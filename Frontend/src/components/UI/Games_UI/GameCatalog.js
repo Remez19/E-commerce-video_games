@@ -6,7 +6,6 @@ import GameInfo from "./GameInfo";
 import Backdrop from "../UI_Utill/Backdrop";
 const GameCatalog = (props) => {
   const gamesList = props.GameList;
-  console.log(gamesList);
 
   const [isGameClicked, setIsGameClicked] = useState();
   const [animStyle, setAnimStyle] = useState(true);
@@ -36,7 +35,11 @@ const GameCatalog = (props) => {
         )}
       {gamesList.map((game) => {
         return (
-          <GameItem gameData={game} onGameItemClick={onGameItemClickHandler} />
+          <GameItem
+            gameData={game}
+            onGameItemClick={onGameItemClickHandler}
+            key={game._id}
+          />
         );
       })}
     </section>

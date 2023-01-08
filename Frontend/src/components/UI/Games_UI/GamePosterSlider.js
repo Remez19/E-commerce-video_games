@@ -8,11 +8,10 @@ const GamePosterSlider = (props) => {
     animation: "",
     fade: "",
   });
-  // console.log(gamesSlides);
 
-  // console.log(gamesSlides);
   useEffect(() => {
     const intervalAnimation = setInterval(() => {
+      // can be done better
       setGameSlideIndex((currIndexVal) => {
         if (currIndexVal.animation === "out" || "")
           return {
@@ -33,7 +32,7 @@ const GamePosterSlider = (props) => {
       clearInterval(intervalAnimation);
       // clearInterval(indexInterval);
     };
-  }, []);
+  }, [gamesSlides.length]);
 
   const onGamePosterClickHandler = () => {
     console.log(gamesSlides[gameSlideIndex.index].title);

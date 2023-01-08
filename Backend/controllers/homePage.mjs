@@ -23,20 +23,29 @@ export const getUserSearchResult = async (req, res, next) => {
   // Check for errors before anything if needed!
 
   try {
-    // Pageniation needed
-    // db.users.find(name: new RegExp('^' + search + '$')) //For exact search, case
-    // console.log(`title: { $regex: /^${req.params.keyWords}/ }`);
-    // console.log(`"^${req.params.keyWords}"`);
-    // const query = { title: `/^${req.params.keyWords}/` };
-    // console.log(query);
-    const gamesList = await gameModel.find({
-      title: new RegExp(`^${req.params.keyWords}`),
-    });
-    console.log(gamesList);
-    res.status(200).json({
-      message: "Search Successfull.",
-      games: gamesList,
-    });
+    if (req.params.keyWords) {
+      const gamesList = await gameModel.find({
+        title: new RegExp(`^${req.params.keyWords}`),
+      });
+      if (gamesList.length === 0) {
+        // result set empty
+        res.status(200).json({
+          message: "No games Found",
+          games: gamesList,
+        });
+      } else {
+        res.status(200).json({
+          message: "Search Successfull.",
+          games: gamesList,
+        });
+      }
+    } else {
+      const gamesList = await gameModel.find();
+      res.status(200).json({
+        message: "Search Successfull.",
+        games: gamesList,
+      });
+    }
   } catch (err) {
     if (!err.statusCode) {
       // Server error
