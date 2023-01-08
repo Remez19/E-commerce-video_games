@@ -9,7 +9,7 @@ const GameItem = ({ gameData, onGameItemClick }) => {
       <div
         onClick={onClickGameHandler}
         className="game_item_container__image"
-        style={{ backgroundImage: `url(${gameData.url})` }}
+        style={{ backgroundImage: `url(${gameData.imageUrl})` }}
       ></div>
       <div className="game_item_container__platforms">
         Platforms

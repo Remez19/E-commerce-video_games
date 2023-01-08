@@ -2,12 +2,15 @@ import "./GamePoster.css";
 
 import { useEffect, useState } from "react";
 const GamePosterSlider = (props) => {
+  const gamesSlides = props.GameList;
   const [gameSlideIndex, setGameSlideIndex] = useState({
     index: 0,
     animation: "",
     fade: "",
   });
-  const gamesSlides = props.GamesPosters;
+  // console.log(gamesSlides);
+
+  // console.log(gamesSlides);
   useEffect(() => {
     const intervalAnimation = setInterval(() => {
       setGameSlideIndex((currIndexVal) => {
@@ -30,12 +33,11 @@ const GamePosterSlider = (props) => {
       clearInterval(intervalAnimation);
       // clearInterval(indexInterval);
     };
-  }, [gamesSlides]);
+  }, []);
 
   const onGamePosterClickHandler = () => {
     console.log(gamesSlides[gameSlideIndex.index].title);
   };
-
   return (
     <section className="main_data_container__game_posters">
       <div className={`game_poster__items ${gameSlideIndex.fade}`}>
@@ -44,7 +46,9 @@ const GamePosterSlider = (props) => {
           onClick={onGamePosterClickHandler}
           className={`game_poster__item ${gameSlideIndex.animation}`}
           style={{
-            backgroundImage: `url(${gamesSlides[gameSlideIndex.index].url})`,
+            backgroundImage: `url(${
+              gamesSlides[gameSlideIndex.index].imageUrl
+            })`,
           }}
         ></div>
       </div>

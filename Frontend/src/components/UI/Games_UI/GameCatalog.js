@@ -6,6 +6,8 @@ import GameInfo from "./GameInfo";
 import Backdrop from "../UI_Utill/Backdrop";
 const GameCatalog = (props) => {
   const gamesList = props.GameList;
+  console.log(gamesList);
+
   const [isGameClicked, setIsGameClicked] = useState();
   const [animStyle, setAnimStyle] = useState(true);
   const [pressedGame, setPressedGame] = useState();
