@@ -1,0 +1,15 @@
+.user_profile_btn {
+  background-color: transparent;
+  background-image: url("../../../images/UI_Images/user_profile_logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.user_profile_btn:hover {
+  border-radius: 50%;
+  background-color: rgb(136, 136, 136);
+}

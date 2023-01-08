@@ -1,0 +1,37 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  grid-row: row-3-start / span row-3-end;
+  width: 100%;
+  display: flex;
+  background-color: #ffe283;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer li {
+  display: inline-block;
+  padding: 0 1rem;
+}
+
+.footer a {
+  color: black;
+  font-family: "Secular One", sans-serif;
+}
+.footer a:hover,
+.footer a:active {
+  color: black;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+@media (min-width: 40rem) {
+  .footer {
+    position: relative;
+  }
+}

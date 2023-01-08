@@ -1,0 +1,72 @@
+.main_data_container__game_posters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 20rem;
+}
+
+.game_poster__items {
+  height: 100%;
+  width: 100%;
+  color: #ffe283;
+  text-align: center;
+  font-family: "Varela Round", sans-serif;
+}
+
+.fadeOut {
+  animation: fadeOutAnim 1s ease-out forwards;
+}
+.fadeIn {
+  animation: fadeInAnim 1s ease-out forwards;
+}
+
+.game_poster__item {
+  margin-top: 1rem;
+  width: 100%;
+  height: 85%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.out {
+  animation: slideOut 1.3s ease-out forwards;
+}
+.in {
+  animation: slideIn 1.3s ease-out forwards;
+}
+@keyframes slideOut {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeInAnim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOutAnim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

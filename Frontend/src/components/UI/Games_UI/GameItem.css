@@ -1,0 +1,80 @@
+.game_item_container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: transparent;
+  /* border: 2px solid blue; */
+  width: 100%;
+  height: fit-content;
+}
+.game_item_container__title {
+  margin: 0;
+  color: #ff7474;
+  font-family: "Varela Round", sans-serif;
+}
+.game_item_container__image {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+  margin-top: 0.7rem;
+  width: 100%;
+  height: 10rem;
+}
+
+.game_item_container__image:hover {
+  cursor: pointer;
+}
+
+.game_item_container__platforms {
+  margin-top: 0.3rem;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ff7474;
+}
+
+.game_item_container__platforms_list {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  padding-left: 0;
+}
+.game_item_container__platforms_list > li {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.game_item_container__price {
+  margin-top: 0;
+  color: #ffe283;
+}
+
+.game_item_container__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.game_item_container__actions button {
+  color: #ff7474;
+  background-color: transparent;
+  border: 1px solid #ffe283;
+  border-radius: 5%;
+  width: 5rem;
+  height: 2.5rem;
+}
+
+.game_item_container__actions button:hover {
+  background-color: #ff747443;
+  cursor: pointer;
+}
+
+@media (min-width: 40rem) {
+  .game_item_container {
+    border-right: 1px solid #ff7474;
+  }
+}

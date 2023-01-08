@@ -1,0 +1,66 @@
+.game_info__container {
+  background-color: rgb(47, 47, 47);
+  position: absolute;
+  width: 75vw;
+  height: 60vh;
+  z-index: 150;
+  border-radius: 10px;
+  bottom: 12rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+}
+.game_info__container__back {
+  position: absolute;
+  left: 0.2rem;
+  top: 0.2rem;
+  width: 2rem;
+  height: 2rem;
+  background-image: url("../../../images/UI_Images/back.png");
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  border: none;
+  background-color: transparent;
+}
+
+.game_info__container p {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  font-family: "Varela Round", sans-serif;
+  color: #ff7474;
+}
+
+.game_info__container_image {
+  /* background-color: black; */
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 100%;
+  height: 40%;
+}
+
+.game_info__container_description {
+  /* padding-top: 0.5rem; */
+  background-color: transparent;
+  color: #ff7474;
+  padding: 0.5rem;
+  border: none;
+  border-top: 2px solid #ff7474;
+  border-bottom: 2px solid #ff7474;
+  width: 90%;
+  height: 20%;
+}
+
+@media (min-width: 40rem) {
+  .game_info__container {
+    width: 60vw;
+    height: 70vh;
+  }
+  .game_info__container__back:hover,
+  .game_info__container__back:active {
+    background-image: url("../../../images/UI_Images/back_hover.png");
+    cursor: pointer;
+  }
+}

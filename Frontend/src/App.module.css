@@ -1,0 +1,7 @@
+.main_app__container {
+  background-color: black;
+  grid-row: row-2-start / row-2-end;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5rem;
+}
