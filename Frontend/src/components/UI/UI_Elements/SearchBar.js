@@ -39,7 +39,6 @@ const SearchBar = () => {
       }
 
       const resData = await res.json();
-      console.log(resData);
       if (resData.games.length > 0) {
         dispatchAction(gamesSliceActions.setSearchResultGames(resData));
       }

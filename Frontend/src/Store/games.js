@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initState = { games: [] };
+const initState = { games: [], slideShowGames: [] };
 
 const gamesSlice = createSlice({
   name: "games",
   initialState: initState,
   reducers: {
     initGames(state, action) {
+      state.slideShowGames = [...action.payload.games];
       state.games = [...action.payload.games];
     },
     setSearchResultGames(state, action) {
