@@ -16,7 +16,8 @@ const DataContainer = () => {
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   // app state loading
-  const isLoading = useSelector((state) => state.ui.isLoading);
+  // const isLoading = useSelector((state) => state.ui.isLoading);
+  const isLoading = true;
 
   const dispatchAction = useDispatch();
 

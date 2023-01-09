@@ -28,5 +28,5 @@ code {
   width: 100%;
   overflow-x: hidden;
   display: grid;
-  grid-template-rows: [row-1-start] 1fr [row-1-end row-2-start] 1fr [row-2-end row-3-start] 1fr [row-3-end];
+  grid-template-rows: [row-1-start] 0.2fr [row-1-end row-2-start] 3fr [row-2-end row-3-start] 0.2fr [row-3-end];
 }
