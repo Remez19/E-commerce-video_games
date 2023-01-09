@@ -14,21 +14,27 @@ const GameItem = ({ gameData, onGameItemClick }) => {
       <div className="game_item_container__platforms">
         Platforms
         <ul className="game_item_container__platforms_list">
-          <li
-            style={{
-              backgroundImage: `url(${require("../../../images/Platforms/ps.png")})`,
-            }}
-          ></li>
-          <li
-            style={{
-              backgroundImage: `url(${require("../../../images/Platforms/xbox.png")})`,
-            }}
-          ></li>
-          <li
-            style={{
-              backgroundImage: `url(${require("../../../images/Platforms/pc.png")})`,
-            }}
-          ></li>
+          {gameData.platforms.includes("PS") && (
+            <li
+              style={{
+                backgroundImage: `url(${require("../../../images/Platforms/ps.png")})`,
+              }}
+            ></li>
+          )}
+          {gameData.platforms.includes("XBOX") && (
+            <li
+              style={{
+                backgroundImage: `url(${require("../../../images/Platforms/xbox.png")})`,
+              }}
+            ></li>
+          )}
+          {gameData.platforms.includes("PC") && (
+            <li
+              style={{
+                backgroundImage: `url(${require("../../../images/Platforms/pc.png")})`,
+              }}
+            ></li>
+          )}
         </ul>
       </div>
       <p className="game_item_container__price">{`Price:${gameData.price}`}</p>

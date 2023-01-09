@@ -1,13 +1,16 @@
-import { useState } from "react";
-import React from "react";
 import "./SearchBar.css";
-import { useDispatch } from "react-redux";
 import { gamesSliceActions } from "../../../Store/games";
+import { uiSliceActions } from "../../../Store/ui";
+
+import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 const SearchBar = () => {
   const dispatchAction = useDispatch();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [serachBarInput, setSearchBarInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
   const cssClasses = [
     "search_bar__input",
     !isSearchActive ? "not_active_search" : "",
@@ -29,6 +32,7 @@ const SearchBar = () => {
     }
   };
   const handleSearch = async () => {
+    dispatchAction(uiSliceActions.setLoading(true));
     try {
       const res = await fetch("http://localhost:8080/" + serachBarInput, {
         method: "POST",
@@ -43,7 +47,17 @@ const SearchBar = () => {
         dispatchAction(gamesSliceActions.setSearchResultGames(resData));
       }
       // console.log(resData);
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    } finally {
+      function delay(milliseconds) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, milliseconds);
+        });
+      }
+      await delay(2000);
+      dispatchAction(uiSliceActions.setLoading(false));
+    }
   };
   const onSearchBtnClickHandler = () => {
     handleSearch();

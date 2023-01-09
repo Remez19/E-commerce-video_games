@@ -39,12 +39,13 @@ const DataContainer = () => {
       // Handle error !
       console.log(err);
     }
+    // Illustrated delay
     function delay(milliseconds) {
       return new Promise((resolve) => {
         setTimeout(resolve, milliseconds);
       });
     }
-    await delay(3000);
+    await delay(2000);
     dispatchAction(uiSliceActions.setLoading(false));
   }, [dispatchAction]);
   useEffect(() => {
