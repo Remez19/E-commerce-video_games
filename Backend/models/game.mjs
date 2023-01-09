@@ -15,6 +15,7 @@ const gameSchema = new Schema({
     type: Number,
     required: true,
   },
+  platforms: [],
 });
 
 export const gameModel = mongoose.model("Game", gameSchema);

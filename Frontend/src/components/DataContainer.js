@@ -1,8 +1,11 @@
 import "./DataContainer.css";
 import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
 import GameCatalog from "./UI/Games_UI/GameCatalog";
+import Loading from "./UI/UI_Utill/Loading";
+
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import { gamesSliceActions } from "../Store/games";
 import { uiSliceActions } from "../Store/ui";
@@ -16,8 +19,7 @@ const DataContainer = () => {
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   // app state loading
-  // const isLoading = useSelector((state) => state.ui.isLoading);
-  const isLoading = true;
+  const isLoading = useSelector((state) => state.ui.isLoading);
 
   const dispatchAction = useDispatch();
 
@@ -37,6 +39,12 @@ const DataContainer = () => {
       // Handle error !
       console.log(err);
     }
+    function delay(milliseconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, milliseconds);
+      });
+    }
+    await delay(3000);
     dispatchAction(uiSliceActions.setLoading(false));
   }, [dispatchAction]);
   useEffect(() => {
@@ -46,11 +54,13 @@ const DataContainer = () => {
   return (
     <main className="main_data_container">
       {!isLoading ? (
-        <GamePosterSlider Slides={gamesSlidesList} />
+        <React.Fragment>
+          <GamePosterSlider Slides={gamesSlidesList} />
+          <GameCatalog GameList={gamesList} />
+        </React.Fragment>
       ) : (
-        <p>Loading!</p>
+        <Loading />
       )}
-      {!isLoading ? <GameCatalog GameList={gamesList} /> : <p>Loading!</p>}
     </main>
   );
 };

@@ -1,5 +1,29 @@
-.loading-contaier {
+.loading-container__background {
   width: 100vw;
   height: 100vh;
-  color: red;
+  background-color: #00000050;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.loading-container {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.fadeAnim {
+  animation: fade 1s ease-in forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
