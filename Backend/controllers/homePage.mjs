@@ -23,9 +23,10 @@ export const getUserSearchResult = async (req, res, next) => {
   // Check for errors before anything if needed!
 
   try {
-    if (req.params.keyWords) {
+    const { keyWords } = req.body;
+    if (keyWords) {
       const gamesList = await gameModel.find({
-        title: new RegExp(`^${req.params.keyWords}`),
+        title: new RegExp(`^${keyWords}`),
       });
       if (gamesList.length === 0) {
         // result set empty
@@ -54,7 +55,3 @@ export const getUserSearchResult = async (req, res, next) => {
     next(err);
   }
 };
-// { <field>: { $regex: /pattern/, $options: '<options>' } }
-// { <field>: { $regex: 'pattern', $options: '<options>' } }
-// { <field>: { $regex: /pattern/<options> } }
-// db.products.find( { sku: { $regex: /^ABC/i } } )

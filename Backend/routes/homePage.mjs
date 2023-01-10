@@ -5,6 +5,6 @@ const homePageRouter = express.Router();
 
 homePageRouter.post("/", getHomePage);
 
-homePageRouter.post("/:keyWords", getUserSearchResult);
+homePageRouter.post("/search", getUserSearchResult);
 
 export default homePageRouter;

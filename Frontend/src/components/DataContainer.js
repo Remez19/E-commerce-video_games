@@ -3,15 +3,32 @@ import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
 import GameCatalog from "./UI/Games_UI/GameCatalog";
 import Loading from "./UI/UI_Utill/Loading";
 
-import { useEffect, useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 
 import { gamesSliceActions } from "../Store/games";
-import { uiSliceActions } from "../Store/ui";
+
+import useHttp from "../hooks/use-http";
 
 const DataContainer = () => {
   // List of games to present.
+
+  const dispatchAction = useDispatch();
+
+  const setGames = useCallback(
+    (gamesList) => {
+      dispatchAction(gamesSliceActions.initGames(gamesList));
+    },
+    [dispatchAction]
+  );
+  const { error, sendRequest: fetchGames } = useHttp(
+    {
+      url: "http://localhost:8080/",
+    },
+    setGames
+  );
+
   const gamesList = useSelector((state) => state.games.games);
 
   // List of games for the slide show.
@@ -21,37 +38,9 @@ const DataContainer = () => {
   // app state loading
   const isLoading = useSelector((state) => state.ui.isLoading);
 
-  const dispatchAction = useDispatch();
-
-  // get games from db.
-  // http request to the REST API backend
-  const getGames = useCallback(async () => {
-    let resData;
-    try {
-      const res = await fetch("http://localhost:8080/", { method: "POST" });
-      if (res.status !== 200) {
-        throw new Error("Response not ok!");
-      }
-      resData = await res.json();
-      dispatchAction(gamesSliceActions.initGames(resData));
-      // setGamesList(resData.games);
-    } catch (err) {
-      // Handle error !
-      console.log(err);
-    }
-    // Illustrated delay
-    function delay(milliseconds) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, milliseconds);
-      });
-    }
-    await delay(2000);
-    dispatchAction(uiSliceActions.setLoading(false));
-  }, [dispatchAction]);
   useEffect(() => {
-    dispatchAction(uiSliceActions.setLoading(true));
-    getGames();
-  }, [getGames, dispatchAction]);
+    fetchGames();
+  }, [fetchGames]);
   return (
     <main className="main_data_container">
       {!isLoading ? (
@@ -62,6 +51,7 @@ const DataContainer = () => {
       ) : (
         <Loading />
       )}
+      {error && <p>Error Component</p>}
     </main>
   );
 };

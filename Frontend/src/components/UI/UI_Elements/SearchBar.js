@@ -1,16 +1,30 @@
 import "./SearchBar.css";
 import { gamesSliceActions } from "../../../Store/games";
-import { uiSliceActions } from "../../../Store/ui";
 
-import React from "react";
+import React, { useCallback } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+import useHttp from "../../../hooks/use-http";
 
 const SearchBar = () => {
   const dispatchAction = useDispatch();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [serachBarInput, setSearchBarInput] = useState("");
-
+  const setSearchResult = useCallback(
+    (searchResult) => {
+      dispatchAction(gamesSliceActions.setSearchResultGames(searchResult));
+    },
+    [dispatchAction]
+  );
+  const { error, sendRequest: getSearchResults } = useHttp(
+    {
+      url: "http://localhost:8080/search",
+      headers: { "Content-Type": "application/json" },
+      body: { keyWords: serachBarInput },
+    },
+    setSearchResult
+  );
   const cssClasses = [
     "search_bar__input",
     !isSearchActive ? "not_active_search" : "",
@@ -28,36 +42,12 @@ const SearchBar = () => {
         return event.target.value;
       });
     } else {
+      // Custom http
       handleSearch();
     }
   };
   const handleSearch = async () => {
-    dispatchAction(uiSliceActions.setLoading(true));
-    try {
-      const res = await fetch("http://localhost:8080/" + serachBarInput, {
-        method: "POST",
-      });
-      if (res.status !== 200) {
-        // Need to do better
-        throw new Error("Something went worng ");
-      }
-
-      const resData = await res.json();
-      if (resData.games.length > 0) {
-        dispatchAction(gamesSliceActions.setSearchResultGames(resData));
-      }
-      // console.log(resData);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      function delay(milliseconds) {
-        return new Promise((resolve) => {
-          setTimeout(resolve, milliseconds);
-        });
-      }
-      await delay(2000);
-      dispatchAction(uiSliceActions.setLoading(false));
-    }
+    getSearchResults();
   };
   const onSearchBtnClickHandler = () => {
     handleSearch();
