@@ -17,7 +17,7 @@ const GameInfo = ({ gameData, onBackClick }) => {
         className="game_info__container_image"
         width="853"
         height="480"
-        src={`${gameData.youtubeUrl}?enablejsapi=1&origin=http://localhost:3000/`}
+        src={`https://www.youtube.com/embed/${gameData.youtubeUrl}?enablejsapi=1&origin=http://localhost:3000/`}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
