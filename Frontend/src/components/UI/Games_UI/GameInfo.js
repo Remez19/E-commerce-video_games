@@ -1,5 +1,5 @@
 import "./GameInfo.css";
-import Backdrop from "../UI_Utill/Backdrop";
+
 const GameInfo = ({ gameData, onBackClick }) => {
   return (
     <div
@@ -13,19 +13,21 @@ const GameInfo = ({ gameData, onBackClick }) => {
         onClick={onBackClick}
       ></button>
       <p>{gameData.title}</p>
-      <div
+      <iframe
         className="game_info__container_image"
-        style={{
-          backgroundImage: `url(${gameData.url})`,
-        }}
-      ></div>
+        width="853"
+        height="480"
+        src={`${gameData.youtubeUrl}?enablejsapi=1&origin=http://localhost:3000/`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="Embedded youtube"
+      />
+
       {/* Can add rating with starts like  */}
-      <p>Description</p>
-      <textarea
-        className="game_info__container_description"
-        defaultValue={gameData.description}
-      ></textarea>
-      <div>
+      <p style={{ textDecoration: "underline" }}>Description</p>
+      <p className="game_info__container_description">{gameData.description}</p>
+      <div className="game_info__container__actions">
         <button>Add To Cart</button>
         <button>Favorite</button>
       </div>
