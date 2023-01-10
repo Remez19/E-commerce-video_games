@@ -7,20 +7,30 @@ const useHttp = (reqConfig, dataTransformer) => {
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(
-    async (taskText) => {
+    async (data) => {
       dispatchAction(uiSliceActions.setLoading(true));
       setError(null);
       try {
         const response = await fetch(reqConfig.url, {
           method: reqConfig.method ? reqConfig.method : "POST",
-          headers: reqConfig.headers ? reqConfig.headers : {},
-          body: reqConfig.body ? JSON.stringify(reqConfig.body) : null,
+          headers: reqConfig.headers
+            ? reqConfig.headers
+            : { "Content-Type": "application/json" },
+          body: reqConfig.body
+            ? JSON.stringify(reqConfig.body)
+            : JSON.stringify(data),
         });
         if (!response.ok) {
           throw new Error("Request Failed!");
         }
         const resData = await response.json();
         // call back to use the data we fetched
+        function delay(milliseconds) {
+          return new Promise((resolve) => {
+            setTimeout(resolve, milliseconds);
+          });
+        }
+        await delay(1500);
         dataTransformer(resData);
       } catch (err) {
         setError(err.meesage || "Something Went worng with request!");

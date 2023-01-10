@@ -17,6 +17,7 @@ const SearchBar = () => {
     },
     [dispatchAction]
   );
+  // Handle error Case
   const { error, sendRequest: getSearchResults } = useHttp(
     {
       url: "http://localhost:8080/search",
