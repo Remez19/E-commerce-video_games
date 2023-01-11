@@ -3,7 +3,7 @@ import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
 import GameCatalog from "./UI/Games_UI/GameCatalog";
 import Loading from "./UI/UI_Utill/Loading";
 
-import { useCallback, useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 
@@ -47,7 +47,7 @@ const DataContainer = () => {
       {!isLoading ? (
         <React.Fragment>
           <GamePosterSlider Slides={gamesSlidesList} />
-          <GameCatalog GameList={gamesList} ref />
+          <GameCatalog GameList={gamesList} />
         </React.Fragment>
       ) : (
         <Loading />

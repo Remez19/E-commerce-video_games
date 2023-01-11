@@ -23,9 +23,9 @@ const GameCatalog = (props) => {
       setIsGameClicked(false);
     }, 210);
   };
-
+  const handleScroll = () => {};
   return (
-    <section className="game_catalog__container">
+    <section className="game_catalog__container" onScrollCapture={handleScroll}>
       {isGameClicked &&
         ReactDOM.createPortal(
           <Backdrop onClick={onBackdropClicked} animationStyle={animStyle}>
@@ -33,7 +33,7 @@ const GameCatalog = (props) => {
           </Backdrop>,
           document.getElementById("backdrop-root")
         )}
-      {gamesList.map((game) => {
+      {gamesList.map((game, i) => {
         return (
           <GameItem
             gameData={game}
