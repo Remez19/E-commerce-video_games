@@ -8,7 +8,6 @@ import { useState } from "react";
 
 const HeaderActionPanel = () => {
   const [active, setActive] = useState("");
-  console.log(active);
   const dispatchAction = useDispatch();
   const updateGameCatalog = (data) => {
     dispatchAction(gamesSliceActions.setSearchResultGames(data));
@@ -25,6 +24,9 @@ const HeaderActionPanel = () => {
     setActive(event.target.innerText);
     fetchFillteredGames({ filter: event.target.innerText });
   };
+  // useEffect(() => {
+  //   setActive("");
+  // }, [active]);
   return (
     <div className={"action_panel"}>
       <button

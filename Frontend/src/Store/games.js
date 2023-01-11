@@ -6,12 +6,15 @@ const gamesSlice = createSlice({
   name: "games",
   initialState: initState,
   reducers: {
-    initGames(state, action) {
+    setGames(state, action) {
       state.slideShowGames = [...action.payload.games];
-      state.games = [...action.payload.games];
+      state.games = state.games.concat([...action.payload.games]);
     },
     setSearchResultGames(state, action) {
       state.games = [...action.payload.games];
+    },
+    updateGamesList(state, action) {
+      state.games = state.games.concat([...action.payload.games]);
     },
   },
 });

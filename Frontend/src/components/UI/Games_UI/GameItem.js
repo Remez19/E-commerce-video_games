@@ -1,5 +1,5 @@
 import "./GameItem.css";
-const GameItem = ({ gameData, onGameItemClick }) => {
+const GameItem = ({ gameData, onGameItemClick, myRef }) => {
   const onClickGameHandler = () => {
     onGameItemClick(gameData);
   };
@@ -38,7 +38,7 @@ const GameItem = ({ gameData, onGameItemClick }) => {
         </ul>
       </div>
       <p className="game_item_container__price">{`Price:${gameData.price}`}</p>
-      <div className="game_item_container__actions">
+      <div className="game_item_container__actions" ref={myRef}>
         <button>Youtube Trailer</button>
         <button>Add To Cart</button>
       </div>

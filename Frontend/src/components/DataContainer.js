@@ -2,6 +2,7 @@ import "./DataContainer.css";
 import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
 import GameCatalog from "./UI/Games_UI/GameCatalog";
 import Loading from "./UI/UI_Utill/Loading";
+import Filter from "./UI/UI_Elements/Filter";
 
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,37 +18,53 @@ const DataContainer = () => {
 
   const dispatchAction = useDispatch();
 
-  const setGames = useCallback(
-    (gamesList) => {
-      dispatchAction(gamesSliceActions.initGames(gamesList));
+  const setGamesList = useCallback(
+    (resData) => {
+      dispatchAction(gamesSliceActions.setGames(resData));
     },
     [dispatchAction]
   );
-  const { error, sendRequest: fetchGames } = useHttp(
+  const {
+    error,
+    sendRequest: fetchGames,
+    hasMore: hasMoreGames,
+  } = useHttp(
     {
       url: "http://localhost:8080/",
     },
-    setGames
+    setGamesList
   );
 
+  // app state loading
+
+  const scrollEventHandler = useCallback(() => {
+    if (hasMoreGames) {
+      setPageNumber((prevState) => prevState + 1);
+    }
+  }, [hasMoreGames]);
+
+  useEffect(() => {
+    fetchGames({ page: pageNumber });
+  }, [fetchGames, pageNumber]);
+
+  const isLoading = useSelector((state) => state.ui.isLoading);
   const gamesList = useSelector((state) => state.games.games);
 
   // List of games for the slide show.
   // Top games (do better quey on the db)
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
-  // app state loading
-  const isLoading = useSelector((state) => state.ui.isLoading);
-
-  useEffect(() => {
-    fetchGames({ page: pageNumber });
-  }, [fetchGames, pageNumber]);
   return (
     <main className="main_data_container">
       {!isLoading ? (
         <React.Fragment>
           <GamePosterSlider Slides={gamesSlidesList} />
-          <GameCatalog GameList={gamesList} />
+          <Filter />
+          <GameCatalog
+            GameList={gamesList}
+            handleScroll={scrollEventHandler}
+            isLoading={isLoading}
+          />
         </React.Fragment>
       ) : (
         <Loading />

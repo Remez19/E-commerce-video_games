@@ -10,13 +10,17 @@ export const getHomePage = async (req, res, next) => {
   const pageNumber = req.body.page;
   try {
     // Pageniation needed
-    const gamesList = await gameModel
-      .find()
-      .skip((pageNumber - 1) * GAMES_PER_PAGE)
-      .limit(GAMES_PER_PAGE);
+
+    const skip = (pageNumber - 1) * GAMES_PER_PAGE;
+    const totalGames = await gameModel.find().countDocuments();
+    const gamesList = await gameModel.find().skip(skip).limit(GAMES_PER_PAGE);
+    const loadedGames = pageNumber * GAMES_PER_PAGE;
+    // console.log(`TotalGames: ${totalGames}`);
+    // console.log(`Skip: ${skip}`);
     res.status(200).json({
       message: "Fetched games",
       games: gamesList,
+      hasMore: totalGames > loadedGames,
     });
   } catch (err) {
     if (!err.statusCode) {
