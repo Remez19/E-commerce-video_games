@@ -7,8 +7,8 @@ import MobileNav from "./MobileNav";
 import UserProfile from "./UserProfile";
 import Cart from "../../Cart/Cart";
 import SearchBar from "./SearchBar";
-import HeaderActionPanel from "./HeaderActionPanel";
-const Header = () => {
+
+const Header = ({ sendKeyWords }) => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
 
   const BacdropClickHandler = () => {
@@ -18,6 +18,9 @@ const Header = () => {
     setIsHamburgerClick((prevState) => {
       return !prevState;
     });
+  };
+  const sendKeyWordsHandler = (keyWords) => {
+    sendKeyWords(keyWords);
   };
   return (
     <header className="main_header">
@@ -36,8 +39,7 @@ const Header = () => {
           <Cart />
         </li>
       </ul>
-      <SearchBar />
-      <HeaderActionPanel />
+      <SearchBar sendKeyWords={sendKeyWordsHandler} />
     </header>
   );
 };

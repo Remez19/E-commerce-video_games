@@ -14,6 +14,7 @@ const useHttp = (reqConfig, transformerObject) => {
       dispatchAction(uiSliceActions.setLoading(true));
       setError(null);
       try {
+        console.log(reqConfig.url);
         const response = await fetch(reqConfig.url, {
           method: reqConfig.method ? reqConfig.method : "POST",
           headers: reqConfig.headers
@@ -35,6 +36,7 @@ const useHttp = (reqConfig, transformerObject) => {
         }
         await delay(1500);
         setHasMore(resData.hasMore);
+        console.log(resData);
         transformerObject[reqConfig.operationType](resData);
       } catch (err) {
         setError(err.meesage || "Something Went worng with request!");

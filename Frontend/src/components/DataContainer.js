@@ -12,7 +12,7 @@ import { gamesSliceActions } from "../Store/games";
 
 import useHttp from "../hooks/use-http";
 
-const DataContainer = () => {
+const DataContainer = ({ serachBarValue }) => {
   // List of games to present.
 
   const [reqConfig, setReqConfig] = useState({
@@ -32,6 +32,9 @@ const DataContainer = () => {
     },
     updateGamesList: (resData) => {
       dispatchAction(gamesSliceActions.updateGamesList(resData));
+    },
+    setSearchResultGames: (resData) => {
+      dispatchAction(gamesSliceActions.setSearchResultGames(resData));
     },
   });
 
@@ -71,6 +74,23 @@ const DataContainer = () => {
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   // console.log(scrollPosition);
+  const onSearchValueUpdate = useCallback((searchBarValue) => {
+    setReqConfig((prevState) => {
+      return {
+        ...prevState,
+        url: "http://localhost:8080/search",
+        body: {
+          pageNumber: 1,
+          filter: prevState.body.filter,
+          keyWords: searchBarValue,
+        },
+        operationType: "setSearchResultGames",
+      };
+    });
+  }, []);
+  useEffect(() => {
+    if (serachBarValue !== undefined) onSearchValueUpdate(serachBarValue);
+  }, [onSearchValueUpdate, serachBarValue]);
 
   useEffect(() => {
     fetchGames();

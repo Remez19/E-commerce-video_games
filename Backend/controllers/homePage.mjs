@@ -36,28 +36,47 @@ export const getUserSearchResult = async (req, res, next) => {
   // Check for errors before anything if needed!
 
   try {
-    const { keyWords } = req.body;
+    const { keyWords, pageNumber } = req.body;
+    const skip = (pageNumber - 1) * GAMES_PER_PAGE;
+    const loadedGames = pageNumber * GAMES_PER_PAGE;
+
+    console.log(`Page number: ${pageNumber}`);
+
     if (keyWords) {
-      const gamesList = await gameModel.find({
-        title: new RegExp(`^${keyWords}`),
-      });
+      // Number of total docs in db
+      const totalGames = await gameModel
+        .find({
+          title: new RegExp(`^${keyWords}`),
+        })
+        .countDocuments();
+
+      const gamesList = await gameModel
+        .find({
+          title: new RegExp(`^${keyWords}`),
+        })
+        .skip(skip)
+        .limit(GAMES_PER_PAGE);
       if (gamesList.length === 0) {
         // result set empty
         res.status(200).json({
           message: "No games Found",
           games: gamesList,
+          hasMore: false,
         });
       } else {
         res.status(200).json({
           message: "Search Successfull.",
           games: gamesList,
+          hasMore: totalGames > loadedGames,
         });
       }
     } else {
-      const gamesList = await gameModel.find();
+      const totalGames = await gameModel.find().countDocuments();
+      const gamesList = await gameModel.find().skip(skip).limit(GAMES_PER_PAGE);
       res.status(200).json({
         message: "Search Successfull.",
         games: gamesList,
+        hasMore: totalGames > loadedGames,
       });
     }
   } catch (err) {
