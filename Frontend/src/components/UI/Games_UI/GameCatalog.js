@@ -20,10 +20,13 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((games) => {
         if (games[0].isIntersecting) {
-          handleScroll();
+          handleScroll(games[0].boundingClientRect.y);
         }
       });
-      if (gameElement) observer.current.observe(gameElement);
+      if (gameElement) {
+        // console.log();
+        observer.current.observe(gameElement);
+      }
     },
     [isLoading, handleScroll]
   );

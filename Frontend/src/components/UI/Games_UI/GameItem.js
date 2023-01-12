@@ -38,7 +38,11 @@ const GameItem = ({ gameData, onGameItemClick, myRef }) => {
         </ul>
       </div>
       <p className="game_item_container__price">{`Price:${gameData.price}`}</p>
-      <div className="game_item_container__actions" ref={myRef}>
+      <div
+        className="game_item_container__actions"
+        ref={myRef}
+        id={myRef && "last"}
+      >
         <button>Youtube Trailer</button>
         <button>Add To Cart</button>
       </div>

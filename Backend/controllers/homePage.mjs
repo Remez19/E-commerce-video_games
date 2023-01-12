@@ -71,13 +71,20 @@ export const getUserSearchResult = async (req, res, next) => {
 
 export const getFillteredResults = async (req, res, next) => {
   try {
-    const { filter } = req.body;
+    const { filter, pageNumber } = req.body;
     if (!filter) {
       throw new Error("No fillter in request");
     }
-    const filterResult = await gameModel.find({ platforms: filter });
-    console.log();
-    if (filterResult.length === 0) {
+    const skip = (pageNumber - 1) * GAMES_PER_PAGE;
+    const loadedGames = pageNumber * GAMES_PER_PAGE;
+    const totalGames = await gameModel
+      .find({ platforms: filter })
+      .countDocuments();
+    const filterResult = await gameModel
+      .find({ platforms: filter })
+      .skip(skip)
+      .limit(GAMES_PER_PAGE);
+    if (!totalGames) {
       // result set empty
       res.status(200).json({
         message: "No games Found",
@@ -87,6 +94,7 @@ export const getFillteredResults = async (req, res, next) => {
       res.status(200).json({
         message: "Filter Successfull.",
         games: filterResult,
+        hasMore: totalGames > loadedGames,
       });
     }
   } catch (err) {

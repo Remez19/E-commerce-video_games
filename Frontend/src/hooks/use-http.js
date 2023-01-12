@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiSliceActions } from "../Store/ui";
 
-const useHttp = (reqConfig, dataTransformer) => {
+const useHttp = (reqConfig, transformerObject) => {
   const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
   const isLoading = useSelector((state) => state.ui.isLoading);
@@ -35,7 +35,7 @@ const useHttp = (reqConfig, dataTransformer) => {
         }
         await delay(1500);
         setHasMore(resData.hasMore);
-        dataTransformer(resData);
+        transformerObject[reqConfig.operationType](resData);
       } catch (err) {
         setError(err.meesage || "Something Went worng with request!");
       }
@@ -47,7 +47,8 @@ const useHttp = (reqConfig, dataTransformer) => {
       reqConfig.method,
       reqConfig.headers,
       reqConfig.body,
-      dataTransformer,
+      reqConfig.operationType,
+      transformerObject,
     ]
   );
   return {

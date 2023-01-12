@@ -42,6 +42,11 @@
   background-image: url("../../../images/UI_Images/filter-yellow.png");
 }
 
+.active-filter__item {
+  text-decoration: underline;
+  color: rgb(255, 116, 116);
+}
+
 .dropdown-menu ul {
   display: flex;
   flex-direction: column;
@@ -54,8 +59,7 @@
   color: rgba(255, 116, 116, 0.7);
 }
 
-.dropdown-menu button:hover,
-.dropdown-menu button:active {
+.dropdown-menu button:hover {
   text-decoration: underline;
   cursor: pointer;
   color: rgb(255, 116, 116);

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initState = { isLoading: true };
+const initState = { isLoading: true, elementToscroll: null };
 
 const uiSlice = createSlice({
   name: "ui",
@@ -8,6 +8,9 @@ const uiSlice = createSlice({
   reducers: {
     setLoading(state, action) {
       state.isLoading = action.payload;
+    },
+    setElementToScroll(state, action) {
+      state.elementToscroll = action.payload;
     },
   },
 });

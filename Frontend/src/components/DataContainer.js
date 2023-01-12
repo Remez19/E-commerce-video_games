@@ -16,41 +16,52 @@ const DataContainer = () => {
   // List of games to present.
 
   const [reqConfig, setReqConfig] = useState({
+    operationType: "initGames",
     url: "http://localhost:8080/",
     headers: { "Content-Type": "application/json" },
-    body: { pageNumber: 1, query: "" },
+    body: { pageNumber: 1, query: "", filter: "" },
   });
+
+  const [filterValue, setFilterValue] = useState();
 
   const dispatchAction = useDispatch();
 
-  const setGamesList = useCallback(
-    (resData) => {
-      dispatchAction(gamesSliceActions.setSlideShow(resData));
-      dispatchAction(gamesSliceActions.setGames(resData));
+  const [operationType] = useState({
+    initGames: (resData) => {
+      dispatchAction(gamesSliceActions.initGames(resData));
     },
-    [dispatchAction]
-  );
+    updateGamesList: (resData) => {
+      dispatchAction(gamesSliceActions.updateGamesList(resData));
+    },
+  });
+
   const {
     error,
     sendRequest: fetchGames,
     hasMore: hasMoreGames,
-  } = useHttp(reqConfig, setGamesList);
+  } = useHttp(reqConfig, operationType);
 
   // app state loading
 
-  const scrollEventHandler = useCallback(() => {
-    if (hasMoreGames) {
-      setReqConfig((prevState) => {
-        return {
-          ...prevState,
-          body: {
-            pageNumber: prevState.body.pageNumber + 1,
-            query: prevState.body.query,
-          },
-        };
-      });
-    }
-  }, [hasMoreGames]);
+  const scrollEventHandler = useCallback(
+    (scrollPosition) => {
+      if (hasMoreGames) {
+        // Do Something with scroll
+        setReqConfig((prevState) => {
+          return {
+            ...prevState,
+            body: {
+              pageNumber: prevState.body.pageNumber + 1,
+              query: prevState.body.query,
+              filter: prevState.body.filter,
+            },
+            operationType: "updateGamesList",
+          };
+        });
+      }
+    },
+    [hasMoreGames]
+  );
 
   const isLoading = useSelector((state) => state.ui.isLoading);
   const gamesList = useSelector((state) => state.games.games);
@@ -58,12 +69,24 @@ const DataContainer = () => {
   // List of games for the slide show.
   // Top games (do better quey on the db)
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
+
+  // console.log(scrollPosition);
+
   useEffect(() => {
     fetchGames();
   }, [fetchGames, reqConfig]);
 
-  const fillterUsedHandler = () => {
-    // setFilterUsed(true);
+  const fillterUsedHandler = (filterData) => {
+    dispatchAction(gamesSliceActions.clearGamesList());
+    setFilterValue(filterData);
+    setReqConfig((prevState) => {
+      return {
+        ...prevState,
+        url: "http://localhost:8080/filter",
+        body: { pageNumber: 1, filter: filterData },
+        operationType: "updateGamesList",
+      };
+    });
   };
 
   return (
@@ -71,7 +94,7 @@ const DataContainer = () => {
       {!isLoading ? (
         <React.Fragment>
           <GamePosterSlider Slides={gamesSlidesList} />
-          <Filter filterUsed={fillterUsedHandler} />
+          <Filter filterUsed={fillterUsedHandler} filterPicked={filterValue} />
           <GameCatalog
             GameList={gamesList}
             handleScroll={scrollEventHandler}

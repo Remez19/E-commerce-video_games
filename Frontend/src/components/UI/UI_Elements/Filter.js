@@ -1,33 +1,16 @@
-import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-import { gamesSliceActions } from "../../../Store/games";
-import useHttp from "../../../hooks/use-http";
 import "./Filter.css";
 
-const Filter = ({ filterUsed }) => {
-  const dispatchAction = useDispatch();
+const Filter = ({ filterUsed, filterPicked }) => {
   const [active, setActive] = useState(false);
   const openFilterHandler = (e) => {
     if (e.target.id === "main") setActive((prevState) => !prevState);
   };
   const handleFilterPick = (event) => {
-    filterUsed();
-    fetchGames({ filter: event.target.innerText });
+    const filterValue = event.target.innerText;
+    filterUsed(filterValue);
   };
-  const setFilterResult = useCallback(
-    (resData) => {
-      dispatchAction(gamesSliceActions.setGames(resData));
-    },
-    [dispatchAction]
-  );
-  const { error, sendRequest: fetchGames } = useHttp(
-    {
-      url: "http://localhost:8080/",
-      headers: { "Content-Type": "application/json" },
-    },
-    setFilterResult
-  );
 
   return (
     <div
@@ -40,17 +23,32 @@ const Filter = ({ filterUsed }) => {
         <h6>Platfroms:</h6>
         <ul>
           <li>
-            <button className="dropdown-menu__item" onClick={handleFilterPick}>
+            <button
+              className={`dropdown-menu__item ${
+                filterPicked === "PS" && "active-filter__item"
+              }`}
+              onClick={handleFilterPick}
+            >
               PS
             </button>
           </li>
           <li>
-            <button className="dropdown-menu__item" onClick={handleFilterPick}>
+            <button
+              className={`dropdown-menu__item ${
+                filterPicked === "XBOX" && "active-filter__item"
+              }`}
+              onClick={handleFilterPick}
+            >
               XBOX
             </button>
           </li>
           <li>
-            <button className="dropdown-menu__item" onClick={handleFilterPick}>
+            <button
+              className={`dropdown-menu__item ${
+                filterPicked === "PC" && "active-filter__item"
+              }`}
+              onClick={handleFilterPick}
+            >
               PC
             </button>
           </li>
