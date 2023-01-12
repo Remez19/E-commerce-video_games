@@ -40,6 +40,7 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
       setIsGameClicked(false);
     }, 210);
   };
+
   return (
     <section className="game_catalog__container" onScrollCapture={handleScroll}>
       {isGameClicked &&

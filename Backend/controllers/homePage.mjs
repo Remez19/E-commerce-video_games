@@ -7,7 +7,8 @@ const GAMES_PER_PAGE = 8;
 
 export const getHomePage = async (req, res, next) => {
   // Check for errors before anything if needed!
-  const pageNumber = req.body.page;
+  const pageNumber = req.body.pageNumber;
+
   try {
     // Pageniation needed
 

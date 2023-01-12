@@ -1,0 +1,66 @@
+.filter-container {
+  position: relative;
+  /* display: flex;
+  flex-direction: row; */
+  height: 2rem;
+  width: 2rem;
+  background-image: url("../../../images/UI_Images/filter-red.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 1rem;
+}
+
+.filter-container:hover {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  color: #ff7474;
+  text-decoration: underline;
+  position: absolute;
+  width: 10rem;
+  left: 0;
+  top: calc(100% + 0.25rem);
+  background-color: rgb(47, 47, 47);
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 5px 0px rgba(255, 226, 131, 0.9);
+  /* box-shadow: 0 2px 5px 0 rgba(255, 116, 116, 0.9); */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.active-dropdown-menu {
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: auto;
+}
+
+.active-filter {
+  background-image: url("../../../images/UI_Images/filter-yellow.png");
+}
+
+.dropdown-menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: "🎮 ";
+}
+.dropdown-menu button {
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 116, 116, 0.7);
+}
+
+.dropdown-menu button:hover,
+.dropdown-menu button:active {
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgb(255, 116, 116);
+}
+
+@media (min-width: 40rem) {
+  /* For bigger screens  */
+}

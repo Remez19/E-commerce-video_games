@@ -42,12 +42,12 @@ const useHttp = (reqConfig, dataTransformer) => {
       dispatchAction(uiSliceActions.setLoading(false));
     },
     [
-      dataTransformer,
-      reqConfig.body,
-      reqConfig.headers,
-      reqConfig.method,
-      reqConfig.url,
       dispatchAction,
+      reqConfig.url,
+      reqConfig.method,
+      reqConfig.headers,
+      reqConfig.body,
+      dataTransformer,
     ]
   );
   return {
@@ -59,3 +59,6 @@ const useHttp = (reqConfig, dataTransformer) => {
 };
 
 export default useHttp;
+/**
+ * reqConfig.url, reqConfig.method, reqConfig.headers, reqConfig.body,
+ */

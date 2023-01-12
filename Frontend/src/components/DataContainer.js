@@ -14,12 +14,18 @@ import useHttp from "../hooks/use-http";
 
 const DataContainer = () => {
   // List of games to present.
-  const [pageNumber, setPageNumber] = useState(1);
+
+  const [reqConfig, setReqConfig] = useState({
+    url: "http://localhost:8080/",
+    headers: { "Content-Type": "application/json" },
+    body: { pageNumber: 1, query: "" },
+  });
 
   const dispatchAction = useDispatch();
 
   const setGamesList = useCallback(
     (resData) => {
+      dispatchAction(gamesSliceActions.setSlideShow(resData));
       dispatchAction(gamesSliceActions.setGames(resData));
     },
     [dispatchAction]
@@ -28,24 +34,23 @@ const DataContainer = () => {
     error,
     sendRequest: fetchGames,
     hasMore: hasMoreGames,
-  } = useHttp(
-    {
-      url: "http://localhost:8080/",
-    },
-    setGamesList
-  );
+  } = useHttp(reqConfig, setGamesList);
 
   // app state loading
 
   const scrollEventHandler = useCallback(() => {
     if (hasMoreGames) {
-      setPageNumber((prevState) => prevState + 1);
+      setReqConfig((prevState) => {
+        return {
+          ...prevState,
+          body: {
+            pageNumber: prevState.body.pageNumber + 1,
+            query: prevState.body.query,
+          },
+        };
+      });
     }
   }, [hasMoreGames]);
-
-  useEffect(() => {
-    fetchGames({ page: pageNumber });
-  }, [fetchGames, pageNumber]);
 
   const isLoading = useSelector((state) => state.ui.isLoading);
   const gamesList = useSelector((state) => state.games.games);
@@ -53,13 +58,20 @@ const DataContainer = () => {
   // List of games for the slide show.
   // Top games (do better quey on the db)
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
+  useEffect(() => {
+    fetchGames();
+  }, [fetchGames, reqConfig]);
+
+  const fillterUsedHandler = () => {
+    // setFilterUsed(true);
+  };
 
   return (
     <main className="main_data_container">
       {!isLoading ? (
         <React.Fragment>
           <GamePosterSlider Slides={gamesSlidesList} />
-          <Filter />
+          <Filter filterUsed={fillterUsedHandler} />
           <GameCatalog
             GameList={gamesList}
             handleScroll={scrollEventHandler}
