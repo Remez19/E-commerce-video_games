@@ -36,7 +36,6 @@ const useHttp = (reqConfig, transformerObject) => {
         }
         await delay(1500);
         setHasMore(resData.hasMore);
-        console.log(resData);
         transformerObject[reqConfig.operationType](resData);
       } catch (err) {
         setError(err.meesage || "Something Went worng with request!");
