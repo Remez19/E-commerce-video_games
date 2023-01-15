@@ -4,3 +4,26 @@
   background-color: black;
   justify-content: center;
 }
+
+.filter_searchBar_container {
+  display: grid;
+  grid-template-columns: [column-1-start] 100% [column-1-end];
+  /* grid-template-rows: [row-1-start] 1fr [row-1-end]; */
+  column-gap: 0;
+  justify-items: center;
+  margin: auto;
+  margin-bottom: 2rem;
+  margin-right: 3rem;
+}
+.filter_searchBar_container__data {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-right: 1rem;
+  grid-column: column-1-start / span column-1-end;
+}
+
+@media (min-width: 40rem) {
+}

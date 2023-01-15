@@ -1,13 +1,14 @@
 .filter-container {
   position: relative;
-  /* display: flex;
-  flex-direction: row; */
+  margin-left: 3rem;
   height: 2rem;
   width: 2rem;
   background-image: url("../../../images/UI_Images/filter-red.png");
   background-repeat: no-repeat;
   background-size: contain;
-  margin-left: 1rem;
+
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .filter-container:hover {
@@ -66,5 +67,8 @@
 }
 
 @media (min-width: 40rem) {
-  /* For bigger screens  */
+  .filter-container {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
 }

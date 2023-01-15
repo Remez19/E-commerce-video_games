@@ -6,9 +6,9 @@ import HamburgerButton from "./HamburgerButton";
 import MobileNav from "./MobileNav";
 import UserProfile from "./UserProfile";
 import Cart from "../../Cart/Cart";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 
-const Header = ({ sendKeyWords }) => {
+const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
 
   const BacdropClickHandler = () => {
@@ -19,9 +19,7 @@ const Header = ({ sendKeyWords }) => {
       return !prevState;
     });
   };
-  const sendKeyWordsHandler = (keyWords) => {
-    sendKeyWords(keyWords);
-  };
+
   return (
     <header className="main_header">
       <HamburgerButton onClick={onHamburgerClickHandler} />
@@ -39,7 +37,7 @@ const Header = ({ sendKeyWords }) => {
           <Cart />
         </li>
       </ul>
-      <SearchBar sendKeyWords={sendKeyWordsHandler} />
+      {/* <SearchBar sendKeyWords={sendKeyWordsHandler} /> */}
     </header>
   );
 };

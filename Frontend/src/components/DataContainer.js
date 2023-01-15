@@ -3,6 +3,7 @@ import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
 import GameCatalog from "./UI/Games_UI/GameCatalog";
 import Loading from "./UI/UI_Utill/Loading";
 import Filter from "./UI/UI_Elements/Filter";
+import SearchBar from "../components/UI/UI_Elements/SearchBar";
 
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -114,7 +115,15 @@ const DataContainer = ({ serachBarValue }) => {
       {!isLoading ? (
         <React.Fragment>
           <GamePosterSlider Slides={gamesSlidesList} />
-          <Filter filterUsed={fillterUsedHandler} filterPicked={filterValue} />
+          <div className="filter_searchBar_container">
+            <div className="filter_searchBar_container__data">
+              <Filter
+                filterUsed={fillterUsedHandler}
+                filterPicked={filterValue}
+              />
+              <SearchBar />
+            </div>
+          </div>
           <GameCatalog
             GameList={gamesList}
             handleScroll={scrollEventHandler}
