@@ -1,15 +1,28 @@
-import { Children, Component, useContext, useEffect, useState } from "react";
+// import { useState } from "react";
 import "./Backdrop.css";
 
-const Backdrop = ({ animationStyle, onClick, children }) => {
+const Backdrop = ({ children, setIsItemClicked, anim, setAnim }) => {
+  const onBackClickHandler = () => {
+    setAnim("slideUp 0.2s ease-out forwards");
+  };
+  const onAnimationEndHandler = () => {
+    if (anim === "slideUp 0.2s ease-out forwards") {
+      setAnim("slideDown 0.2s ease-out forwards");
+      setIsItemClicked(false);
+    }
+  };
+  // useEffect(() => {
+  //   if (anim === "slideUp 0.2s ease-out forwards") {
+  //     setAnimation("slideUp 0.2s ease-out forwards");
+  //   }
+  // }, [anim]);
   return (
     <div
-      onClick={onClick}
+      onClick={onBackClickHandler}
+      onAnimationEnd={onAnimationEndHandler}
       className="backdrop"
       style={{
-        animation: animationStyle
-          ? "slideUp 0.2s ease-out forwards"
-          : "slideDown 0.2s ease-out forwards",
+        animation: anim,
       }}
     >
       {children}
@@ -17,3 +30,8 @@ const Backdrop = ({ animationStyle, onClick, children }) => {
   );
 };
 export default Backdrop;
+
+/**
+ * ? "slideUp 0.2s ease-out forwards"
+          : "slideDown 0.2s ease-out forwards",
+ */

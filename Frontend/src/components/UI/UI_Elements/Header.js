@@ -6,7 +6,6 @@ import HamburgerButton from "./HamburgerButton";
 import MobileNav from "./MobileNav";
 import UserProfile from "./UserProfile";
 import Cart from "../../Cart/Cart";
-// import SearchBar from "./SearchBar";
 
 const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
@@ -37,7 +36,6 @@ const Header = () => {
           <Cart />
         </li>
       </ul>
-      {/* <SearchBar sendKeyWords={sendKeyWordsHandler} /> */}
     </header>
   );
 };

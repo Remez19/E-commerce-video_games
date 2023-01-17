@@ -13,7 +13,7 @@ import { gamesSliceActions } from "../Store/games";
 
 import useHttp from "../hooks/use-http";
 
-const DataContainer = ({ serachBarValue }) => {
+const DataContainer = () => {
   // List of games to present.
 
   const [reqConfig, setReqConfig] = useState({
@@ -75,23 +75,20 @@ const DataContainer = ({ serachBarValue }) => {
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   // console.log(scrollPosition);
-  const onSearchValueUpdate = useCallback((searchBarValue) => {
-    setReqConfig((prevState) => {
-      return {
-        ...prevState,
-        url: "http://localhost:8080/search",
-        body: {
-          pageNumber: 1,
-          filter: prevState.body.filter,
-          keyWords: searchBarValue,
-        },
-        operationType: "setSearchResultGames",
-      };
-    });
-  }, []);
-  useEffect(() => {
-    if (serachBarValue !== undefined) onSearchValueUpdate(serachBarValue);
-  }, [onSearchValueUpdate, serachBarValue]);
+  // const onSearchValueUpdate = useCallback((searchBarValue) => {
+  //   setReqConfig((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       url: "http://localhost:8080/search",
+  //       body: {
+  //         pageNumber: 1,
+  //         filter: prevState.body.filter,
+  //         keyWords: searchBarValue,
+  //       },
+  //       operationType: "setSearchResultGames",
+  //     };
+  //   });
+  // }, []);
 
   useEffect(() => {
     fetchGames();
@@ -109,6 +106,20 @@ const DataContainer = ({ serachBarValue }) => {
       };
     });
   };
+  const onSearchHandler = useCallback((keyWords) => {
+    setReqConfig((prevState) => {
+      return {
+        ...prevState,
+        url: "http://localhost:8080/search",
+        body: {
+          pageNumber: 1,
+          filter: prevState.body.filter,
+          keyWords: keyWords,
+        },
+        operationType: "setSearchResultGames",
+      };
+    });
+  }, []);
 
   return (
     <main className="main_data_container">
@@ -121,7 +132,7 @@ const DataContainer = ({ serachBarValue }) => {
                 filterUsed={fillterUsedHandler}
                 filterPicked={filterValue}
               />
-              <SearchBar />
+              <SearchBar setUserSearch={onSearchHandler} />
             </div>
           </div>
           <GameCatalog

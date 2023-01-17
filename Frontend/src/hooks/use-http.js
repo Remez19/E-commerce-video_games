@@ -14,7 +14,6 @@ const useHttp = (reqConfig, transformerObject) => {
       dispatchAction(uiSliceActions.setLoading(true));
       setError(null);
       try {
-        console.log(reqConfig.url);
         const response = await fetch(reqConfig.url, {
           method: reqConfig.method ? reqConfig.method : "POST",
           headers: reqConfig.headers

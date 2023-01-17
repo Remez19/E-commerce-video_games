@@ -2,7 +2,7 @@ import "./SearchBar.css";
 
 import { useState } from "react";
 
-const SearchBar = ({ sendKeyWords }) => {
+const SearchBar = ({ setUserSearch }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [serachBarInput, setSearchBarInput] = useState("");
 
@@ -23,12 +23,12 @@ const SearchBar = ({ sendKeyWords }) => {
         return event.target.value;
       });
     } else {
-      sendKeyWords(serachBarInput);
+      setUserSearch(serachBarInput);
     }
   };
 
   const onSearchBtnClickHandler = () => {
-    sendKeyWords(serachBarInput);
+    setUserSearch(serachBarInput);
   };
 
   return (

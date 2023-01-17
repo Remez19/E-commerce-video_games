@@ -10,7 +10,10 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
   const gamesList = GameList;
   const observer = useRef();
   const [isGameClicked, setIsGameClicked] = useState();
-  const [animStyle, setAnimStyle] = useState(true);
+  const [animation, setAnimation] = useState(
+    "slideDown 0.2s ease-out forwards"
+  );
+
   const [pressedGame, setPressedGame] = useState();
 
   // Logic for infinate scroll
@@ -32,24 +35,26 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
   );
 
   const onGameItemClickHandler = (game) => {
-    setAnimStyle(false);
+    // setAnimStyle(false);
     setIsGameClicked(true);
     setPressedGame(game);
-  };
-  const onBackdropClicked = () => {
-    setAnimStyle(true);
-    // Can be done better ?
-    setTimeout(() => {
-      setIsGameClicked(false);
-    }, 210);
   };
 
   return (
     <section className="game_catalog__container" onScrollCapture={handleScroll}>
       {isGameClicked &&
         ReactDOM.createPortal(
-          <Backdrop onClick={onBackdropClicked} animationStyle={animStyle}>
-            <GameInfo gameData={pressedGame} onBackClick={onBackdropClicked} />
+          <Backdrop
+            setIsItemClicked={setIsGameClicked}
+            anim={animation}
+            setAnim={setAnimation}
+          >
+            <GameInfo
+              gameData={pressedGame}
+              onBackClick={() => {
+                setAnimation("slideUp 0.2s ease-out forwards");
+              }}
+            />
           </Backdrop>,
           document.getElementById("backdrop-root")
         )}
