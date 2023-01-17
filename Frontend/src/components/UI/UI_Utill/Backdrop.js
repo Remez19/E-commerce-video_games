@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import "./Backdrop.css";
 
 const Backdrop = ({ children, setIsItemClicked, anim, setAnim }) => {
@@ -11,11 +10,7 @@ const Backdrop = ({ children, setIsItemClicked, anim, setAnim }) => {
       setIsItemClicked(false);
     }
   };
-  // useEffect(() => {
-  //   if (anim === "slideUp 0.2s ease-out forwards") {
-  //     setAnimation("slideUp 0.2s ease-out forwards");
-  //   }
-  // }, [anim]);
+
   return (
     <div
       onClick={onBackClickHandler}

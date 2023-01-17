@@ -1,19 +1,26 @@
-import "./UserProfile.css";
 import { Fragment, useState } from "react";
 import ReactDOM from "react-dom";
 
+import "./UserProfile.css";
+import Backdrop from "../UI_Utill/Backdrop";
+
 const UserProfile = () => {
   const [isUserProfilecCicked, setIsUserProfileClicked] = useState(false);
-  const onBackdropClicked = () => {
-    setIsUserProfileClicked(false);
-  };
+  const [animation, setAnimation] = useState(
+    "slideDown 0.2s ease-out forwards"
+  );
+
   return (
     <Fragment>
-      {/* {isUserProfilecCicked &&
+      {isUserProfilecCicked &&
         ReactDOM.createPortal(
-         ,
+          <Backdrop
+            setIsItemClicked={setIsUserProfileClicked}
+            anim={animation}
+            setAnim={setAnimation}
+          ></Backdrop>,
           document.getElementById("backdrop-root")
-        )} */}
+        )}
       <button className={"user_profile_btn"}></button>
     </Fragment>
   );
@@ -21,10 +28,17 @@ const UserProfile = () => {
 export default UserProfile;
 // {isGameClicked &&
 //   ReactDOM.createPortal(
-// (
-//   <Backdrop onClick={onBackdropClicked} animationStyle={animStyle}>
-//     <GameInfo gameData={pressedGame} onBackClick={onBackdropClicked} />
-//   </Backdrop>
-// ),
-//   document.getElementById("backdrop-root");
+//     <Backdrop
+//       setIsItemClicked={setIsGameClicked}
+//       anim={animation}
+//       setAnim={setAnimation}
+//     >
+//       <GameInfo
+//         gameData={pressedGame}
+//         onBackClick={() => {
+//           setAnimation("slideUp 0.2s ease-out forwards");
+//         }}
+//       />
+//     </Backdrop>,
+//     document.getElementById("backdrop-root")
 //   )}
