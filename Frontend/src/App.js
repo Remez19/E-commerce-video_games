@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import Header from "./components/UI/UI_Elements/Header";
-import DataContainer from "./components/DataContainer";
+import GamesStorePage from "./components/Pages/GamesStorePage";
 import Footer from "./components/UI/UI_Elements/Footer";
 
 import React from "react";
@@ -12,7 +12,7 @@ function App() {
       <Provider store={store}>
         <Header />
         <div className={styles.main_app__container}>
-          <DataContainer />
+          <GamesStorePage />
         </div>
         <Footer />
       </Provider>

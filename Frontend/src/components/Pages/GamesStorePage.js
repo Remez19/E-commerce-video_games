@@ -1,19 +1,19 @@
-import "./DataContainer.css";
-import GamePosterSlider from "./UI/Games_UI/GamePosterSlider";
-import GameCatalog from "./UI/Games_UI/GameCatalog";
-import Loading from "./UI/UI_Utill/Loading";
-import Filter from "./UI/UI_Elements/Filter";
-import SearchBar from "../components/UI/UI_Elements/SearchBar";
+import "./GamesStorePage.css";
+import GamePosterSlider from "../UI/Games_UI/GamePosterSlider";
+import GameCatalog from "../UI/Games_UI/GameCatalog";
+import Loading from "../UI/UI_Utill/Loading";
+import Filter from "../UI/UI_Elements/Filter";
+import SearchBar from "../UI/UI_Elements/SearchBar";
 
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 
-import { gamesSliceActions } from "../Store/games";
+import { gamesSliceActions } from "../../Store/games";
 
-import useHttp from "../hooks/use-http";
+import useHttp from "../../hooks/use-http";
 
-const DataContainer = () => {
+const GamesStore = () => {
   // List of games to present.
 
   const [reqConfig, setReqConfig] = useState({
@@ -149,4 +149,4 @@ const DataContainer = () => {
   );
 };
 
-export default DataContainer;
+export default GamesStore;
