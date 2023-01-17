@@ -1,44 +1,16 @@
-import { Fragment, useState } from "react";
-import ReactDOM from "react-dom";
+import { NavLink } from "react-router-dom";
+// import { useState } from "react";
 
 import "./UserProfile.css";
-import Backdrop from "../UI_Utill/Backdrop";
 
 const UserProfile = () => {
-  const [isUserProfilecCicked, setIsUserProfileClicked] = useState(false);
-  const [animation, setAnimation] = useState(
-    "slideDown 0.2s ease-out forwards"
-  );
+  // const [active, setActive] = useState(false);
 
   return (
-    <Fragment>
-      {isUserProfilecCicked &&
-        ReactDOM.createPortal(
-          <Backdrop
-            setIsItemClicked={setIsUserProfileClicked}
-            anim={animation}
-            setAnim={setAnimation}
-          ></Backdrop>,
-          document.getElementById("backdrop-root")
-        )}
-      <button className={"user_profile_btn"}></button>
-    </Fragment>
+    <NavLink to="/login" className={({ isActive }) => {}} end>
+      <button className={`user_profile_btn`} />
+    </NavLink>
   );
 };
 export default UserProfile;
-// {isGameClicked &&
-//   ReactDOM.createPortal(
-//     <Backdrop
-//       setIsItemClicked={setIsGameClicked}
-//       anim={animation}
-//       setAnim={setAnimation}
-//     >
-//       <GameInfo
-//         gameData={pressedGame}
-//         onBackClick={() => {
-//           setAnimation("slideUp 0.2s ease-out forwards");
-//         }}
-//       />
-//     </Backdrop>,
-//     document.getElementById("backdrop-root")
-//   )}
+// ${active ? " activeLink" : ""}

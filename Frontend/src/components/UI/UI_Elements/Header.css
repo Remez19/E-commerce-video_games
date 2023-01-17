@@ -2,10 +2,8 @@
   grid-row: row-1-start / span row-1-end;
   background-color: black;
   color: white;
-  height: fit-content;
   width: 100%;
   display: grid;
-  grid-template-rows: [row-1-start] 1fr [row-1-end row-2-start] 1fr [row-2-end];
   grid-template-columns: [column-1-start] 1fr [column-1-end column-2-start] 1fr [column-2-end];
 }
 
@@ -28,7 +26,6 @@
 
 @media (min-width: 40rem) {
   .main_header {
-    grid-template-rows: [row-1-start] 1fr [row-1-end row-2-start] 1fr [row-2-end];
     grid-template-columns: [column-1-start] 0.25fr [column-1-end column-2-start] 3fr [column-2-end column-3-start];
     align-items: center;
   }

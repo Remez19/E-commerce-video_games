@@ -13,3 +13,8 @@
   border-radius: 50%;
   background-color: rgb(136, 136, 136);
 }
+
+.activeLink {
+  border-radius: 50%;
+  background-color: #ffe283;
+}
