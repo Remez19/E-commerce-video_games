@@ -62,6 +62,13 @@
   border: 1px solid #ff7474;
 }
 
+.user-login__container button:disabled,
+.user-login__container button:disabled:hover {
+  color: #ff747464;
+  border-color: #ff747464;
+  cursor: auto;
+}
+
 .user-login__container button:hover {
   border-radius: 10%;
   border: 1px solid #ffe283;

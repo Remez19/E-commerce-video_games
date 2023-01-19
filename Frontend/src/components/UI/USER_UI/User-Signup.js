@@ -2,6 +2,10 @@ import { useRef, useState } from "react";
 
 import "./User-Login.css";
 
+/**
+ * Missing input valdiation.
+ */
+
 function UserSignup({ onClickSignupHandler }) {
   const [userData, setUserData] = useState({
     userName: undefined,
@@ -9,11 +13,18 @@ function UserSignup({ onClickSignupHandler }) {
     password: undefined,
     rePassword: undefined,
   });
-  const userNameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const rePasswordRef = useRef();
-  const onSubmitHandler = (e) => {
+  const userName = useRef();
+  const email = useRef();
+  const password = useRef();
+  const rePassword = useRef();
+  const [invalidInput, setInvalidInput] = useState(true);
+  const [reqConfig, setReqConfig] = useState({
+    url: "http://localhost:8080/login",
+    headers: { "Content-Type": "application/json" },
+    body: { email: "", password: "", userName: "" },
+  });
+
+  const onSignupHandler = (e) => {
     e.preventDefault();
     console.log(userData);
   };
@@ -37,32 +48,53 @@ function UserSignup({ onClickSignupHandler }) {
       });
   };
   const onBlurHandler = (e) => {
-    if (e.target.id === "userName" && userNameRef.current.value === "")
+    if (e.target.id === "userName" && userName.current.value === "")
       setUserData((prevState) => {
         return { ...prevState, userName: "moveDown" };
       });
-    if (e.target.id === "Email" && emailRef.current.value === "")
+    else if (e.target.id === "Email" && email.current.value === "")
       setUserData((prevState) => {
         return { ...prevState, email: "moveDown" };
       });
-    else if (e.target.id === "Password" && passwordRef.current.value === "")
+    else if (e.target.id === "Password" && password.current.value === "")
       setUserData((prevState) => {
         return { ...prevState, password: "moveDown" };
       });
-    else if (e.target.id === "rePassword" && rePasswordRef.current.value === "")
+    else if (e.target.id === "rePassword" && rePassword.current.value === "")
       setUserData((prevState) => {
         return { ...prevState, rePassword: "moveDown" };
       });
   };
+
+  const onChangeHandler = (e) => {
+    setReqConfig((prevState) => {
+      return {
+        ...prevState,
+        body: {
+          email: email.current ? email.current.value : prevState.body.email,
+          password: password.current
+            ? password.current.value
+            : prevState.body.password,
+        },
+      };
+    });
+    if (email.current.value !== "" && password.current.value !== "") {
+      setInvalidInput(false);
+    } else {
+      setInvalidInput(true);
+    }
+  };
+
   return (
-    <form onSubmit={onSubmitHandler} className="user-login__container">
+    <form onSubmit={onSignupHandler} className="user-login__container">
       <div className="user-signup__header-img"></div>
       <div className="user-login__data">
         <input
           id="userName"
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
-          ref={userNameRef}
+          ref={userName}
+          onChange={onChangeHandler}
         ></input>
         <label
           htmlFor="userName"
@@ -74,7 +106,8 @@ function UserSignup({ onClickSignupHandler }) {
           id="Email"
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
-          ref={emailRef}
+          ref={email}
+          onChange={onChangeHandler}
         ></input>
         <label
           htmlFor="email-signup"
@@ -83,10 +116,11 @@ function UserSignup({ onClickSignupHandler }) {
           Email
         </label>
         <input
+          onChange={onChangeHandler}
           id="Password"
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
-          ref={passwordRef}
+          ref={password}
           type={"password"}
         ></input>
         <label
@@ -96,10 +130,11 @@ function UserSignup({ onClickSignupHandler }) {
           Password
         </label>
         <input
+          onChange={onChangeHandler}
           id="rePassword"
           onFocus={onFocusHandler}
           onBlur={onBlurHandler}
-          ref={rePasswordRef}
+          ref={rePassword}
           type={"password"}
         ></input>
         <label
@@ -109,7 +144,9 @@ function UserSignup({ onClickSignupHandler }) {
           Re-Enter Password
         </label>
       </div>
-      <button type="submit">Sign-Up</button>
+      <button type="submit" disabled>
+        Sign-Up
+      </button>
       <div className="link">
         Have an acoount already?{" "}
         <p onClick={onClickSignupHandler}>Click Here</p>
@@ -119,35 +156,3 @@ function UserSignup({ onClickSignupHandler }) {
 }
 
 export default UserSignup;
-/**
- *  <form onSubmit={onSubmitHandler} className="user-login__container">
-      <p className="user-login__header-text">Login</p>
-      <div className="user-login__data">
-        <input
-          type={"email"}
-          id={"email"}
-          onFocus={onFocusHandler}
-          onBlur={onBlurHandler}
-          ref={emailRef}
-        ></input>
-        <label htmlFor="email" className={emailAnim}>
-          Email
-        </label>
-        <input
-          type={"password"}
-          id={"password"}
-          onFocus={onFocusHandler}
-          onBlur={onBlurHandler}
-          ref={passwordRef}
-        ></input>
-        <label htmlFor="password" className={passAnim}>
-          Password
-        </label>
-      </div>
-      <button type="submit">Login</button>
-      <div className="link">
-        Don't have an acoount yet?{" "}
-        <p onClick={onClickSignupHandler}>Click Here</p>
-      </div>
-    </form>
- */

@@ -1,26 +1,29 @@
-import { useState, useRef, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 import "./User-Login.css";
 
+/**
+ * Missing input validation
+ */
+
 function UserLogin({ onClickSignupHandler }) {
   const [emailAnim, setEmailAnim] = useState("");
   const [passAnim, setPassAnim] = useState("");
-  const [invalidInput, setInvalidInput] = useState(false);
+  const [invalidInput, setInvalidInput] = useState(true);
   const navigate = useNavigate();
+  const email = useRef();
+  const password = useRef();
   const [reqConfig, setReqConfig] = useState({
     url: "http://localhost:8080/login",
     headers: { "Content-Type": "application/json" },
     body: { email: "", password: "" },
   });
-  const emailRef = useRef();
-  const passwordRef = useRef();
 
   const onLoginFinishHandler = (resData) => {
-    console.log(resData);
-    navigate("/", { isError: true, error });
+    navigate("/");
   };
 
   const {
@@ -31,39 +34,43 @@ function UserLogin({ onClickSignupHandler }) {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (emailRef.current.value === "") {
-      setInvalidInput(true);
-      return;
-    }
-    if (passwordRef.current.value === "") {
-      setInvalidInput(true);
-      return;
-    }
-    login();
+    if (email.current.value === "" || password.current.value === "") {
+      // setInvalidInput(true);
+    } else login();
   };
-
+  const onChangeHandler = (e) => {
+    setReqConfig((prevState) => {
+      return {
+        ...prevState,
+        body: {
+          email: email.current ? email.current.value : prevState.body.email,
+          password: password.current
+            ? password.current.value
+            : prevState.body.password,
+        },
+      };
+    });
+    if (email.current.value !== "" && password.current.value !== "") {
+      setInvalidInput(false);
+    } else {
+      setInvalidInput(true);
+    }
+  };
   const onFocusHandler = (e) => {
     if (e.target.id === "email") setEmailAnim("moveUp");
     else setPassAnim("moveUp");
   };
   const onBlurHandler = (e) => {
-    if (e.target.id === "email" && emailRef.current.value === "")
+    if (e.target.id === "email" && email.current.value === "")
       setEmailAnim("moveDown");
-    else if (e.target.id === "password" && passwordRef.current.value === "")
+    else if (e.target.id === "password" && password.current.value === "") {
       setPassAnim("moveDown");
-    setReqConfig((prevState) => {
-      return {
-        ...prevState,
-        body: {
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        },
-      };
-    });
+    }
   };
   useEffect(() => {
     if (error) throw error;
   }, [error]);
+
   return (
     <form onSubmit={onSubmitHandler} className="user-login__container">
       {!isLoading ? (
@@ -72,36 +79,42 @@ function UserLogin({ onClickSignupHandler }) {
           <div className="user-login__data">
             <input
               className={
-                invalidInput && emailRef.current.value === ""
+                invalidInput && email.current && email.current.value === ""
                   ? "invalidInput"
                   : ""
               }
+              ref={email}
               type={"email"}
               id={"email"}
               onFocus={onFocusHandler}
               onBlur={onBlurHandler}
-              ref={emailRef}
+              onChange={onChangeHandler}
             ></input>
             <label htmlFor="email" className={emailAnim}>
               Email
             </label>
             <input
               className={
-                invalidInput && passwordRef.current.value === ""
+                invalidInput &&
+                password.current &&
+                password.current.value === ""
                   ? "invalidInput"
                   : ""
               }
+              ref={password}
               type={"password"}
               id={"password"}
               onFocus={onFocusHandler}
               onBlur={onBlurHandler}
-              ref={passwordRef}
+              onChange={onChangeHandler}
             ></input>
             <label htmlFor="password" className={passAnim}>
               Password
             </label>
           </div>
-          <button type="submit">Login</button>
+          <button type="submit" disabled={invalidInput}>
+            Login
+          </button>
           <div className="link">
             Don't have an acoount yet?{" "}
             <p onClick={onClickSignupHandler}>Click Here</p>
