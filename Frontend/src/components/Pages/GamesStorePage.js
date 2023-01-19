@@ -43,7 +43,8 @@ const GamesStore = () => {
     error,
     sendRequest: fetchGames,
     hasMore: hasMoreGames,
-  } = useHttp(reqConfig, operationType);
+    isLoading,
+  } = useHttp(reqConfig, operationType, true);
 
   // app state loading
 
@@ -66,29 +67,6 @@ const GamesStore = () => {
     },
     [hasMoreGames]
   );
-
-  const isLoading = useSelector((state) => state.ui.isLoading);
-  const gamesList = useSelector((state) => state.games.games);
-
-  // List of games for the slide show.
-  // Top games (do better quey on the db)
-  const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
-
-  // console.log(scrollPosition);
-  // const onSearchValueUpdate = useCallback((searchBarValue) => {
-  //   setReqConfig((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       url: "http://localhost:8080/search",
-  //       body: {
-  //         pageNumber: 1,
-  //         filter: prevState.body.filter,
-  //         keyWords: searchBarValue,
-  //       },
-  //       operationType: "setSearchResultGames",
-  //     };
-  //   });
-  // }, []);
 
   useEffect(() => {
     fetchGames();
@@ -120,6 +98,12 @@ const GamesStore = () => {
       };
     });
   }, []);
+
+  const gamesList = useSelector((state) => state.games.games);
+
+  // List of games for the slide show.
+  // Top games (do better quey on the db)
+  const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   return (
     <main className="main_data_container">

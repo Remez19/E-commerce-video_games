@@ -35,6 +35,10 @@
   gap: 2.5rem;
 }
 
+.inputInvalid {
+  border-color: rgba(251, 0, 0, 0.263) !important;
+}
+
 .user-login__data input {
   background-color: transparent;
   border: none;

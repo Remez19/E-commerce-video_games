@@ -1,20 +1,23 @@
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { uiSliceActions } from "../Store/ui";
 
-const useHttp = (reqConfig, transformerObject) => {
-  const dispatchAction = useDispatch();
+// import { useDispatch } from "react-redux";
+// import { uiSliceActions } from "../Store/ui";
+
+const useHttp = (reqConfig, transformerObject, loadConfig) => {
+  // const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
-  const isLoading = useSelector((state) => state.ui.isLoading);
+  const [isLoading, setIsLoading] = useState(loadConfig || false);
 
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(
     async (data) => {
-      dispatchAction(uiSliceActions.setLoading(true));
+      setIsLoading(true);
+      // dispatchAction(uiSliceActions.setLoading(true));
       setError(null);
+      let response;
       try {
-        const response = await fetch(reqConfig.url, {
+        response = await fetch(reqConfig.url, {
           method: reqConfig.method ? reqConfig.method : "POST",
           headers: reqConfig.headers
             ? reqConfig.headers
@@ -24,7 +27,7 @@ const useHttp = (reqConfig, transformerObject) => {
             : JSON.stringify(data),
         });
         if (!response.ok) {
-          throw new Error("Request Failed!");
+          throw new Error((await response.json()).message);
         }
         const resData = await response.json();
         // call back to use the data we fetched
@@ -35,14 +38,22 @@ const useHttp = (reqConfig, transformerObject) => {
         }
         await delay(1500);
         setHasMore(resData.hasMore);
-        transformerObject[reqConfig.operationType](resData);
+        if (reqConfig.operationType) {
+          transformerObject[reqConfig.operationType](resData);
+        } else {
+          transformerObject(resData);
+        }
       } catch (err) {
-        setError(err.meesage || "Something Went worng with request!");
+        setError({
+          message: err.message || "Something Went worng with request!",
+          status: response.status || 404,
+        });
+      } finally {
+        setIsLoading(false);
       }
-      dispatchAction(uiSliceActions.setLoading(false));
+      // dispatchAction(uiSliceActions.setLoading(false));
     },
     [
-      dispatchAction,
       reqConfig.url,
       reqConfig.method,
       reqConfig.headers,

@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 // My imports
 import { errorMiddleware } from "./middleware/error.mjs";
 import homePageRouter from "./routes/homePage.mjs";
+import authRoutes from "./routes/authRouths.mjs";
 
 // Read the env vars
 config();
@@ -42,6 +43,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", homePageRouter);
+
+app.use("/", authRoutes);
 
 app.use(errorMiddleware);
 

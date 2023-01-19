@@ -7,6 +7,7 @@ import store from "./Store/store";
 import RootLayout from "./components/Pages/RootLayout";
 import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
+import ErrorPage from "./components/Pages/ErrorPage";
 
 import React from "react";
 import { Provider } from "react-redux";
@@ -17,10 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <GamesStorePage /> },
       { path: "/login", element: <UserLoginPage /> },
-      { path: "/signup", element: <UserLoginPage /> },
     ],
   },
 ]);
