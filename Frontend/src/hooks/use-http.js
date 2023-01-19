@@ -1,8 +1,5 @@
 import { useCallback, useState } from "react";
 
-// import { useDispatch } from "react-redux";
-// import { uiSliceActions } from "../Store/ui";
-
 const useHttp = (reqConfig, transformerObject, loadConfig) => {
   // const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
@@ -13,7 +10,6 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
   const sendRequest = useCallback(
     async (data) => {
       setIsLoading(true);
-      // dispatchAction(uiSliceActions.setLoading(true));
       setError(null);
       let response;
       try {
@@ -27,7 +23,10 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
             : JSON.stringify(data),
         });
         if (!response.ok) {
-          throw new Error((await response.json()).message);
+          // Getting the message from the server
+          let message = (await response.json()).message;
+          // eslint-disable-next-line no-throw-literal
+          throw { message, status: response.status };
         }
         const resData = await response.json();
         // call back to use the data we fetched
@@ -44,14 +43,10 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
           transformerObject(resData);
         }
       } catch (err) {
-        setError({
-          message: err.message || "Something Went worng with request!",
-          status: response.status || 404,
-        });
+        setError(err);
       } finally {
         setIsLoading(false);
       }
-      // dispatchAction(uiSliceActions.setLoading(false));
     },
     [
       reqConfig.url,
@@ -71,6 +66,3 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
 };
 
 export default useHttp;
-/**
- * reqConfig.url, reqConfig.method, reqConfig.headers, reqConfig.body,
- */

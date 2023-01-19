@@ -10,13 +10,20 @@ function ErrorPage() {
   let message = "Something went wrong.";
   let status = error.status;
 
-  //   if (error.status === 500) {
-  //     message = JSON.parse(error.data).message;
-  //   }
+  console.log(error);
+  // if () {
+  //   message = error.data.message;
+  //   console.log(message);
+  // }
   if (isRouteErrorResponse(error)) {
-    message = error.data;
   }
-  console.log(error.message);
+  if (error.status === 500) {
+    message = error.message;
+  }
+  if (error.status === 400) {
+    title = "Not Found!";
+    message = "Could not find rescource or page.";
+  }
 
   return (
     <Fragment>

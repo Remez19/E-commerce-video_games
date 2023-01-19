@@ -1,5 +1,5 @@
 import { useState, useRef, Fragment, useEffect } from "react";
-import { useNavigate, json } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -62,13 +62,7 @@ function UserLogin({ onClickSignupHandler }) {
     });
   };
   useEffect(() => {
-    if (error) {
-      console.log(error.message);
-      // throw new Response(JSON.stringify({ message: error.message }), {
-      //   status: error.status,
-      // });
-      throw json({ message: error.message }, { status: error.status });
-    }
+    if (error) throw error;
   }, [error]);
   return (
     <form onSubmit={onSubmitHandler} className="user-login__container">
