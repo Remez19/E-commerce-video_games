@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 // My imports
 import { errorMiddleware } from "./middleware/error.mjs";
 import homePageRouter from "./routes/homePage.mjs";
-import authRoutes from "./routes/authRouths.mjs";
+import authRoutes from "./routes/auth.mjs";
 
 // Read the env vars
 config();
@@ -46,6 +46,7 @@ app.use("/", homePageRouter);
 
 app.use("/", authRoutes);
 
+// Error middleware to catch any errors in requests
 app.use(errorMiddleware);
 
 mongoose

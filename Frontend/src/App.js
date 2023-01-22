@@ -7,6 +7,7 @@ import store from "./Store/store";
 import RootLayout from "./components/Pages/RootLayout";
 import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
+import UserSignupPage from "./components/Pages/UserSignupPage";
 import ErrorPage from "./components/Pages/ErrorPage";
 
 import React from "react";
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         path: "/login",
         element: <UserLoginPage />,
       },
+      { path: "/signup", element: <UserSignupPage /> },
     ],
   },
 ]);

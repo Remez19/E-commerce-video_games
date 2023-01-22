@@ -1,5 +1,6 @@
 import { useState, Fragment, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -9,7 +10,7 @@ import "./User-Login.css";
  * Missing input validation
  */
 
-function UserLogin({ onClickSignupHandler }) {
+function UserLogin() {
   const [emailAnim, setEmailAnim] = useState("");
   const [passAnim, setPassAnim] = useState("");
   const [invalidInput, setInvalidInput] = useState(true);
@@ -117,7 +118,9 @@ function UserLogin({ onClickSignupHandler }) {
           </button>
           <div className="link">
             Don't have an acoount yet?{" "}
-            <p onClick={onClickSignupHandler}>Click Here</p>
+            <NavLink to="/signup" style={{ color: "#ff7474" }} end>
+              Click Here
+            </NavLink>
           </div>
         </Fragment>
       ) : (
