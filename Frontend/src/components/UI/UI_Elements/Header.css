@@ -13,7 +13,7 @@
   grid-column-start: column-2-start;
   grid-column-end: column-3-end;
   display: flex;
-  margin-top: 0.5rem;
+  margin-top: 0;
   list-style: none;
   width: 100%;
   align-items: center;
@@ -22,6 +22,13 @@
 
 .main_header__item {
   padding-right: 1rem;
+}
+
+.loggedIn {
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 @media (min-width: 40rem) {
@@ -34,7 +41,4 @@
     grid-row: row-1-start / row-1-end;
     grid-column: column-3-start / column-3-end;
   }
-  /* .main_header :nth-child(3) {
-    order: 2;
-  } */
 }

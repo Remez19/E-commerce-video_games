@@ -1,186 +1,152 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
-import "./User-Login.css";
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
+import "./User-Login.css";
 
-/**
- * Missing input valdiation.
- */
-
-function UserSignup({ onClickSignupHandler }) {
-  const [userData, setUserData] = useState({
-    userName: undefined,
-    email: undefined,
-    password: undefined,
-    rePassword: undefined,
-  });
-  const userName = useRef();
-  const email = useRef();
-  const password = useRef();
-  const rePassword = useRef();
+function UserSignup() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { isDirty, isValid },
+  } = useForm();
+  const [emailLabel, setEmailLabel] = useState("");
+  const [passwordLabel, setPasswordLabel] = useState("");
+  const [userNameLabel, setUserNameLabel] = useState("");
+  const [rePasswordLabel, setRePasswordLabel] = useState("");
   const navigate = useNavigate();
-  const [invalidInput, setInvalidInput] = useState(true);
-  const [reqConfig, setReqConfig] = useState({
-    url: "http://localhost:8080/signup",
-    headers: { "Content-Type": "application/json" },
-    body: { email: "", password: "", userName: "" },
-  });
 
-  const onSignupFinishHandler = (resData) => {
-    console.log(resData);
+  const onLoginFinishHandler = (resData) => {
     navigate("/login");
   };
 
   const {
-    error,
+    error: requestError,
     sendRequest: signup,
     isLoading,
-  } = useHttp(reqConfig, onSignupFinishHandler);
+  } = useHttp({ url: "http://localhost:8080/signup" }, onLoginFinishHandler);
 
-  const onSignupHandler = (e) => {
-    e.preventDefault();
-    signup();
-  };
-
-  const onFocusHandler = (e) => {
-    if (e.target.id === "userName")
-      setUserData((prevState) => {
-        return { ...prevState, userName: "moveUp" };
-      });
-    if (e.target.id === "Email")
-      setUserData((prevState) => {
-        return { ...prevState, email: "moveUp" };
-      });
-    else if (e.target.id === "Password")
-      setUserData((prevState) => {
-        return { ...prevState, password: "moveUp" };
-      });
-    else if (e.target.id === "rePassword")
-      setUserData((prevState) => {
-        return { ...prevState, rePassword: "moveUp" };
-      });
-  };
-  const onBlurHandler = (e) => {
-    if (e.target.id === "userName" && userName.current.value === "")
-      setUserData((prevState) => {
-        return { ...prevState, userName: "moveDown" };
-      });
-    else if (e.target.id === "Email" && email.current.value === "")
-      setUserData((prevState) => {
-        return { ...prevState, email: "moveDown" };
-      });
-    else if (e.target.id === "Password" && password.current.value === "")
-      setUserData((prevState) => {
-        return { ...prevState, password: "moveDown" };
-      });
-    else if (e.target.id === "rePassword" && rePassword.current.value === "")
-      setUserData((prevState) => {
-        return { ...prevState, rePassword: "moveDown" };
-      });
-  };
-
-  const onChangeHandler = (e) => {
-    setReqConfig((prevState) => {
-      return {
-        ...prevState,
-        body: {
-          email: email.current ? email.current.value : prevState.body.email,
-          password: password.current
-            ? password.current.value
-            : prevState.body.password,
-          userName: userName.current
-            ? userName.current.value
-            : prevState.body.userName,
-        },
-      };
+  const onSubmitHandler = (data) => {
+    signup({
+      email: data.email,
+      password: data.password,
+      userName: data.userName,
     });
-    if (
-      email.current.value !== "" &&
-      password.current.value !== "" &&
-      rePassword.current.value !== "" &&
-      userName.current.value !== ""
-    ) {
-      setInvalidInput(false);
-    } else {
-      setInvalidInput(true);
-    }
   };
-
   useEffect(() => {
-    if (error) {
-      throw error;
+    if (requestError && requestError.status !== 409) {
+      throw requestError;
     }
-  }, [error]);
-
+  }, [requestError]);
   return (
-    <form onSubmit={onSignupHandler} className="user-login__container">
+    <form
+      onSubmit={handleSubmit(onSubmitHandler)}
+      className="user-login__container"
+    >
       {!isLoading ? (
         <Fragment>
-          <div className="user-signup__header-img"></div>
+          <div className="user-login__header-img"></div>
           <div className="user-login__data">
-            <input
-              id="userName"
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              ref={userName}
-              onChange={onChangeHandler}
-            ></input>
-            <label
-              htmlFor="userName"
-              className={userData.userName ? userData.userName : ""}
-            >
-              User Name
-            </label>
-            <input
-              id="Email"
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              ref={email}
-              onChange={onChangeHandler}
-            ></input>
-            <label
-              htmlFor="email-signup"
-              className={userData.email ? userData.email : ""}
-            >
-              Email
-            </label>
-            <input
-              onChange={onChangeHandler}
-              id="Password"
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              ref={password}
-              type={"password"}
-            ></input>
-            <label
-              htmlFor="password-signup"
-              className={userData.password ? userData.password : ""}
-            >
-              Password
-            </label>
-            <input
-              onChange={onChangeHandler}
-              id="rePassword"
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              ref={rePassword}
-              type={"password"}
-            ></input>
-            <label
-              htmlFor="rePassword"
-              className={userData.rePassword ? userData.rePassword : ""}
-            >
-              Re-Enter Password
-            </label>
+            {requestError && (
+              <div className="user-login__error-message">
+                {requestError.message}
+              </div>
+            )}
+            <div className="input-label__box">
+              <label htmlFor="userName" className={userNameLabel}>
+                User Name
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("userName")) setUserNameLabel("moveUp");
+                }}
+                {...register("userName", {
+                  required: true,
+                  onBlur: () => {
+                    if (!getValues("userName")) setUserNameLabel("moveDown");
+                  },
+                })}
+              ></input>
+            </div>
+            <div className="input-label__box">
+              <label htmlFor="email" className={emailLabel}>
+                Email
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("email")) setEmailLabel("moveUp");
+                }}
+                type={"email"}
+                id={"email"}
+                {...register("email", {
+                  required: true,
+                  onBlur: () => {
+                    if (!getValues("email")) setEmailLabel("moveDown");
+                  },
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "invalid email address.",
+                  },
+                })}
+              ></input>
+            </div>
+            <div className="input-label__box">
+              <label htmlFor="password" className={passwordLabel}>
+                Password
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("password")) setPasswordLabel("moveUp");
+                }}
+                type={"password"}
+                id={"password"}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  onBlur: () => {
+                    if (!getValues("password")) setPasswordLabel("moveDown");
+                  },
+                })}
+              ></input>
+            </div>
+            <div className="input-label__box">
+              <label htmlFor="rePassword" className={rePasswordLabel}>
+                Retype Password
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("rePassword")) setRePasswordLabel("moveUp");
+                }}
+                type={"password"}
+                {...register("rePassword", {
+                  required: true,
+                  validate: (value) => {
+                    return value === getValues("password");
+                  },
+                  minLength: 6,
+                  onBlur: () => {
+                    if (!getValues("rePassword"))
+                      setRePasswordLabel("moveDown");
+                  },
+                })}
+              ></input>
+            </div>
           </div>
-          <button type="submit" disabled={invalidInput}>
-            Sign-Up
-          </button>
-          <div className="link">
-            Have an acoount already?{" "}
-            <p onClick={onClickSignupHandler}>Click Here</p>
+          <input
+            type="submit"
+            disabled={!(isValid && isDirty)}
+            value="Signup"
+          />
+          <div className="user-login__link-text">
+            Have an acoount Already?{" "}
+            <NavLink to="/login" className="user-login__link" end>
+              Click Here
+            </NavLink>
           </div>
         </Fragment>
       ) : (

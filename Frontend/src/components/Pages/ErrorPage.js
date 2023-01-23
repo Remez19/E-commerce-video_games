@@ -7,7 +7,7 @@ import { Fragment } from "react";
 function ErrorPage() {
   const error = useRouteError();
   let title = "An Error Accourd!";
-  let message = "Something went wrong.";
+  let message = error.message || "Something went wrong.";
   let status = error.status;
 
   console.log(error);

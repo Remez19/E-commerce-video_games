@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
-  isLoading: false,
+  loggedInUser: "",
 };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState: initState,
   reducers: {
-    setLoading(state, action) {
-      state.isLoading = action.payload;
+    setLoggedInUserName(state, action) {
+      state.loggedInUser = action.payload;
     },
   },
 });

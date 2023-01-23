@@ -101,8 +101,6 @@ const GamesStore = () => {
 
   const gamesList = useSelector((state) => state.games.games);
 
-  // List of games for the slide show.
-  // Top games (do better quey on the db)
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
 
   return (

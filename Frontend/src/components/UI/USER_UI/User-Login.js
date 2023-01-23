@@ -1,6 +1,7 @@
-import { useState, Fragment, useEffect, useRef } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -11,114 +12,95 @@ import "./User-Login.css";
  */
 
 function UserLogin() {
-  const [emailAnim, setEmailAnim] = useState("");
-  const [passAnim, setPassAnim] = useState("");
-  const [invalidInput, setInvalidInput] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { isDirty, isValid },
+  } = useForm();
+  const [emailLabel, setEmailLabel] = useState("");
+  const [passwordLabel, setPasswordLabel] = useState("");
   const navigate = useNavigate();
-  const email = useRef();
-  const password = useRef();
-  const [reqConfig, setReqConfig] = useState({
-    url: "http://localhost:8080/login",
-    headers: { "Content-Type": "application/json" },
-    body: { email: "", password: "" },
-  });
 
   const onLoginFinishHandler = (resData) => {
+    localStorage.setItem("token", resData.token);
+    localStorage.setItem("userName", resData.userName);
     navigate("/");
   };
 
   const {
-    error,
+    error: requestError,
     sendRequest: login,
     isLoading,
-  } = useHttp(reqConfig, onLoginFinishHandler);
+  } = useHttp({ url: "http://localhost:8080/login" }, onLoginFinishHandler);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    if (email.current.value === "" || password.current.value === "") {
-      // setInvalidInput(true);
-    } else login();
-  };
-  const onChangeHandler = (e) => {
-    setReqConfig((prevState) => {
-      return {
-        ...prevState,
-        body: {
-          email: email.current ? email.current.value : prevState.body.email,
-          password: password.current
-            ? password.current.value
-            : prevState.body.password,
-        },
-      };
-    });
-    if (email.current.value !== "" && password.current.value !== "") {
-      setInvalidInput(false);
-    } else {
-      setInvalidInput(true);
-    }
-  };
-  const onFocusHandler = (e) => {
-    if (e.target.id === "email") setEmailAnim("moveUp");
-    else setPassAnim("moveUp");
-  };
-  const onBlurHandler = (e) => {
-    if (e.target.id === "email" && email.current.value === "")
-      setEmailAnim("moveDown");
-    else if (e.target.id === "password" && password.current.value === "") {
-      setPassAnim("moveDown");
-    }
+  const onSubmitHandler = (data) => {
+    login({ email: data.email, password: data.password });
   };
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
+    if (requestError && requestError.status !== 401) {
+      throw requestError;
+    }
+  }, [requestError]);
   return (
-    <form onSubmit={onSubmitHandler} className="user-login__container">
+    <form
+      onSubmit={handleSubmit(onSubmitHandler)}
+      className="user-login__container"
+    >
       {!isLoading ? (
         <Fragment>
           <div className="user-login__header-img"></div>
           <div className="user-login__data">
-            <input
-              className={
-                invalidInput && email.current && email.current.value === ""
-                  ? "invalidInput"
-                  : ""
-              }
-              ref={email}
-              type={"email"}
-              id={"email"}
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              onChange={onChangeHandler}
-            ></input>
-            <label htmlFor="email" className={emailAnim}>
-              Email
-            </label>
-            <input
-              className={
-                invalidInput &&
-                password.current &&
-                password.current.value === ""
-                  ? "invalidInput"
-                  : ""
-              }
-              ref={password}
-              type={"password"}
-              id={"password"}
-              onFocus={onFocusHandler}
-              onBlur={onBlurHandler}
-              onChange={onChangeHandler}
-            ></input>
-            <label htmlFor="password" className={passAnim}>
-              Password
-            </label>
+            {requestError && (
+              <div className="user-login__error-message">
+                {requestError.message}
+              </div>
+            )}
+            <div className="input-label__box">
+              <label htmlFor="email" className={emailLabel}>
+                Email
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("email")) setEmailLabel("moveUp");
+                }}
+                type={"email"}
+                {...register("email", {
+                  required: true,
+                  onBlur: () => {
+                    if (!getValues("email")) setEmailLabel("moveDown");
+                  },
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "invalid email address.",
+                  },
+                })}
+              ></input>
+            </div>
+            <div className="input-label__box">
+              <label htmlFor="password" className={passwordLabel}>
+                Password
+              </label>
+              <input
+                onFocus={() => {
+                  if (!getValues("password")) setPasswordLabel("moveUp");
+                }}
+                type={"password"}
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  onBlur: () => {
+                    if (!getValues("password")) setPasswordLabel("moveDown");
+                  },
+                })}
+              ></input>
+            </div>
           </div>
-          <button type="submit" disabled={invalidInput}>
-            Login
-          </button>
-          <div className="link">
+          <input type="submit" disabled={!(isValid && isDirty)} value="Login" />
+          <div className="user-login__link-text">
             Don't have an acoount yet?{" "}
-            <NavLink to="/signup" style={{ color: "#ff7474" }} end>
+            <NavLink to="/signup" className="user-login__link" end>
               Click Here
             </NavLink>
           </div>

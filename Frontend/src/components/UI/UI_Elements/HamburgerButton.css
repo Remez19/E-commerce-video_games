@@ -11,6 +11,7 @@
   grid-row-end: row-1-end;
   grid-column-start: column-1-start;
   grid-column-end: column-1-end;
+  padding-bottom: 1rem;
 }
 
 .main_header__toggle_button {

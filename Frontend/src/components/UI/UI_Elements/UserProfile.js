@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom";
-// import { useState } from "react";
+import { Fragment } from "react";
 
 import "./UserProfile.css";
 
-const UserProfile = () => {
-  // const [active, setActive] = useState(false);
-
+const UserProfile = ({ user }) => {
   return (
-    <NavLink to="/login" className={({ isActive }) => {}} end>
-      <button className={`user_profile_btn`} />
-    </NavLink>
+    <Fragment>
+      <NavLink to="/login" className={({ isActive }) => {}} end>
+        <button className={`user_profile_btn`} />
+      </NavLink>
+      <p className="userName">{user}</p>
+    </Fragment>
   );
 };
 export default UserProfile;
-// ${active ? " activeLink" : ""}

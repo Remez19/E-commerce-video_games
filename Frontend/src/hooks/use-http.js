@@ -17,7 +17,10 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
           method: reqConfig.method ? reqConfig.method : "POST",
           headers: reqConfig.headers
             ? reqConfig.headers
-            : { "Content-Type": "application/json" },
+            : {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
           body: reqConfig.body
             ? JSON.stringify(reqConfig.body)
             : JSON.stringify(data),

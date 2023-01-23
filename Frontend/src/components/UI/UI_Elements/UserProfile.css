@@ -18,3 +18,11 @@
   border-radius: 50%;
   background-color: #ffe283;
 }
+
+.userName {
+  color: #ff7474;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.6rem;
+  margin-top: 0;
+}

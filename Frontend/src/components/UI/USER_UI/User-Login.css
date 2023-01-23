@@ -31,12 +31,24 @@
 .user-login__data {
   display: flex;
   flex-direction: column;
-
-  gap: 2.5rem;
+  gap: 2rem;
+}
+.user-login__error-message {
+  color: rgb(152, 152, 152);
+  font-size: 1rem;
+  text-align: center;
 }
 
-.inputInvalid {
-  border-color: rgba(251, 0, 0, 0.263) !important;
+.input-label__box {
+  display: flex;
+  flex-direction: column;
+}
+.input-label__box label {
+  color: #ff7474;
+  text-align: left;
+  font-size: 0.8rem;
+  position: absolute;
+  margin-top: 0.3rem;
 }
 
 .user-login__data input {
@@ -62,71 +74,41 @@
   border: 1px solid #ff7474;
 }
 
-.user-login__container button:disabled,
-.user-login__container button:disabled:hover {
+.user-login__container input[type="submit"] {
+  margin-top: 2rem;
+  color: #ff7474;
+  background-color: transparent;
+  width: 4rem;
+  height: 2rem;
+  border-radius: 10%;
+  border: 1px solid #ff7474;
+}
+
+.user-login__container input[type="submit"]:disabled,
+.user-login__container input[type="submit"]:disabled:hover {
   color: #ff747464;
   border-color: #ff747464;
   cursor: auto;
 }
 
-.user-login__container button:hover {
+.user-login__container input[type="submit"]:hover {
   border-radius: 10%;
   border: 1px solid #ffe283;
   color: #ffe283;
   cursor: pointer;
 }
 
-.link {
+.user-login__link-text {
+  margin-top: 0.5rem;
   display: inline-block;
   color: #ff7474;
   font-size: 0.8rem;
 }
-
-.link > p {
-  text-decoration: underline;
-  display: inline-block;
+.user-login__link {
+  color: #ff7474;
 }
-
-.link > p:hover {
+.user-login__link:hover {
   color: #ffe283;
-  cursor: pointer;
-}
-
-.user-login__data label[for="email"] {
-  color: #ff7474;
-  position: fixed;
-  font-size: 0.8rem;
-}
-.user-login__data label[for="userName"] {
-  color: #ff7474;
-  position: fixed;
-  font-size: 0.8rem;
-}
-
-.user-login__data label[for="email-signup"] {
-  color: #ff7474;
-  position: absolute;
-  top: 16rem;
-  font-size: 0.8rem;
-}
-
-.user-login__data label[for="password"] {
-  color: #ff7474;
-  position: absolute;
-  top: 16rem;
-  font-size: 0.8rem;
-}
-.user-login__data label[for="password-signup"] {
-  color: #ff7474;
-  position: absolute;
-  top: 20.5rem;
-  font-size: 0.8rem;
-}
-.user-login__data label[for="rePassword"] {
-  color: #ff7474;
-  position: absolute;
-  top: 25rem;
-  font-size: 0.8rem;
 }
 
 .moveUp {
