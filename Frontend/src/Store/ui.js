@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
-  loggedInUser: "",
+  loggedInUser: localStorage.getItem("userName"),
 };
 
 const uiSlice = createSlice({
   name: "ui",
   initialState: initState,
   reducers: {
-    setLoggedInUserName(state, action) {
+    setLoggedInUser(state, action) {
       state.loggedInUser = action.payload;
     },
   },

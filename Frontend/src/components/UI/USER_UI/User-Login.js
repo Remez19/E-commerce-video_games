@@ -2,6 +2,8 @@ import { useState, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { uiSliceActions } from "../../../Store/ui";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -21,10 +23,12 @@ function UserLogin() {
   const [emailLabel, setEmailLabel] = useState("");
   const [passwordLabel, setPasswordLabel] = useState("");
   const navigate = useNavigate();
+  const dispatchAction = useDispatch();
 
   const onLoginFinishHandler = (resData) => {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
+    dispatchAction(uiSliceActions.setLoggedInUser(resData.userName));
     navigate("/");
   };
 

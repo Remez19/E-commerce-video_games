@@ -1,6 +1,9 @@
 import "./Header.css";
+
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
+import { useSelector } from "react-redux";
+
 import Backdrop from "../UI_Utill/Backdrop";
 import HamburgerButton from "./HamburgerButton";
 import MobileNav from "./MobileNav";
@@ -9,6 +12,8 @@ import Cart from "../../Cart/Cart";
 
 const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
+  let loggedInUser = useSelector((state) => state.ui.loggedInUser);
+
   const [user, setUser] = useState(null);
 
   const BacdropClickHandler = () => {
@@ -23,9 +28,11 @@ const Header = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUser(localStorage.getItem("userName"));
+      setUser(true);
     }
-  }, []);
+  }, [loggedInUser]);
+
+  // Work on styles!!!
   return (
     <header className="main_header">
       <HamburgerButton onClick={onHamburgerClickHandler} />
@@ -36,13 +43,10 @@ const Header = () => {
         )}
       <MobileNav isHamburgerBtnClick={isHamburgerBtnClick} />
       <ul className="main_header__items">
-        <li className={user ? "loggedIn" : "main_header__item"}>
-          <UserProfile user={user} />
+        <li className="main_header__item">
+          <UserProfile user={loggedInUser} />
         </li>
-        <li
-          className="main_header__item"
-          style={{ paddingBottom: user ? "1.4rem" : "0" }}
-        >
+        <li className="main_header__item">
           <Cart />
         </li>
       </ul>

@@ -5,6 +5,7 @@
   flex-direction: column;
   background-color: black;
   row-gap: 1rem;
+  margin-bottom: 3rem;
 }
 
 @media (min-width: 40rem) {
