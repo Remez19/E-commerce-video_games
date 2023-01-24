@@ -1,7 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initState = {
-  loggedInUser: localStorage.getItem("userName"),
+  loggedInUser: {
+    userName: localStorage.getItem("userName"),
+    userId: localStorage.getItem("userId"),
+    cart: [],
+    favorites: [],
+  },
 };
 
 const uiSlice = createSlice({

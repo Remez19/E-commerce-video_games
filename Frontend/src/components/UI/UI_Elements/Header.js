@@ -1,6 +1,6 @@
 import "./Header.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactDOM from "react-dom";
 import { useSelector } from "react-redux";
 
@@ -14,8 +14,6 @@ const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
   let loggedInUser = useSelector((state) => state.ui.loggedInUser);
 
-  const [user, setUser] = useState(null);
-
   const BacdropClickHandler = () => {
     setIsHamburgerClick(false);
   };
@@ -24,15 +22,6 @@ const Header = () => {
       return !prevState;
     });
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setUser(true);
-    }
-  }, [loggedInUser]);
-
-  // Work on styles!!!
   return (
     <header className="main_header">
       <HamburgerButton onClick={onHamburgerClickHandler} />
@@ -47,7 +36,7 @@ const Header = () => {
           <UserProfile user={loggedInUser} />
         </li>
         <li className="main_header__item">
-          <Cart />
+          <Cart cart={loggedInUser.cart} />
         </li>
       </ul>
     </header>

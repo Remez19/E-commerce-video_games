@@ -28,7 +28,15 @@ function UserLogin() {
   const onLoginFinishHandler = (resData) => {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
-    dispatchAction(uiSliceActions.setLoggedInUser(resData.userName));
+    localStorage.setItem("userId", resData.userId);
+    dispatchAction(
+      uiSliceActions.setLoggedInUser({
+        userName: resData.userName,
+        userId: resData.userId,
+        cart: resData.cart,
+        favorites: resData.favorites,
+      })
+    );
     navigate("/");
   };
 

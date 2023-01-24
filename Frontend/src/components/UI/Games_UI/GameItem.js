@@ -3,6 +3,9 @@ const GameItem = ({ gameData, onGameItemClick, myRef }) => {
   const onClickGameHandler = () => {
     onGameItemClick(gameData);
   };
+  const onaAddToCartHandler = () => {
+    console.log("add");
+  };
   return (
     <div className="game_item_container">
       <p className="game_item_container__title">{gameData.title}</p>
@@ -43,8 +46,12 @@ const GameItem = ({ gameData, onGameItemClick, myRef }) => {
         ref={myRef}
         id={myRef && "last"}
       >
-        <button>Youtube Trailer</button>
-        <button>Add To Cart</button>
+        <button className="game_item__to-favorite" title="Add To Favorite" />
+        <button
+          title="Add To Cart"
+          className="game_item__to-cart"
+          onClick={onaAddToCartHandler}
+        />
       </div>
     </div>
   );

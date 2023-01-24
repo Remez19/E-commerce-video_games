@@ -1,6 +1,6 @@
 .cart_btn:hover {
   border-radius: 50%;
-  background-color: rgb(136, 136, 136);
+  background-color: #ffe283;
 }
 .cart_btn {
   background-color: transparent;
@@ -17,4 +17,18 @@
   text-align: center;
   color: #ff7474;
   padding-top: 2rem;
+}
+
+.cart-items__counter {
+  position: relative;
+  background-color: #ff7474;
+  background-position: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  color: #ffe283;
+  text-align: center;
+  margin-left: 1rem;
+  margin-top: -0.3rem;
+  border: 2px solid black;
 }

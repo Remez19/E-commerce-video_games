@@ -49,6 +49,8 @@ export const postLogin = async (req, res, next) => {
       token: token,
       userId: loadedUser._id.toString(),
       userName: loadedUser.name,
+      cart: loadedUser.cart,
+      favorites: loadedUser.favorites,
     });
   } catch (error) {
     if (!error.statusCode) {
