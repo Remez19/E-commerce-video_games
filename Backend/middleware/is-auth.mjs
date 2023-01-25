@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+// const ExpiredTokenError = require("jsonwebtoken/lib/TokenExpiredError");
 
 import { config } from "dotenv";
 
@@ -25,6 +26,12 @@ export const isAuth = (req, res, next) => {
     req.userId = decodedToken.userId;
     next();
   } catch (error) {
+    if (
+      error instanceof jwt.TokenExpiredError ||
+      error instanceof jwt.JsonWebTokenError
+    ) {
+      error.statusCode = 401;
+    }
     if (!error.statusCode) {
       error.statusCode = 500;
     }

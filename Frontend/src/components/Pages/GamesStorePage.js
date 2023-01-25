@@ -19,7 +19,6 @@ const GamesStore = () => {
   const [reqConfig, setReqConfig] = useState({
     operationType: "initGames",
     url: "http://localhost:8080/",
-    headers: { "Content-Type": "application/json" },
     body: { pageNumber: 1, query: "", filter: "" },
   });
 

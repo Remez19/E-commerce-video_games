@@ -66,6 +66,7 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
               gameData={game}
               onGameItemClick={onGameItemClickHandler}
               key={game._id}
+              gameId={game._id}
             />
           );
         } else {
@@ -74,6 +75,7 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
               gameData={game}
               onGameItemClick={onGameItemClickHandler}
               key={game._id}
+              gameId={game._id}
             />
           );
         }

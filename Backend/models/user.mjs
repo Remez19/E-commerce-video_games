@@ -15,12 +15,26 @@ const userShema = new Schema({
     type: String,
     required: true,
   },
-  cart: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Game",
+  cart: {
+    items: [
+      {
+        productData: {
+          type: Schema.Types.ObjectId,
+          ref: "Game",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    totalPrice: {
+      type: Number,
+      required: true,
+      default: 0,
     },
-  ],
+  },
   favorites: [
     {
       type: Schema.Types.ObjectId,

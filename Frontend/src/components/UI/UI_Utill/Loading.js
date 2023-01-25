@@ -5,7 +5,7 @@ import xboxPallet from "../../../images/UI_Images/xboxPallet.png";
 import playstationYelow from "../../../images/UI_Images/playstation-logo.png";
 
 import { useCallback, useEffect, useState } from "react";
-const Loading = (props) => {
+const Loading = ({ width, height }) => {
   const getRandomPositionAndBackground = useCallback(() => {
     const backgrounds = [psPalletRed, xboxYellow, xboxPallet, playstationYelow];
     const viewportWidth = window.innerWidth;
@@ -31,7 +31,10 @@ const Loading = (props) => {
     event.target.classList.add("fadeAnim");
   };
   return (
-    <div className="loading-container__background">
+    <div
+      className="loading-container__background"
+      style={{ width: width, height: height }}
+    >
       <div
         className={`loading-container fadeAnim`}
         onAnimationEnd={onAnimationEndHandler}

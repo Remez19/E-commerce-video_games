@@ -12,7 +12,7 @@ import Cart from "../../Cart/Cart";
 
 const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
-  let loggedInUser = useSelector((state) => state.ui.loggedInUser);
+  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
 
   const BacdropClickHandler = () => {
     setIsHamburgerClick(false);
@@ -36,7 +36,7 @@ const Header = () => {
           <UserProfile user={loggedInUser} />
         </li>
         <li className="main_header__item">
-          <Cart cart={loggedInUser.cart} />
+          <Cart cart={loggedInUser ? loggedInUser.cart : undefined} />
         </li>
       </ul>
     </header>

@@ -17,7 +17,6 @@ const UserProfile = ({ user }) => {
     dispatchAction(uiSliceActions.setLoggedInUser(undefined));
     navigate("/login");
   };
-
   return (
     <>
       {user ? (

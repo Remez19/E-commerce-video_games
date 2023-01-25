@@ -2,6 +2,7 @@
  * Can pick better codes for the status response
  */
 import { gameModel } from "../models/game.mjs";
+import { userModel } from "../models/user.mjs";
 
 const GAMES_PER_PAGE = 8;
 
@@ -10,14 +11,10 @@ export const getHomePage = async (req, res, next) => {
   const pageNumber = req.body.pageNumber;
 
   try {
-    // Pageniation needed
-
     const skip = (pageNumber - 1) * GAMES_PER_PAGE;
     const totalGames = await gameModel.find().countDocuments();
     const gamesList = await gameModel.find().skip(skip).limit(GAMES_PER_PAGE);
     const loadedGames = pageNumber * GAMES_PER_PAGE;
-    // console.log(`TotalGames: ${totalGames}`);
-    // console.log(`Skip: ${skip}`);
     res.status(200).json({
       message: "Fetched games",
       games: gamesList,
@@ -115,6 +112,40 @@ export const getFillteredResults = async (req, res, next) => {
         games: filterResult,
         hasMore: totalGames > loadedGames,
       });
+    }
+  } catch (err) {
+    if (!err.statusCode) {
+      // Server error
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+export const addItemToCart = async (req, res, next) => {
+  const { userId, itemId } = req.body;
+
+  try {
+    const user = await userModel.findById(userId).populate("cart");
+    if (!user) {
+      throw new Error("Something went wrong!");
+    }
+    const itemIndex = user.cart.items.findIndex((cartItem) => {
+      return cartItem._id.toString() === itemId;
+    });
+    if (itemIndex > 0) {
+      // item in cart already update the quatntity
+    } else {
+      const itemToAdd = await gameModel.findById(itemId);
+      if (!itemToAdd) {
+        throw new Error("Something went wrong!");
+      }
+      user.cart.items.push({ productData: itemToAdd, quantity: 1 });
+      user.cart.totalPrice += itemToAdd.price;
+      await user.save();
+      res
+        .status(201)
+        .json({ message: "Item added to cart.", newCart: user.cart });
     }
   } catch (err) {
     if (!err.statusCode) {

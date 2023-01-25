@@ -1,6 +1,3 @@
-// import Header from "./components/UI/UI_Elements/Header";
-
-// import Footer from "./components/UI/UI_Elements/Footer";
 import store from "./Store/store";
 
 // Pages imports
