@@ -2,7 +2,6 @@ import "./Header.css";
 
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
 
 import Backdrop from "../UI_Utill/Backdrop";
 import HamburgerButton from "./HamburgerButton";
@@ -12,7 +11,6 @@ import Cart from "../../Cart/Cart";
 
 const Header = () => {
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
-  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
 
   const BacdropClickHandler = () => {
     setIsHamburgerClick(false);
@@ -33,10 +31,10 @@ const Header = () => {
       <MobileNav isHamburgerBtnClick={isHamburgerBtnClick} />
       <ul className="main_header__items">
         <li className="main_header__item">
-          <UserProfile user={loggedInUser} />
+          <UserProfile />
         </li>
         <li className="main_header__item">
-          <Cart cart={loggedInUser ? loggedInUser.cart : undefined} />
+          <Cart />
         </li>
       </ul>
     </header>

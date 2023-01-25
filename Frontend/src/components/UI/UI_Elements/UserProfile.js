@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { uiSliceActions } from "../../../Store/ui";
 
 import "./UserProfile.css";
 
-const UserProfile = ({ user }) => {
+const UserProfile = () => {
+  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const [active, setActive] = useState(false);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
@@ -19,16 +20,16 @@ const UserProfile = ({ user }) => {
   };
   return (
     <>
-      {user ? (
+      {loggedInUser ? (
         <div className="user_profile_btn" onClick={onUserNameClickHandler}>
-          {user.userName}
+          {loggedInUser.userName}
           <div
             className={`dropdown-menu__user-profile__backdrop ${
               active && "dropdown-menu__user-profile__backdrop-active"
             }`}
           >
             <div className={`dropdown-menu__user-profile`}>
-              <h4>{user.userName}</h4>
+              <h4>{loggedInUser.userName}</h4>
               <ul className="dropdown-menu__user-profile__list">
                 <li>
                   <button className="dropdown-menu__user-profile__list-item">

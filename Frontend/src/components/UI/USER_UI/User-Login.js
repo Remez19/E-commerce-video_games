@@ -1,6 +1,5 @@
 import { useState, Fragment, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { uiSliceActions } from "../../../Store/ui";
@@ -29,18 +28,9 @@ function UserLogin() {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
     localStorage.setItem("userId", resData.userId);
-    console.log(resData.cart);
-    /**
- * // Put the object into storage
-localStorage.setItem('testObject', JSON.stringify(testObject));
 
-// Retrieve the object from storage
-var retrievedObject = localStorage.getItem('testObject');
-
-console.log('retrievedObject: ', JSON.parse(retrievedObject));
- */
     localStorage.setItem("cart", JSON.stringify(resData.cart));
-    console.log("local" + JSON.parse(localStorage.getItem("cart")));
+
     dispatchAction(
       uiSliceActions.setLoggedInUser({
         userName: resData.userName,

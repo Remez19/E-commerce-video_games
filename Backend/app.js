@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { errorMiddleware } from "./middleware/error.mjs";
 import homePageRouter from "./routes/homePage.mjs";
 import authRoutes from "./routes/auth.mjs";
+import cartPageRouter from "./routes/cart.mjs";
 
 // Read the env vars
 config();
@@ -45,6 +46,8 @@ app.use((req, res, next) => {
 app.use("/", homePageRouter);
 
 app.use("/", authRoutes);
+
+app.use("/cart", cartPageRouter);
 
 // Error middleware to catch any errors in requests
 app.use(errorMiddleware);

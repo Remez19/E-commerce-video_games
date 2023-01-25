@@ -17,6 +17,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
 
   const onAddToCartFinish = (resData) => {
     const { newCart } = resData;
+    localStorage.setItem("cart", JSON.stringify(resData.newCart));
     dispatchAction(uiSliceActions.updateUserCart(newCart));
   };
   const onClickGameHandler = () => {

@@ -126,15 +126,26 @@ export const addItemToCart = async (req, res, next) => {
   const { userId, itemId } = req.body;
 
   try {
-    const user = await userModel.findById(userId).populate("cart");
+    const user = await userModel
+      .findById(userId)
+      .populate("cart.items.productData");
     if (!user) {
       throw new Error("Something went wrong!");
     }
     const itemIndex = user.cart.items.findIndex((cartItem) => {
-      return cartItem._id.toString() === itemId;
+      console.log(
+        "in cart: " + cartItem._id.toString() + "item: " + itemId.toString()
+      );
+      return cartItem.productData._id.toString() === itemId.toString();
     });
-    if (itemIndex > 0) {
-      // item in cart already update the quatntity
+    console.log(itemIndex);
+    if (itemIndex >= 0) {
+      user.cart.items[itemIndex].quantity += 1;
+      user.cart.totalPrice += user.cart.items[itemIndex].productData.price;
+      await user.save();
+      res
+        .status(201)
+        .json({ message: "Item added to cart.", newCart: user.cart });
     } else {
       const itemToAdd = await gameModel.findById(itemId);
       if (!itemToAdd) {

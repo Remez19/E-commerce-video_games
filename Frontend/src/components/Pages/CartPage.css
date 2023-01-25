@@ -1,0 +1,14 @@
+.cart-page__main-container {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 2rem;
+  align-items: center;
+}
+
+.cart-page__main-container h2 {
+  color: #ffe283;
+  font-family: "Varela Round", sans-serif;
+  text-decoration: underline;
+}

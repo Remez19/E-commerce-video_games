@@ -6,6 +6,7 @@ import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
 import ErrorPage from "./components/Pages/ErrorPage";
+import CartPage from "./components/Pages/CartPage";
 
 import React from "react";
 import { Provider } from "react-redux";
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
         element: <UserLoginPage />,
       },
       { path: "/signup", element: <UserSignupPage /> },
+      { path: "/shop", element: <CartPage /> },
     ],
   },
 ]);

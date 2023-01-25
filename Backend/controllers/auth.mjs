@@ -21,7 +21,9 @@ export const postLogin = async (req, res, next) => {
     }
     const { email, password } = req.body;
     let loadedUser;
-    const user = await userModel.findOne({ email: email });
+    const user = await userModel
+      .findOne({ email: email })
+      .populate("cart.items.productData");
     if (!user) {
       // User not found
       const error = new Error("User with this email not exist.");

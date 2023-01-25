@@ -1,8 +1,5 @@
 .main_data_container {
-  height: 100%;
-  width: 100%;
   background-color: black;
-  justify-content: center;
 }
 
 .filter_searchBar_container {
