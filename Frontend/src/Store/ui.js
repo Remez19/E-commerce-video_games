@@ -4,6 +4,10 @@ const cart = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart"))
   : undefined;
 
+const favorites = localStorage.getItem("favorites")
+  ? JSON.parse(localStorage.getItem("favorites"))
+  : undefined;
+
 const initState = {
   loggedInUser: localStorage.getItem("token")
     ? {
@@ -15,7 +19,7 @@ const initState = {
               items: [],
               totalPrice: 0,
             },
-        favorites: [],
+        favorites: favorites ? favorites : [],
       }
     : undefined,
   isLoading: false,
@@ -37,6 +41,19 @@ const uiSlice = createSlice({
         ...state.loggedInUser,
         cart: { ...action.payload },
       };
+    },
+    updateUserFavorites(state, action) {
+      if (state.loggedInUser.favorites.length > 0) {
+        state.loggedInUser = {
+          ...state.loggedInUser,
+          favorites: [...action.payload],
+        };
+      } else {
+        state.loggedInUser = {
+          ...state.loggedInUser,
+          favorites: [action.payload],
+        };
+      }
     },
   },
 });

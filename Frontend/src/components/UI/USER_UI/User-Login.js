@@ -28,7 +28,7 @@ function UserLogin() {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
     localStorage.setItem("userId", resData.userId);
-
+    localStorage.setItem("favorites", JSON.stringify(resData.favorites));
     localStorage.setItem("cart", JSON.stringify(resData.cart));
 
     dispatchAction(

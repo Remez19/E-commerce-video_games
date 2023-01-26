@@ -13,3 +13,16 @@
   font-family: "Varela Round", sans-serif;
   text-decoration: underline;
 }
+.cart-page__main-container > button {
+  background-color: transparent;
+  border: 2px solid #ffe283;
+  color: #ff7474;
+  width: 6rem;
+  height: 2.5rem;
+  border-radius: 5%;
+}
+.cart-page__main-container > button:hover {
+  border: 2px solid #ff7474;
+  color: #ffe283;
+  cursor: pointer;
+}

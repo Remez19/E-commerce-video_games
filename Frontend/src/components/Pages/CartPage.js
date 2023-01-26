@@ -1,9 +1,16 @@
 import "./CartPage.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import CartItem from "../UI/UI_Elements/CartItem";
 
 function CartPage() {
   const { cart } = useSelector((state) => state.ui.loggedInUser);
+  const navigate = useNavigate();
+
+  const onClickOrderButtonHandler = () => {
+    navigate("/checkout");
+  };
   return (
     <main className="cart-page__main-container">
       <h2>Your Cart</h2>
@@ -15,7 +22,7 @@ function CartPage() {
         <h3>Cart is Empty</h3>
       )}
       {cart.items.length > 0 && (
-        <button className="cart-page__order-now-btn">Order Now!</button>
+        <button onClick={onClickOrderButtonHandler}>Order Now!</button>
       )}
     </main>
   );

@@ -16,6 +16,7 @@
   justify-content: right;
   align-items: center;
   margin-right: 0.2rem;
+  padding-bottom: 0.2rem;
   height: 100%;
 }
 
@@ -26,7 +27,7 @@
   list-style: none;
   width: fit-content;
   padding: 0;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 0;
 }

@@ -5,9 +5,12 @@ import GameInfo from "./GameInfo";
 import Backdrop from "../UI_Utill/Backdrop";
 
 import { useState, useCallback, useRef } from "react";
+import { useSelector } from "react-redux";
 
 const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
   const gamesList = GameList;
+  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
+  let favorites = loggedInUser ? loggedInUser.favorites : undefined;
   const observer = useRef();
   const [isGameClicked, setIsGameClicked] = useState();
   const [animation, setAnimation] = useState(
@@ -39,7 +42,6 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
     setIsGameClicked(true);
     setPressedGame(game);
   };
-
   return (
     <section className="game_catalog__container" onScrollCapture={handleScroll}>
       {isGameClicked &&
@@ -59,9 +61,14 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
           document.getElementById("backdrop-root")
         )}
       {gamesList.map((game, i) => {
+        let favorite;
+        if (favorites) {
+          favorite = favorites.includes(game._id);
+        }
         if (gamesList.length === i + 1) {
           return (
             <GameItem
+              favorite={favorite}
               myRef={lastGameElementRef}
               gameData={game}
               onGameItemClick={onGameItemClickHandler}
@@ -72,6 +79,7 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
         } else {
           return (
             <GameItem
+              favorite={favorite}
               gameData={game}
               onGameItemClick={onGameItemClickHandler}
               key={game._id}

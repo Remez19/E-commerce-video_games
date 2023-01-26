@@ -7,33 +7,66 @@ import "./GameItem.css";
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 
-const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
+const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
-  const [reqConfig] = useState({
+  const [reqConfigCart] = useState({
     url: "http://localhost:8080/addToCart",
   });
+
+  const [reqConfigFav] = useState({});
 
   const onAddToCartFinish = (resData) => {
     const { newCart } = resData;
     localStorage.setItem("cart", JSON.stringify(resData.newCart));
     dispatchAction(uiSliceActions.updateUserCart(newCart));
   };
+
+  const onAddToFavoritesFinish = (resData) => {
+    const { favorites } = resData;
+    console.log(favorites);
+    localStorage.removeItem("favorites");
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    dispatchAction(uiSliceActions.updateUserFavorites(favorites));
+  };
+
   const onClickGameHandler = () => {
     onGameItemClick(gameData);
   };
 
   const {
-    sendRequest: addToItemCart,
+    sendRequest: addItemToCart,
     isLoading,
     error,
-  } = useHttp(reqConfig, onAddToCartFinish);
+  } = useHttp(reqConfigCart, onAddToCartFinish);
+
+  const {
+    isLoading: isLoadingFav,
+    error: errorFav,
+    sendRequest: favItem,
+  } = useHttp(reqConfigFav, onAddToFavoritesFinish);
+
+  const onAddToFavoritesHandler = () => {
+    if (!loggedInUser) {
+      navigate("/login");
+    } else if (favorite) {
+      favItem(
+        { userId: loggedInUser.userId, itemId: gameId },
+        "http://localhost:8080/removeItemFromFavorites"
+      );
+    } else {
+      favItem(
+        { userId: loggedInUser.userId, itemId: gameId },
+        "http://localhost:8080/addToFavorites"
+      );
+    }
+  };
   const onAddToCartHandler = () => {
     if (!loggedInUser) {
       navigate("/login");
     } else {
-      addToItemCart({ userId: loggedInUser.userId, itemId: gameId });
+      addItemToCart({ userId: loggedInUser.userId, itemId: gameId });
     }
   };
   // If user is authenticated
@@ -47,10 +80,19 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
         throw error;
       }
     }
+    if (errorFav) {
+      if (errorFav.status === 401) {
+        localStorage.clear();
+        dispatchAction(uiSliceActions.setLoggedInUser(undefined));
+        navigate("/login");
+      } else {
+        throw error || errorFav;
+      }
+    }
   });
   return (
     <>
-      {!isLoading ? (
+      {!isLoading && !isLoadingFav ? (
         <div className="game_item_container">
           <p className="game_item_container__title">{gameData.title}</p>
           <div
@@ -91,8 +133,14 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
             id={myRef && "last"}
           >
             <button
+              style={{
+                backgroundImage: favorite
+                  ? `url(${require("../../../images/UI_Images/favorite.png")})`
+                  : `url(${require("../../../images/UI_Images/add_to_favorite.png")})`,
+              }}
               className="game_item__to-favorite"
               title="Add To Favorite"
+              onClick={onAddToFavoritesHandler}
             />
             <button
               title="Add To Cart"

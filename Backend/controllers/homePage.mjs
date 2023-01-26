@@ -166,3 +166,68 @@ export const addItemToCart = async (req, res, next) => {
     next(err);
   }
 };
+
+export const addItemToFavorites = async (req, res, next) => {
+  try {
+    const { itemId, userId } = req.body;
+    const user = await userModel.findById(userId);
+    const itemToAdd = await gameModel.findById(itemId);
+    if (!user || !itemToAdd) {
+      throw new Error("Failed to add to favorite");
+    }
+    user.favorites.push(itemToAdd);
+    await user.save();
+    if (user.favorites.length === 1) {
+      res.status(201).json({
+        message: "Item added to favorites.",
+        favorites: user.favorites[0]._id,
+      });
+    } else {
+      res.status(201).json({
+        message: "Item added to favorites.",
+        favorites: user.favorites,
+      });
+    }
+  } catch (error) {
+    if (!err.statusCode) {
+      // Server error
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+export const removeItemFromFavorites = async (req, res, next) => {
+  try {
+    const { itemId, userId } = req.body;
+    const user = await userModel.findById(userId).populate("favorites");
+    if (!user) {
+      throw new Error("Failed to add to favorite");
+    }
+    console.log("Before:");
+    console.log(user.favorites);
+    user.favorites = [
+      ...user.favorites.filter((favItem) => {
+        return favItem._id.toString() !== itemId;
+      }),
+    ];
+    await user.save();
+    if (user.favorites.length === 1) {
+      res.status(201).json({
+        message: "Item unfavorite.",
+        favorites: user.favorites[0]._id,
+      });
+    } else {
+      res.status(201).json({
+        message: "Item unfavorite.",
+        favorites: user.favorites,
+      });
+    }
+  } catch (err) {
+    if (!err.statusCode) {
+      // Server error
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
