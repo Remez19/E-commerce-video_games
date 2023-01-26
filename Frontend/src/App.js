@@ -7,6 +7,7 @@ import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
 import ErrorPage from "./components/Pages/ErrorPage";
 import CartPage from "./components/Pages/CartPage";
+import OrdersPage from "./components/Pages/OrdersPage";
 
 import React from "react";
 import { Provider } from "react-redux";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       },
       { path: "/signup", element: <UserSignupPage /> },
       { path: "/shop", element: <CartPage /> },
+      { path: "/orders", element: <OrdersPage /> },
     ],
   },
 ]);

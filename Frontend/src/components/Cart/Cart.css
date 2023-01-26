@@ -16,7 +16,12 @@
   font-size: 0.8rem;
   text-align: center;
   color: #ff7474;
-  padding-top: 2rem;
+  padding-top: 1.9rem;
+}
+
+.cart_btn--not {
+  padding-top: 2.45rem;
+  /* margin-bottom: 1rem; */
 }
 
 .cart-items__counter {

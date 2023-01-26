@@ -1,61 +1,114 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { uiSliceActions } from "../../../Store/ui";
 
 import "./CartItem.css";
 import useHttp from "../../../hooks/use-http";
+import Loading from "../UI_Utill/Loading";
 
 function CartItem({ cartItem }) {
-  // localhost8080://cart/
-  const [reqConfig, setReqConfig] = useState({
-    url: "http://localhost:8080/",
-  });
+  const dispatchAction = useDispatch();
+  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
+  // itemId, userId, price
   const { productData } = cartItem;
+
+  const onCartActionFinishHandler = (resData) => {
+    localStorage.removeItem("cart");
+    localStorage.setItem("cart", JSON.stringify(resData.newCart));
+    dispatchAction(uiSliceActions.updateUserCart(resData.newCart));
+  };
+
+  const { error, sendRequest, isLoading } = useHttp(
+    {},
+    onCartActionFinishHandler
+  );
+
+  const onClickRemoveItemHandler = () => {
+    const url = "http://localhost:8080/cart/removeFromCart";
+    sendRequest(
+      {
+        itemId: productData._id,
+        price: productData.price,
+        userId: loggedInUser.userId,
+      },
+      url
+    );
+  };
+
+  const onClickChangeQuantityHandler = (e) => {
+    // e.target.innerText
+    const url = "http://localhost:8080/cart/changeCartItemQuantity";
+    sendRequest(
+      {
+        itemId: productData._id,
+        price: productData.price,
+        userId: loggedInUser.userId,
+        operation: e.target.innerText,
+      },
+      url
+    );
+  };
+
+  useEffect(() => {
+    if (error) {
+      // in case of an error
+      throw error;
+    }
+  }, [error]);
+
   return (
-    <div className="cart-item__container">
-      <div className="cart-item__image-container">
-        <img
-          className="cart-item__image"
-          src={productData.imageUrl}
-          alt={productData.title}
-        ></img>
-      </div>
-      <div className="cart-item__info-continer">
-        <p className="cart-item__title">{productData.title}</p>
-        <p className="cart-item__price">{`Price: $${productData.price}`}</p>
-        <div className="cart-item__platforms-container">
-          Platforms:
-          <ul className="cart-item__platforms-list">
-            {productData.platforms.includes("PS") && (
-              <li
-                style={{
-                  backgroundImage: `url(${require("../../../images/Platforms/ps.png")})`,
-                }}
-              ></li>
-            )}
-            {productData.platforms.includes("XBOX") && (
-              <li
-                style={{
-                  backgroundImage: `url(${require("../../../images/Platforms/xbox.png")})`,
-                }}
-              ></li>
-            )}
-            {productData.platforms.includes("PC") && (
-              <li
-                style={{
-                  backgroundImage: `url(${require("../../../images/Platforms/pc.png")})`,
-                }}
-              ></li>
-            )}
-          </ul>
+    <>
+      {isLoading ? (
+        <Loading width={"100%"} height={"100%"} />
+      ) : (
+        <div className="cart-item__container">
+          <div className="cart-item__image-container">
+            <img
+              className="cart-item__image"
+              src={productData.imageUrl}
+              alt={productData.title}
+            ></img>
+          </div>
+          <div className="cart-item__info-continer">
+            <p className="cart-item__title">{productData.title}</p>
+            <p className="cart-item__price">{`Price: $${productData.price}`}</p>
+            <div className="cart-item__platforms-container">
+              Platforms:
+              <ul className="cart-item__platforms-list">
+                {productData.platforms.includes("PS") && (
+                  <li
+                    style={{
+                      backgroundImage: `url(${require("../../../images/Platforms/ps.png")})`,
+                    }}
+                  ></li>
+                )}
+                {productData.platforms.includes("XBOX") && (
+                  <li
+                    style={{
+                      backgroundImage: `url(${require("../../../images/Platforms/xbox.png")})`,
+                    }}
+                  ></li>
+                )}
+                {productData.platforms.includes("PC") && (
+                  <li
+                    style={{
+                      backgroundImage: `url(${require("../../../images/Platforms/pc.png")})`,
+                    }}
+                  ></li>
+                )}
+              </ul>
+            </div>
+            <div className="cart-item__quantity">
+              {`Quantity: ${cartItem.quantity}`}
+              <button onClick={onClickChangeQuantityHandler}>-</button>
+              {cartItem.quantity}
+              <button onClick={onClickChangeQuantityHandler}>+</button>
+            </div>
+            <button onClick={onClickRemoveItemHandler}>Remove</button>
+          </div>
         </div>
-        <div className="cart-item__quantity">
-          {`Quantity: ${cartItem.quantity}`}
-          <button>-</button>
-          {cartItem.quantity}
-          <button>+</button>
-        </div>
-        <button>Remove</button>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

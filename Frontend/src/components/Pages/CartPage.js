@@ -14,6 +14,9 @@ function CartPage() {
       ) : (
         <h3>Cart is Empty</h3>
       )}
+      {cart.items.length > 0 && (
+        <button className="cart-page__order-now-btn">Order Now!</button>
+      )}
     </main>
   );
 }

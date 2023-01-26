@@ -18,7 +18,7 @@ const Cart = () => {
     }
   }, [cart]);
   return (
-    <NavLink to="/shop" className="cart_btn" end>
+    <NavLink to="/shop" className={`cart_btn ${!cart && "cart_btn--not"}`} end>
       {cart && <div className="cart-items__counter">{itemsCount}</div>}
     </NavLink>
   );

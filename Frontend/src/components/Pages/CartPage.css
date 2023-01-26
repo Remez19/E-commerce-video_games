@@ -7,7 +7,8 @@
   align-items: center;
 }
 
-.cart-page__main-container h2 {
+.cart-page__main-container h2,
+.cart-page__main-container h3 {
   color: #ffe283;
   font-family: "Varela Round", sans-serif;
   text-decoration: underline;

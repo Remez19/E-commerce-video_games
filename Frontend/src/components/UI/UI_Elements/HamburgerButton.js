@@ -1,7 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import "./HamburgerButton.css";
+
 const HamburgerButton = (props) => {
+  const navigate = useNavigate();
+
+  const onHomePageNameClickHandler = () => {
+    navigate("/");
+  };
   return (
     <div className="hamburger_container">
       <button onClick={props.onClick} className="main_header__toggle_button">
@@ -12,6 +18,7 @@ const HamburgerButton = (props) => {
       <NavLink to="/">
         <button className="main_header__logo"></button>
       </NavLink>
+      <p onClick={onHomePageNameClickHandler}>Games Puddle</p>
     </div>
   );
 };

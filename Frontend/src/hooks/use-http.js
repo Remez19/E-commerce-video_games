@@ -8,12 +8,12 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
   const [error, setError] = useState(null);
 
   const sendRequest = useCallback(
-    async (data) => {
+    async (data, url) => {
       setIsLoading(true);
       setError(null);
       let response;
       try {
-        response = await fetch(reqConfig.url, {
+        response = await fetch(url ? url : reqConfig.url, {
           method: reqConfig.method ? reqConfig.method : "POST",
           headers: reqConfig.headers
             ? reqConfig.headers

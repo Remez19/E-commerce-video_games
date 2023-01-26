@@ -101,7 +101,6 @@ const GamesStore = () => {
   const gamesList = useSelector((state) => state.games.games);
 
   const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
-
   return (
     <main className="main_data_container">
       {!isLoading ? (
