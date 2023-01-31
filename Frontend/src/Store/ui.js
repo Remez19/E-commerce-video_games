@@ -12,7 +12,7 @@ const initState = {
   loggedInUser: localStorage.getItem("token")
     ? {
         userName: localStorage.getItem("userName"),
-        userId: localStorage.getItem("userId"),
+        userEmail: localStorage.getItem("userEmail"),
         cart: cart
           ? cart
           : {

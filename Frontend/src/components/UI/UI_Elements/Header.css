@@ -1,9 +1,9 @@
 .main_header {
   background-color: black;
   width: 100%;
-  height: 4rem;
+  height: 4.5rem;
   display: flex;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .main_header--pages_routes {
@@ -16,7 +16,6 @@
   justify-content: right;
   align-items: center;
   margin-right: 0.2rem;
-  padding-bottom: 0.2rem;
   height: 100%;
 }
 

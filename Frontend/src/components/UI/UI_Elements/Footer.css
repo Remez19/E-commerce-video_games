@@ -1,7 +1,6 @@
 .footer {
   position: fixed;
   bottom: 0;
-  grid-row: row-3-start / span row-3-end;
   width: 100%;
   display: flex;
   background-color: #ffe283;

@@ -29,7 +29,7 @@ function CartItem({ cartItem }) {
       {
         itemId: productData._id,
         price: productData.price,
-        userId: loggedInUser.userId,
+        userEmail: loggedInUser.userEmail,
       },
       url
     );
@@ -42,7 +42,7 @@ function CartItem({ cartItem }) {
       {
         itemId: productData._id,
         price: productData.price,
-        userId: loggedInUser.userId,
+        userEmail: loggedInUser.userEmail,
         operation: e.target.innerText,
       },
       url

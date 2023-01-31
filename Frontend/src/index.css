@@ -24,9 +24,12 @@ code {
 }
 
 #root {
+  background-color: black;
   height: 100%;
   width: 100%;
   overflow-x: hidden;
   display: grid;
-  grid-template-rows: [row-1-start] 0.2fr [row-1-end row-2-start] 3fr [row-2-end row-3-start] 0.2fr [row-3-end];
+  display: flex;
+  flex-direction: column;
+  /* grid-template-rows: [row-1-start] 0.2fr [row-1-end row-2-start] 3fr [row-2-end row-3-start] 0.2fr [row-3-end]; */
 }

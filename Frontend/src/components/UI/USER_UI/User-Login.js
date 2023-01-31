@@ -27,7 +27,7 @@ function UserLogin() {
   const onLoginFinishHandler = async (resData) => {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
-    localStorage.setItem("userId", resData.userId);
+    localStorage.setItem("userEmail", resData.userEmail);
     localStorage.setItem("favorites", JSON.stringify(resData.favorites));
     localStorage.setItem("cart", JSON.stringify(resData.cart));
 

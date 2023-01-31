@@ -68,8 +68,11 @@ const GamesStore = () => {
   );
 
   useEffect(() => {
+    if (error) {
+      throw error;
+    }
     fetchGames();
-  }, [fetchGames, reqConfig]);
+  }, [fetchGames, reqConfig, error]);
 
   const fillterUsedHandler = (filterData) => {
     dispatchAction(gamesSliceActions.clearGamesList());
@@ -122,7 +125,7 @@ const GamesStore = () => {
           />
         </React.Fragment>
       ) : (
-        <Loading />
+        <Loading width={"100vw"} height={"100vh"} />
       )}
       {error && <p>Error Component</p>}
     </main>

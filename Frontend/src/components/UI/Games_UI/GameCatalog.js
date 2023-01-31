@@ -1,25 +1,17 @@
 import "./GameCatalog.css";
 import GameItem from "./GameItem";
-import ReactDOM from "react-dom";
-import GameInfo from "./GameInfo";
-import Backdrop from "../UI_Utill/Backdrop";
 
-import { useState, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
   const gamesList = GameList;
+  const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   let favorites = loggedInUser ? loggedInUser.favorites : undefined;
   const observer = useRef();
-  const [isGameClicked, setIsGameClicked] = useState();
-  const [animation, setAnimation] = useState(
-    "slideDown 0.2s ease-out forwards"
-  );
 
-  const [pressedGame, setPressedGame] = useState();
-
-  // Logic for infinate scroll
   const lastGameElementRef = useCallback(
     (gameElement) => {
       if (isLoading) return;
@@ -37,29 +29,11 @@ const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
     [isLoading, handleScroll]
   );
 
-  const onGameItemClickHandler = (game) => {
-    // setAnimStyle(false);
-    setIsGameClicked(true);
-    setPressedGame(game);
+  const onGameItemClickHandler = (game, favorite) => {
+    navigate("/game-item", { state: { game, favorite } });
   };
   return (
     <section className="game_catalog__container" onScrollCapture={handleScroll}>
-      {isGameClicked &&
-        ReactDOM.createPortal(
-          <Backdrop
-            setIsItemClicked={setIsGameClicked}
-            anim={animation}
-            setAnim={setAnimation}
-          >
-            <GameInfo
-              gameData={pressedGame}
-              onBackClick={() => {
-                setAnimation("slideUp 0.2s ease-out forwards");
-              }}
-            />
-          </Backdrop>,
-          document.getElementById("backdrop-root")
-        )}
       {gamesList.map((game, i) => {
         let favorite;
         if (favorites) {

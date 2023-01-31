@@ -3,9 +3,9 @@ import { userModel } from "../models/user.mjs";
 
 export const removeItem = async (req, res, next) => {
   try {
-    const { itemId, userId, price } = req.body;
+    const { itemId, userEmail, price } = req.body;
     const user = await userModel
-      .findById(userId)
+      .findOne({ email: userEmail })
       .populate("cart.items.productData");
     if (!user) {
       throw new Error("Something went wrong");
@@ -31,9 +31,9 @@ export const removeItem = async (req, res, next) => {
 
 export const changeCartItemQuantity = async (req, res, next) => {
   try {
-    const { itemId, userId, price, operation } = req.body;
+    const { itemId, userEmail, price, operation } = req.body;
     const user = await userModel
-      .findById(userId)
+      .findOne({ email: userEmail })
       .populate("cart.items.productData");
     if (!user) {
       throw new Error("Something went wrong");

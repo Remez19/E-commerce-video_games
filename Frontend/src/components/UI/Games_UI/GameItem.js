@@ -25,14 +25,13 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
 
   const onAddToFavoritesFinish = (resData) => {
     const { favorites } = resData;
-    console.log(favorites);
     localStorage.removeItem("favorites");
     localStorage.setItem("favorites", JSON.stringify(favorites));
     dispatchAction(uiSliceActions.updateUserFavorites(favorites));
   };
 
   const onClickGameHandler = () => {
-    onGameItemClick(gameData);
+    onGameItemClick(gameData, favorite);
   };
 
   const {
@@ -48,16 +47,17 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
   } = useHttp(reqConfigFav, onAddToFavoritesFinish);
 
   const onAddToFavoritesHandler = () => {
+    console.log(loggedInUser);
     if (!loggedInUser) {
       navigate("/login");
     } else if (favorite) {
       favItem(
-        { userId: loggedInUser.userId, itemId: gameId },
+        { userEmail: loggedInUser.userEmail, itemId: gameId },
         "http://localhost:8080/removeItemFromFavorites"
       );
     } else {
       favItem(
-        { userId: loggedInUser.userId, itemId: gameId },
+        { userEmail: loggedInUser.userEmail, itemId: gameId },
         "http://localhost:8080/addToFavorites"
       );
     }
@@ -66,7 +66,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
     if (!loggedInUser) {
       navigate("/login");
     } else {
-      addItemToCart({ userId: loggedInUser.userId, itemId: gameId });
+      addItemToCart({ userEmail: loggedInUser.userEmail, itemId: gameId });
     }
   };
   // If user is authenticated

@@ -85,9 +85,7 @@
     display: none;
   }
   .hamburger_container {
-    display: flex;
     margin-left: 0.5rem;
-    height: 100%;
   }
   .hamburger_container > p {
     display: inline-block;

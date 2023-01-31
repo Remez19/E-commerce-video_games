@@ -123,11 +123,10 @@ export const getFillteredResults = async (req, res, next) => {
 };
 
 export const addItemToCart = async (req, res, next) => {
-  const { userId, itemId } = req.body;
-
+  const { itemId, userEmail } = req.body;
   try {
     const user = await userModel
-      .findById(userId)
+      .findOne({ email: userEmail })
       .populate("cart.items.productData");
     if (!user) {
       throw new Error("Something went wrong!");
@@ -169,8 +168,10 @@ export const addItemToCart = async (req, res, next) => {
 
 export const addItemToFavorites = async (req, res, next) => {
   try {
-    const { itemId, userId } = req.body;
-    const user = await userModel.findById(userId);
+    const { itemId, userEmail } = req.body;
+    console.log(userEmail);
+
+    const user = await userModel.findOne({ email: userEmail });
     const itemToAdd = await gameModel.findById(itemId);
     if (!user || !itemToAdd) {
       throw new Error("Failed to add to favorite");
@@ -188,7 +189,7 @@ export const addItemToFavorites = async (req, res, next) => {
         favorites: user.favorites,
       });
     }
-  } catch (error) {
+  } catch (err) {
     if (!err.statusCode) {
       // Server error
       err.statusCode = 500;
@@ -199,13 +200,14 @@ export const addItemToFavorites = async (req, res, next) => {
 
 export const removeItemFromFavorites = async (req, res, next) => {
   try {
-    const { itemId, userId } = req.body;
-    const user = await userModel.findById(userId).populate("favorites");
+    const { itemId, userEmail } = req.body;
+
+    const user = await userModel
+      .findOne({ email: userEmail })
+      .populate("favorites");
     if (!user) {
       throw new Error("Failed to add to favorite");
     }
-    console.log("Before:");
-    console.log(user.favorites);
     user.favorites = [
       ...user.favorites.filter((favItem) => {
         return favItem._id.toString() !== itemId;

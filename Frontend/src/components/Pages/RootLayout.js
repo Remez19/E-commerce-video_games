@@ -3,13 +3,15 @@ import { Fragment } from "react";
 
 import Header from "../UI/UI_Elements/Header";
 import Footer from "../UI/UI_Elements/Footer";
-import "./PageTransition.css";
+
 // Work on page transition
 function RootLayout() {
   return (
     <Fragment>
       <Header />
+
       <Outlet />
+
       <Footer />
     </Fragment>
   );

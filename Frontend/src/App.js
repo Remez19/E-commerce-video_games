@@ -9,6 +9,8 @@ import ErrorPage from "./components/Pages/ErrorPage";
 import CartPage from "./components/Pages/CartPage";
 import OrdersPage from "./components/Pages/OrdersPage";
 import OrderCheckoutPage from "./components/Pages/OrderCheckoutPage";
+import GameItemPage from "./components/Pages/GameItemPage";
+import CheckoutSuccessPage from "./components/Pages/CheckoutSuccessPage";
 
 import React from "react";
 import { Provider } from "react-redux";
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
       { path: "/shop", element: <CartPage /> },
       { path: "/orders", element: <OrdersPage /> },
       { path: "/checkout", element: <OrderCheckoutPage /> },
+      { path: "/game-item", element: <GameItemPage /> },
+      { path: "/checkout-sucess", element: <CheckoutSuccessPage /> },
     ],
   },
 ]);

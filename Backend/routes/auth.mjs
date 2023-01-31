@@ -2,7 +2,8 @@ import express from "express";
 import { body } from "express-validator";
 import { userModel } from "../models/user.mjs";
 
-import { postLogin, postSignup } from "../controllers/auth.mjs";
+import { postLogin, postSignup, payOrder } from "../controllers/auth.mjs";
+import { isAuth } from "../middleware/is-auth.mjs";
 // Add checks !
 const authRouter = express.Router();
 
@@ -26,5 +27,7 @@ authRouter.post(
   ],
   postSignup
 );
+
+authRouter.post("/order", isAuth, payOrder);
 
 export default authRouter;
