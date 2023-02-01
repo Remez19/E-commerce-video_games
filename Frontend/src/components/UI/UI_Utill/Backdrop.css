@@ -10,20 +10,20 @@
   /* pointer-events: none; */
 }
 
-@keyframes slideDown {
+@keyframes slideIn {
   from {
-    transform: translateY(-100%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateY(0%);
   }
 }
 
-@keyframes slideUp {
+@keyframes slideBack {
   from {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
   to {
-    transform: translateY(-100%);
+    transform: translateX(-100%);
   }
 }

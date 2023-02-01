@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { uiSliceActions } from "../../../Store/ui";
+import { uiSliceActions } from "../../Store/ui";
 
 import "./CartItem.css";
-import useHttp from "../../../hooks/use-http";
-import Loading from "../UI_Utill/Loading";
+import useHttp from "../../hooks/use-http";
+import Loading from "../UI/UI_Utill/Loading";
 
 function CartItem({ cartItem }) {
   const dispatchAction = useDispatch();
@@ -78,21 +78,21 @@ function CartItem({ cartItem }) {
                 {productData.platforms.includes("PS") && (
                   <li
                     style={{
-                      backgroundImage: `url(${require("../../../images/Platforms/ps.png")})`,
+                      backgroundImage: `url(${require("../../images/Platforms/ps.png")})`,
                     }}
                   ></li>
                 )}
                 {productData.platforms.includes("XBOX") && (
                   <li
                     style={{
-                      backgroundImage: `url(${require("../../../images/Platforms/xbox.png")})`,
+                      backgroundImage: `url(${require("../../images/Platforms/xbox.png")})`,
                     }}
                   ></li>
                 )}
                 {productData.platforms.includes("PC") && (
                   <li
                     style={{
-                      backgroundImage: `url(${require("../../../images/Platforms/pc.png")})`,
+                      backgroundImage: `url(${require("../../images/Platforms/pc.png")})`,
                     }}
                   ></li>
                 )}

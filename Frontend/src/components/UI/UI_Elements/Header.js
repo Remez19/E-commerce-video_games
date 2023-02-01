@@ -15,9 +15,6 @@ const Header = () => {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
 
-  const BacdropClickHandler = () => {
-    setIsHamburgerClick(false);
-  };
   const onHamburgerClickHandler = () => {
     setIsHamburgerClick((prevState) => {
       return !prevState;
@@ -28,10 +25,12 @@ const Header = () => {
       <HamburgerButton onClick={onHamburgerClickHandler} />
       {isHamburgerBtnClick &&
         ReactDOM.createPortal(
-          <Backdrop onClick={BacdropClickHandler} />,
+          <Backdrop setIsClick={setIsHamburgerClick}>
+            <MobileNav></MobileNav>
+          </Backdrop>,
           document.getElementById("backdrop-root")
         )}
-      <MobileNav isHamburgerBtnClick={isHamburgerBtnClick} />
+      {/* {isHamburgerBtnClick && <MobileNav anim={anim} />} */}
       {loggedInUser && (
         <div className="main_header--pages_routes">
           <NavLink to="/orders">Orders</NavLink>

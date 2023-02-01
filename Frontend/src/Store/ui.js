@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const cart = localStorage.getItem("cart")
-  ? JSON.parse(localStorage.getItem("cart"))
-  : undefined;
-
-const favorites = localStorage.getItem("favorites")
-  ? JSON.parse(localStorage.getItem("favorites"))
-  : undefined;
+const favorites =
+  localStorage.getItem("favorites") !== undefined
+    ? JSON.parse(localStorage.getItem("favorites"))
+    : undefined;
+const cart =
+  localStorage.getItem("cart") !== undefined
+    ? JSON.parse(localStorage.getItem("cart"))
+    : undefined;
 
 const initState = {
   loggedInUser: localStorage.getItem("token")

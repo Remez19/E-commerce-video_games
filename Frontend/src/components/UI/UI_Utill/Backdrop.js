@@ -1,20 +1,23 @@
+import { useState } from "react";
+
 import "./Backdrop.css";
 
-const Backdrop = ({ children, setIsItemClicked, anim, setAnim }) => {
+const Backdrop = ({ children, setIsClick }) => {
+  const [anim, setAnim] = useState("slideIn 0.2s ease-out forwards");
   const onBackClickHandler = () => {
-    setAnim("slideUp 0.2s ease-out forwards");
+    setAnim("slideBack 0.2s ease-out forwards");
   };
-  const onAnimationEndHandler = () => {
-    if (anim === "slideUp 0.2s ease-out forwards") {
-      setAnim("slideDown 0.2s ease-out forwards");
-      setIsItemClicked(false);
+
+  const onAnimEndHandler = () => {
+    if (anim === "slideBack 0.2s ease-out forwards") {
+      setIsClick(false);
     }
   };
 
   return (
     <div
       onClick={onBackClickHandler}
-      onAnimationEnd={onAnimationEndHandler}
+      onAnimationEnd={onAnimEndHandler}
       className="backdrop"
       style={{
         animation: anim,
@@ -25,8 +28,3 @@ const Backdrop = ({ children, setIsItemClicked, anim, setAnim }) => {
   );
 };
 export default Backdrop;
-
-/**
- * ? "slideUp 0.2s ease-out forwards"
-          : "slideDown 0.2s ease-out forwards",
- */

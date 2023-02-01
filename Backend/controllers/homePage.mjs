@@ -36,9 +36,6 @@ export const getUserSearchResult = async (req, res, next) => {
     const { keyWords, pageNumber } = req.body;
     const skip = (pageNumber - 1) * GAMES_PER_PAGE;
     const loadedGames = pageNumber * GAMES_PER_PAGE;
-
-    console.log(`Page number: ${pageNumber}`);
-
     if (keyWords) {
       // Number of total docs in db
       const totalGames = await gameModel
@@ -132,12 +129,8 @@ export const addItemToCart = async (req, res, next) => {
       throw new Error("Something went wrong!");
     }
     const itemIndex = user.cart.items.findIndex((cartItem) => {
-      console.log(
-        "in cart: " + cartItem._id.toString() + "item: " + itemId.toString()
-      );
       return cartItem.productData._id.toString() === itemId.toString();
     });
-    console.log(itemIndex);
     if (itemIndex >= 0) {
       user.cart.items[itemIndex].quantity += 1;
       user.cart.totalPrice += user.cart.items[itemIndex].productData.price;
@@ -169,7 +162,6 @@ export const addItemToCart = async (req, res, next) => {
 export const addItemToFavorites = async (req, res, next) => {
   try {
     const { itemId, userEmail } = req.body;
-    console.log(userEmail);
 
     const user = await userModel.findOne({ email: userEmail });
     const itemToAdd = await gameModel.findById(itemId);
@@ -201,7 +193,6 @@ export const addItemToFavorites = async (req, res, next) => {
 export const removeItemFromFavorites = async (req, res, next) => {
   try {
     const { itemId, userEmail } = req.body;
-
     const user = await userModel
       .findOne({ email: userEmail })
       .populate("favorites");

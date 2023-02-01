@@ -8,7 +8,6 @@ import UserSignupPage from "./components/Pages/UserSignupPage";
 import ErrorPage from "./components/Pages/ErrorPage";
 import CartPage from "./components/Pages/CartPage";
 import OrdersPage from "./components/Pages/OrdersPage";
-import OrderCheckoutPage from "./components/Pages/OrderCheckoutPage";
 import GameItemPage from "./components/Pages/GameItemPage";
 import CheckoutSuccessPage from "./components/Pages/CheckoutSuccessPage";
 
@@ -31,9 +30,35 @@ const router = createBrowserRouter([
       { path: "/signup", element: <UserSignupPage /> },
       { path: "/shop", element: <CartPage /> },
       { path: "/orders", element: <OrdersPage /> },
-      { path: "/checkout", element: <OrderCheckoutPage /> },
       { path: "/game-item", element: <GameItemPage /> },
-      { path: "/checkout-sucess", element: <CheckoutSuccessPage /> },
+      {
+        path: "/checkout-sucess",
+        element: <CheckoutSuccessPage />,
+        loader: async () => {
+          // Get Order data and create order on db
+          try {
+            const jsonData = await fetch(
+              "http://localhost:8080/order/setNewOrder",
+
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+                body: JSON.stringify({
+                  userEmail: localStorage.getItem("userEmail"),
+                }),
+              }
+            );
+            const resData = await jsonData.json();
+
+            return resData;
+          } catch (err) {
+            throw err;
+          }
+        },
+      },
     ],
   },
 ]);

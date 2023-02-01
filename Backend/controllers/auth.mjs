@@ -2,12 +2,6 @@ import { userModel } from "../models/user.mjs";
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
-import { Stripe } from "stripe";
-import { config } from "dotenv";
-
-config();
-
-const stripe = Stripe(process.env.Stripe_Key);
 
 const SALT_VALUE = 12;
 
@@ -100,43 +94,5 @@ export const postSignup = async (req, res, next) => {
       error.statusCode = 500;
     }
     next(error);
-  }
-};
-
-export const payOrder = async (req, res, next) => {
-  try {
-    const { userEmail } = req.body;
-    const user = await userModel
-      .findOne({ email: userEmail })
-      .populate("cart.items.productData");
-    if (!user) {
-      throw new Error("User Not found");
-    }
-    const itemsConvertedForStripe = [];
-    for (const cartItem of user.cart.items) {
-      console.log(cartItem);
-      itemsConvertedForStripe.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: cartItem.productData.title,
-          },
-          unit_amount: cartItem.productData.price * 100,
-        },
-        quantity: cartItem.quantity,
-      });
-    }
-    const session = await stripe.checkout.sessions.create({
-      line_items: itemsConvertedForStripe,
-      mode: "payment",
-      success_url: `${process.env.CLIENT_URL}/checkout-sucess`,
-      cancel_url: `${process.env.CLIENT_URL}/shop`,
-    });
-    res.send({ url: session.url });
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
   }
 };

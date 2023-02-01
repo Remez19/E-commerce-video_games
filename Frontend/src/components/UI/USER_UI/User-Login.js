@@ -34,7 +34,7 @@ function UserLogin() {
     dispatchAction(
       uiSliceActions.setLoggedInUser({
         userName: resData.userName,
-        userId: resData.userId,
+        userEmail: resData.userEmail,
         cart: resData.cart,
         favorites: resData.favorites,
       })

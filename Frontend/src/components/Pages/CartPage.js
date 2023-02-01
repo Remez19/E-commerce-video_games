@@ -1,14 +1,14 @@
 import "./CartPage.css";
 import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
 
-import CartItem from "../UI/UI_Elements/CartItem";
+import CartItem from "../Cart/CartItem";
 import useHttp from "../../hooks/use-http";
 import { useEffect } from "react";
 import Loading from "../UI/UI_Utill/Loading";
 
 function CartPage() {
   const { cart, userEmail } = useSelector((state) => state.ui.loggedInUser);
+
   const onOrderFinishHandler = (resData) => {
     if (resData.url) {
       window.location.href = resData.url;
@@ -20,7 +20,7 @@ function CartPage() {
     sendRequest: order,
   } = useHttp(
     {
-      url: "http://localhost:8080/order",
+      url: "http://localhost:8080/order/payOrder",
       body: { userEmail: userEmail },
     },
     onOrderFinishHandler
@@ -31,7 +31,7 @@ function CartPage() {
   };
   useEffect(() => {
     if (error) {
-      throw error;
+      if (error.statusCode === 401) throw error;
     }
   }, [error]);
   return (
