@@ -1,0 +1,30 @@
+.orders-page__conainer {
+  display: flex;
+  flex-direction: column;
+  animation: slideInPage 0.5s ease-in forwards;
+  gap: 1rem;
+  height: max-content;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.orders-page__conainer > h2 {
+  color: #ffe283;
+  text-decoration: underline;
+}
+
+@keyframes slideInPage {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@media (min-width: 40rem) {
+  .orders-page__conainer {
+    height: 100%;
+  }
+}

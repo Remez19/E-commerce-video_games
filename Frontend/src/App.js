@@ -29,7 +29,31 @@ const router = createBrowserRouter([
       },
       { path: "/signup", element: <UserSignupPage /> },
       { path: "/shop", element: <CartPage /> },
-      { path: "/orders", element: <OrdersPage /> },
+      {
+        path: "/orders",
+        element: <OrdersPage />,
+        loader: async () => {
+          try {
+            const jsonData = await fetch(
+              "http://localhost:8080/order/getUserOrders",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+                body: JSON.stringify({
+                  userEmail: localStorage.getItem("userEmail"),
+                }),
+              }
+            );
+            const resData = await jsonData.json();
+            return resData;
+          } catch (err) {
+            throw err;
+          }
+        },
+      },
       { path: "/game-item", element: <GameItemPage /> },
       {
         path: "/checkout-sucess",

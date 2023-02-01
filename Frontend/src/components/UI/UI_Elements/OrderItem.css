@@ -1,0 +1,44 @@
+.order-item__container {
+  display: flex;
+  width: 70%;
+  height: fit-content;
+  background-color: #ff7474;
+  border: 1px solid #ff7474;
+  border-radius: 5%;
+  flex-direction: column;
+}
+.order-item__data-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 0.2rem;
+  justify-content: center;
+}
+
+.order-item__data-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.order-item__container > div {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.order-item__container > div > p {
+  font-size: 0.7rem;
+  font-weight: bold;
+  display: inline-block;
+}
+.order-item__container > div > button {
+  background-color: transparent;
+  border: none;
+  border-radius: 5%;
+  font-weight: bold;
+}
+
+.order-item__container > div > button:hover {
+  text-decoration: underline;
+  color: #ffe283;
+  cursor: pointer;
+}

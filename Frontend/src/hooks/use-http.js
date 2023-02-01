@@ -31,7 +31,14 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
           // eslint-disable-next-line no-throw-literal
           throw { message, status: response.status };
         }
-        const resData = await response.json();
+        let resData;
+        if (
+          reqConfig.url === "http://localhost:8080/order/createOrderInvoice"
+        ) {
+          resData = await response.blob();
+        } else {
+          resData = await response.json();
+        }
         // call back to use the data we fetched
         function delay(milliseconds) {
           return new Promise((resolve) => {
@@ -69,3 +76,11 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
 };
 
 export default useHttp;
+/**
+ * fetch("url",
+        { 
+            method: "POST",
+            headers: { "Content-Type": "application/json",'Authorization': 'Bearer ' + window.localStorage["Access_Token"]},
+            body:data
+        }).then(response => response.blob()).then(response => ...*your code for download*... )
+ */
