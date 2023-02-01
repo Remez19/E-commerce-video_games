@@ -32,26 +32,79 @@ function OrderItem({ orderData }) {
       ) : (
         <div className="order-item__container">
           <div className="order-item__data-container">
-            <div>
-              <p style={{ fontWeight: "bold" }}>Games</p>
+            <div className="order-item__data-games">
+              <p>Games</p>
               {orderData.items.map((itemInOrder) => {
                 return (
-                  <p
-                    key={itemInOrder._id.toString()}
-                    style={{ color: "black" }}
-                  >
-                    {itemInOrder.itemData.title}
-                  </p>
+                  <div>
+                    <img
+                      src={itemInOrder.itemData.imageUrl}
+                      alt={itemInOrder.itemData.title}
+                    />
+                    <p
+                      key={itemInOrder._id.toString()}
+                      style={{ color: " #dfdfdf" }}
+                    >
+                      {itemInOrder.itemData.title}
+                    </p>
+                  </div>
                 );
               })}
             </div>
-            <div>
-              <p style={{ fontWeight: "bold" }}>Quantity</p>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0",
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                  color: "#e9e9e9",
+                }}
+              >
+                Price
+              </p>
               {orderData.items.map((itemInOrder) => {
                 return (
                   <p
                     key={itemInOrder._id.toString() + "1"}
-                    style={{ color: "black" }}
+                    style={{ color: " #dfdfdf" }}
+                  >
+                    {`$${itemInOrder.itemData.price}`}
+                  </p>
+                );
+              })}
+            </div>
+            <div
+              style={{
+                marginRight: "0.5rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "0.5rem",
+              }}
+            >
+              <p
+                style={{
+                  margin: "0",
+                  fontWeight: "bold",
+                  textDecoration: "underline",
+                  color: "#e9e9e9",
+                }}
+              >
+                Quantity
+              </p>
+              {orderData.items.map((itemInOrder) => {
+                return (
+                  <p
+                    key={itemInOrder._id.toString() + "1"}
+                    style={{ color: " #dfdfdf" }}
                   >
                     {`x${itemInOrder.quantity}`}
                   </p>
@@ -60,7 +113,9 @@ function OrderItem({ orderData }) {
             </div>
           </div>
           <div>
-            <p>{`Date: ${orderData.created_at}`}</p>
+            <p style={{ color: "#b1b1b1" }}>{`Date: ${new Date(
+              orderData.created_at
+            ).toLocaleDateString("en-us")}`}</p>
             <button title="Download Invoice" onClick={onInvoiceClickHandler}>
               Invoice
             </button>

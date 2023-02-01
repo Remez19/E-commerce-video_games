@@ -26,7 +26,7 @@ const orderSchema = new Schema({
     required: true,
   },
   created_at: {
-    type: Date,
+    type: Schema.Types.Date,
     required: true,
   },
 });

@@ -1,9 +1,9 @@
 .order-item__container {
   display: flex;
-  width: 70%;
+  width: 80%;
   height: fit-content;
-  background-color: #ff7474;
-  border: 1px solid #ff7474;
+  background-color: #5151518a;
+  border: 1px solid #515151f1;
   border-radius: 5%;
   flex-direction: column;
 }
@@ -14,11 +14,44 @@
   justify-content: center;
 }
 
-.order-item__data-container > div {
+.order-item__data-games {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  border-right: 1px solid white;
+  padding-right: 1rem;
+  gap: 0.5rem;
 }
+
+.order-item__data-games > p {
+  margin: 0;
+  text-align: center;
+  color: #e9e9e9;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.order-item__data-games > div {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+  gap: 0.5rem;
+}
+
+.order-item__data-games > div > p {
+  font-size: 0.8rem;
+}
+
+.order-item__data-games img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.3rem solid black;
+  border-radius: 30%;
+  background-color: black;
+}
+
 .order-item__container > div {
   display: flex;
   gap: 0.5rem;
@@ -38,7 +71,9 @@
 }
 
 .order-item__container > div > button:hover {
-  text-decoration: underline;
-  color: #ffe283;
+  /* text-decoration: underline; */
+  font-weight: bolder;
+  color: #e9e9e9;
   cursor: pointer;
 }
+/*  #dfdfdf */

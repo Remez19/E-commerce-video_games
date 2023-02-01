@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 const Cart = () => {
   const [itemsCount, setItemsCount] = useState(0);
   const user = useSelector((state) => state.ui.loggedInUser);
-  const cart = user ? user.cart : undefined;
+  let cart = undefined;
+  if (user) {
+    cart = user.cart;
+  }
 
   useEffect(() => {
     if (cart) {
@@ -18,7 +21,7 @@ const Cart = () => {
     }
   }, [cart]);
   return (
-    <NavLink to="/shop" className="cart_btn" end>
+    <NavLink to={user ? "/shop" : "/login"} className="cart_btn" end>
       {cart && <div className="cart-items__counter">{itemsCount}</div>}
     </NavLink>
   );
