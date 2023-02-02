@@ -6,7 +6,6 @@ import OrderItem from "../UI/UI_Elements/OrderItem";
 function OrdersPage() {
   const loaderData = useLoaderData();
   const { userOrders } = loaderData;
-  console.log(userOrders);
   return (
     <main className="orders-page__conainer">
       <h2>Your orders</h2>
@@ -15,7 +14,10 @@ function OrdersPage() {
           return <OrderItem orderData={order} key={order._id.toString()} />;
         })}
       {userOrders.length === 1 && (
-        <OrderItem orderData={userOrders} key={userOrders._id.toString()} />
+        <OrderItem
+          orderData={userOrders[0]}
+          key={userOrders[0]._id.toString()}
+        />
       )}
     </main>
   );

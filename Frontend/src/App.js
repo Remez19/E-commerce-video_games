@@ -62,7 +62,7 @@ const router = createBrowserRouter([
           // Get Order data and create order on db
           try {
             const jsonData = await fetch(
-              "http://localhost:8080/order/setNewOrder",
+              "http://localhost:8080/order/getOrder",
 
               {
                 method: "POST",
@@ -76,7 +76,6 @@ const router = createBrowserRouter([
               }
             );
             const resData = await jsonData.json();
-
             return resData;
           } catch (err) {
             throw err;

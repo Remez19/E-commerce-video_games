@@ -10,7 +10,7 @@ const orderSchema = new Schema({
   },
   items: [
     {
-      itemData: {
+      productData: {
         type: Schema.Types.ObjectId,
         ref: "Game",
         required: true,
@@ -27,6 +27,10 @@ const orderSchema = new Schema({
   },
   created_at: {
     type: Schema.Types.Date,
+    required: true,
+  },
+  invoiceUrl: {
+    type: String,
     required: true,
   },
 });

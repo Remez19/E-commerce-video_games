@@ -28,7 +28,15 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
-app.use(bodyParser.json()); // application/json
+// app.use(bodyParser.json()); // application/json
+app.use((req, res, next) => {
+  if (req.originalUrl === "/order/webhook") {
+    console.log("Stripe parse");
+    next();
+  } else {
+    bodyParser.json()(req, res, next);
+  }
+});
 
 // Serving images statically
 app.use("/images", express.static(path.join(__dirname, "images")));

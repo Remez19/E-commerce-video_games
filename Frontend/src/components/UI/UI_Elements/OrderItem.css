@@ -1,6 +1,6 @@
 .order-item__container {
   display: flex;
-  width: 80%;
+  width: 90%;
   height: fit-content;
   background-color: #5151518a;
   border: 1px solid #515151f1;
@@ -11,18 +11,18 @@
   display: flex;
   flex-direction: row;
   margin-left: 0.2rem;
+  margin-top: 0.5rem;
   justify-content: center;
 }
 
 .order-item__data-games {
-  width: 100%;
-  height: 100%;
+  width: 15rem;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   border-right: 1px solid white;
-  padding-right: 1rem;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .order-item__data-games > p {
