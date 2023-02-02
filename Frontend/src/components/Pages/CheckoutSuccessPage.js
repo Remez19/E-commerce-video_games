@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import { uiSliceActions } from "../../Store/ui";
 import { useDispatch } from "react-redux";

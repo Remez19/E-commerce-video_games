@@ -47,7 +47,6 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
   } = useHttp(reqConfigFav, onAddToFavoritesFinish);
 
   const onAddToFavoritesHandler = () => {
-    console.log(loggedInUser);
     if (!loggedInUser) {
       navigate("/login");
     } else if (favorite) {
@@ -150,7 +149,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
           </div>
         </div>
       ) : (
-        <Loading width={"100%"} height={"100%"} />
+        <Loading width={"100vw"} height={"100vh"} />
       )}
     </>
   );

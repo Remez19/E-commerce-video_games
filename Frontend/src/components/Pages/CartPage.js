@@ -14,20 +14,15 @@ function CartPage() {
       window.location.href = resData.url;
     }
   };
-  const {
-    error,
-    isLoading,
-    sendRequest: order,
-  } = useHttp(
+  const { error, isLoading, sendRequest } = useHttp(
     {
-      url: "http://localhost:8080/order/payOrder",
       body: { userEmail: userEmail },
     },
     onOrderFinishHandler
   );
 
   const onClickOrderButtonHandler = () => {
-    order();
+    sendRequest({ url: "http://localhost:8080/order/payOrder" });
   };
   useEffect(() => {
     if (error) {
@@ -37,13 +32,14 @@ function CartPage() {
   return (
     <>
       {isLoading ? (
-        <Loading width={"100vw"} height={"100vh"} />
+        <Loading width={"100%"} height={"100%"} />
       ) : (
         <main className="cart-page__main-container">
           <h2>Your Cart</h2>
           {cart.items.length > 0 && (
             <h3>{`Total Price: $${cart.totalPrice}`}</h3>
           )}
+          {/* <button>Clear Cart</button> */}
           {cart.items.length > 0 ? (
             cart.items.map((cartItem) => (
               <CartItem cartItem={cartItem} key={cartItem._id.toString()} />

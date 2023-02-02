@@ -22,3 +22,9 @@
     transform: translateX(0%);
   }
 }
+
+@media (min-width: 40rem) {
+  .orders-page__conainer {
+    height: max-content;
+  }
+}

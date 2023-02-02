@@ -1,8 +1,5 @@
 import { orderModel } from "../models/order.mjs";
 import { userModel } from "../models/user.mjs";
-import pdfkit from "pdfkit";
-import fs from "fs";
-import path from "path";
 
 import { Stripe } from "stripe";
 
@@ -98,8 +95,8 @@ export const getUserOrders = async (req, res, next) => {
 
 export const stripeWebHook = async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
-  const endpointSecret =
-    "whsec_a4d68250cced6f5939053451a8428ea627aa347d217807f557f1bed34c9c2ba6";
+  const endpointSecret = process.env.Stripe_EndPoint_Secret;
+
   let event;
 
   try {

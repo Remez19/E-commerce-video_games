@@ -68,3 +68,20 @@ export const changeCartItemQuantity = async (req, res, next) => {
     next(err);
   }
 };
+
+export const clearCart = async (req, res, next) => {
+  try {
+    const { userEmail } = req.body;
+    const user = await userModel.findOne({ email: userEmail });
+    user.cart.items = [];
+    user.cart.totalPrice = 0;
+    await user.save();
+    res.status(201).json({ message: "Clear Cart.", userCart: user.cart });
+  } catch (err) {
+    if (!err.statusCode) {
+      // Server error
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
