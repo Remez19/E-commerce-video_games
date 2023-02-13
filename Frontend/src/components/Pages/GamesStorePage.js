@@ -13,6 +13,9 @@ import { gamesSliceActions } from "../../Store/games";
 
 import useHttp from "../../hooks/use-http";
 
+// Need to work on this component.
+// fetching data can be done differently.
+
 const GamesStore = () => {
   // List of games to present.
 

@@ -49,4 +49,8 @@
     align-items: center;
     margin-left: 3rem;
   }
+  .main_header--pages_route {
+    text-decoration: none;
+    color: #ff7474;
+  }
 }

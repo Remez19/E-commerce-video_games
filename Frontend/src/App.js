@@ -5,6 +5,7 @@ import RootLayout from "./components/Pages/RootLayout";
 import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
+import NewPasswordPage from "./components/Pages/NewPasswordPage";
 import ErrorPage from "./components/Pages/ErrorPage";
 import CartPage from "./components/Pages/CartPage";
 import OrdersPage from "./components/Pages/OrdersPage";
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         element: <UserLoginPage />,
       },
       { path: "/signup", element: <UserSignupPage /> },
+      { path: "/new-password", element: <NewPasswordPage /> },
       { path: "/shop", element: <CartPage /> },
       {
         path: "/orders",

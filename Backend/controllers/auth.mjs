@@ -96,3 +96,23 @@ export const postSignup = async (req, res, next) => {
     next(error);
   }
 };
+
+export const resetPassword = (req, res, next) => {
+  const errors = validationResult(req);
+  try {
+    if (!errors.isEmpty()) {
+      const error = new Error("Invalid Input");
+      error.statusCode = 422;
+      error.data = errors.array();
+      throw error;
+    }
+    const { email } = req.body;
+    // send code to user email address for later check
+    res.status(200).json({ message: "send you a email to reset " });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};

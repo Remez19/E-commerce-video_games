@@ -4,7 +4,7 @@
 import { gameModel } from "../models/game.mjs";
 import { userModel } from "../models/user.mjs";
 
-const GAMES_PER_PAGE = 8;
+const GAMES_PER_PAGE = 12;
 
 export const getHomePage = async (req, res, next) => {
   // Check for errors before anything if needed!
@@ -173,12 +173,15 @@ export const addItemToFavorites = async (req, res, next) => {
     if (user.favorites.length === 1) {
       res.status(201).json({
         message: "Item added to favorites.",
-        favorites: user.favorites[0]._id,
+        favorites: [user.favorites[0]._id],
       });
     } else {
+      let favorites = user.favorites.map((favItem) => {
+        return favItem._id.toString();
+      });
       res.status(201).json({
         message: "Item added to favorites.",
-        favorites: user.favorites,
+        favorites: favorites,
       });
     }
   } catch (err) {
@@ -208,12 +211,15 @@ export const removeItemFromFavorites = async (req, res, next) => {
     if (user.favorites.length === 1) {
       res.status(201).json({
         message: "Item unfavorite.",
-        favorites: user.favorites[0]._id,
+        favorites: [user.favorites[0]._id],
       });
     } else {
+      let favorites = user.favorites.map((favItem) => {
+        return favItem._id.toString();
+      });
       res.status(201).json({
         message: "Item unfavorite.",
-        favorites: user.favorites,
+        favorites: favorites,
       });
     }
   } catch (err) {

@@ -6,8 +6,10 @@ import { uiSliceActions } from "../../../Store/ui";
 import "./GameItem.css";
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
+// import Rate from "../UI_Utill/Rate";
 
-const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
+const GameItem = ({ gameData, onGameItemClick, myRef, gameId, rate }) => {
+  const [favoriteGame, setFavoriteGame] = useState(false);
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const dispatchAction = useDispatch();
   const navigate = useNavigate();
@@ -25,13 +27,24 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
 
   const onAddToFavoritesFinish = (resData) => {
     const { favorites } = resData;
-    localStorage.removeItem("favorites");
+
+    let exist = false;
+    if (favorites.length > 0) {
+      for (const favGame of favorites) {
+        if (favGame === gameData._id) {
+          exist = true;
+          break;
+        }
+      }
+    }
+    setFavoriteGame(exist);
+
     localStorage.setItem("favorites", JSON.stringify(favorites));
     dispatchAction(uiSliceActions.updateUserFavorites(favorites));
   };
 
   const onClickGameHandler = () => {
-    onGameItemClick(gameData, favorite);
+    onGameItemClick(gameData, favoriteGame);
   };
 
   const {
@@ -49,7 +62,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
   const onAddToFavoritesHandler = () => {
     if (!loggedInUser) {
       navigate("/login");
-    } else if (favorite) {
+    } else if (favoriteGame) {
       favItem(
         { userEmail: loggedInUser.userEmail, itemId: gameId },
         "http://localhost:8080/removeItemFromFavorites"
@@ -80,6 +93,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
       }
     }
     if (errorFav) {
+      // Error in favorite request.
       if (errorFav.status === 401) {
         localStorage.clear();
         dispatchAction(uiSliceActions.setLoggedInUser(undefined));
@@ -88,7 +102,16 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
         throw error || errorFav;
       }
     }
-  });
+    if (loggedInUser) {
+      let favorites = JSON.parse(localStorage.getItem("favorites"));
+
+      for (const favGame of favorites) {
+        if (favGame === gameData._id) {
+          setFavoriteGame(true);
+        }
+      }
+    }
+  }, [dispatchAction, error, errorFav, gameData._id, loggedInUser, navigate]);
   return (
     <>
       {!isLoading && !isLoadingFav ? (
@@ -99,6 +122,16 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
             className="game_item_container__image"
             style={{ backgroundImage: `url(${gameData.imageUrl})` }}
           ></div>
+          {/* <div style={{ display: "flex", gap: "0.3rem" }}>
+            {[...Array(5).keys()].map((val) => {
+              return (
+                <>
+                  <Rate color={"white"} size={"10px"} key={val + 1} />
+                  <Rate color={"#FFD700"} size={"5x"} key={val} />
+                </>
+              );
+            })}
+          </div> */}
           <div className="game_item_container__platforms">
             Platforms
             <ul className="game_item_container__platforms_list">
@@ -133,7 +166,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
           >
             <button
               style={{
-                backgroundImage: favorite
+                backgroundImage: favoriteGame
                   ? `url(${require("../../../images/UI_Images/favorite.png")})`
                   : `url(${require("../../../images/UI_Images/add_to_favorite.png")})`,
               }}
@@ -149,7 +182,7 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, favorite }) => {
           </div>
         </div>
       ) : (
-        <Loading width={"100vw"} height={"100vh"} />
+        <Loading width={"100%"} height={"100%"} />
       )}
     </>
   );

@@ -9,7 +9,9 @@ import Loading from "../UI_Utill/Loading";
 import "./User-Login.css";
 
 /**
- * Missing input validation
+ * Missing input validation - messaging
+ * Missing fordet password opetion.
+ *
  */
 
 function UserLogin() {
@@ -30,7 +32,6 @@ function UserLogin() {
     localStorage.setItem("userEmail", resData.userEmail);
     localStorage.setItem("favorites", JSON.stringify(resData.favorites));
     localStorage.setItem("cart", JSON.stringify(resData.cart));
-
     dispatchAction(
       uiSliceActions.setLoggedInUser({
         userName: resData.userName,
@@ -115,6 +116,12 @@ function UserLogin() {
           <div className="user-login__link-text">
             Don't have an acoount yet?{" "}
             <NavLink to="/signup" className="user-login__link" end>
+              Click Here
+            </NavLink>
+          </div>
+          <div className="user-login__link-text">
+            Forgot your password?{" "}
+            <NavLink to="/new-password" className="user-login__link" end>
               Click Here
             </NavLink>
           </div>

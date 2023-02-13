@@ -28,4 +28,18 @@ authRouter.post(
   postSignup
 );
 
+authRouter.post("/new-password", [
+  body("email")
+    .isEmail()
+    .withMessage("Please enter a valid email.")
+    .custom((value, { req }) => {
+      return userModel.findOne({ email: value }).then((userDoc) => {
+        if (userDoc) {
+          return Promise.reject("Email address alreay exists!");
+        }
+      });
+    })
+    .normalizeEmail(),
+]);
+
 export default authRouter;

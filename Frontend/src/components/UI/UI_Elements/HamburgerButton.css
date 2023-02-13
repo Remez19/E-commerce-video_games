@@ -57,7 +57,9 @@
   border: none;
 }
 
-.hamburger_container > p {
+.hamburger_container-main-link {
+  text-decoration: none;
+  display: inline-block;
   color: #ff7474;
   font-family: "Varela Round", sans-serif;
   margin-left: 1rem;
@@ -67,6 +69,23 @@
   font-style: italic;
   font-weight: bold;
   width: max-content;
+}
+.hamburger_container-main-link-active {
+  color: #ffe283;
+  text-decoration: underline;
+  font-family: "Varela Round", sans-serif;
+  margin-left: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: bold;
+  width: max-content;
+}
+
+.hamburger_container-link,
+.hamburger_container-link-active {
+  display: none;
 }
 
 .hamburger_container > p:hover {
@@ -81,7 +100,6 @@
 
 @media (min-width: 40rem) {
   .main_header__toggle_button {
-    /* visibility: hidden; */
     display: none;
   }
   .hamburger_container {
@@ -93,7 +111,30 @@
     margin-top: 0;
     margin-bottom: 0;
   }
-  /* .main_header__logo {
-    margin-left: 0.5rem;
-  } */
+  .hamburger_container-link {
+    text-decoration: none;
+    display: inline-block;
+    color: #ff7474;
+    font-family: "Varela Round", sans-serif;
+    margin-left: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    font-weight: bold;
+    width: max-content;
+  }
+  .hamburger_container-link-active {
+    display: inline-block;
+    color: #ffe283;
+    text-decoration: underline;
+    font-family: "Varela Round", sans-serif;
+    margin-left: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    font-weight: bold;
+    width: max-content;
+  }
 }

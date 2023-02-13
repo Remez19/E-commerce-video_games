@@ -45,23 +45,25 @@
 }
 .input-label__box label {
   color: #ff7474;
-  text-align: left;
   font-size: 0.8rem;
   position: absolute;
   margin-top: 0.3rem;
+  margin-left: 0.3rem;
+  pointer-events: none;
+  background-color: black;
 }
 
 .user-login__data input {
   background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #ff7474;
+  border: 1px solid #ff7474;
+  border-radius: 4%;
   color: #ff7474;
   width: 10rem;
   height: 2rem;
 }
 .user-login__data input:focus {
   outline: none;
-  border-bottom: 1px solid #ffe283;
+  border: 1px solid #ffe283;
 }
 
 .user-login__container button {
@@ -131,13 +133,13 @@ input:-webkit-autofill {
     transform: translateY(0%);
   }
   to {
-    transform: translateY(-140%);
+    transform: translateY(-100%);
   }
 }
 
 @keyframes moveDown {
   from {
-    transform: translateY(-130%);
+    transform: translateY(-100%);
   }
   to {
     transform: translateY(0%);

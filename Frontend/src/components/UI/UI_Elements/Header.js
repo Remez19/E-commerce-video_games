@@ -2,8 +2,6 @@ import "./Header.css";
 
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import Backdrop from "../UI_Utill/Backdrop";
 import HamburgerButton from "./HamburgerButton";
@@ -12,7 +10,6 @@ import UserProfile from "./UserProfile";
 import Cart from "../../Cart/Cart";
 
 const Header = () => {
-  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
 
   const onHamburgerClickHandler = () => {
@@ -30,12 +27,6 @@ const Header = () => {
           </Backdrop>,
           document.getElementById("backdrop-root")
         )}
-      {/* {isHamburgerBtnClick && <MobileNav anim={anim} />} */}
-      {loggedInUser && (
-        <div className="main_header--pages_routes">
-          <NavLink to="/orders">Orders</NavLink>
-        </div>
-      )}
 
       <div className="main_header--user-section">
         <ul className="main_header__items">

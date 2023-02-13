@@ -9,6 +9,8 @@ const cart =
     ? JSON.parse(localStorage.getItem("cart"))
     : undefined;
 
+// console.log(cart);
+
 const initState = {
   loggedInUser: localStorage.getItem("token")
     ? {

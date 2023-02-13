@@ -1,13 +1,11 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import "./HamburgerButton.css";
 
 const HamburgerButton = (props) => {
-  const navigate = useNavigate();
+  const loggedInUser = useSelector((state) => state.ui.loggedInUser);
 
-  const onHomePageNameClickHandler = () => {
-    navigate("/");
-  };
   return (
     <div className="hamburger_container">
       <button onClick={props.onClick} className="main_header__toggle_button">
@@ -18,7 +16,29 @@ const HamburgerButton = (props) => {
       <NavLink to="/">
         <button className="main_header__logo"></button>
       </NavLink>
-      <p onClick={onHomePageNameClickHandler}>Games Puddle</p>
+
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive
+            ? "hamburger_container-main-link-active"
+            : "hamburger_container-main-link"
+        }
+      >
+        Games Puddle
+      </NavLink>
+      {loggedInUser && (
+        <NavLink
+          to="/orders"
+          className={({ isActive }) =>
+            isActive
+              ? "hamburger_container-link-active"
+              : "hamburger_container-link"
+          }
+        >
+          Orders
+        </NavLink>
+      )}
     </div>
   );
 };

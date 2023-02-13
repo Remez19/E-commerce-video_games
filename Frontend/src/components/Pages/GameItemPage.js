@@ -18,8 +18,8 @@ function GameItemPage() {
 
   const [reqConfigFav] = useState({});
   const { state } = useLocation();
-  const { game, favorite } = state;
-  const [favoriteGame, setFavoriteGame] = useState(favorite);
+  const { game } = state;
+  const [favoriteGame, setFavoriteGame] = useState(false);
 
   const onAddToCartFinish = (resData) => {
     const { newCart } = resData;
@@ -29,8 +29,16 @@ function GameItemPage() {
 
   const onAddToFavoritesFinish = (resData) => {
     const { favorites } = resData;
-    console.log(favorites);
-    localStorage.removeItem("favorites");
+    let exist = false;
+    if (favorites.length > 0) {
+      for (const favGame of favorites) {
+        if (favGame === game._id) {
+          exist = true;
+          break;
+        }
+      }
+    }
+    setFavoriteGame(exist);
     localStorage.setItem("favorites", JSON.stringify(favorites));
     dispatchAction(uiSliceActions.updateUserFavorites(favorites));
   };
@@ -51,13 +59,11 @@ function GameItemPage() {
     if (!loggedInUser) {
       navigate("/login");
     } else if (favoriteGame) {
-      setFavoriteGame((prevState) => !prevState);
       favItem(
         { userEmail: loggedInUser.userEmail, itemId: game._id },
         "http://localhost:8080/removeItemFromFavorites"
       );
     } else {
-      setFavoriteGame((prevState) => !prevState);
       favItem(
         { userEmail: loggedInUser.userEmail, itemId: game._id },
         "http://localhost:8080/addToFavorites"
@@ -90,8 +96,16 @@ function GameItemPage() {
       } else {
         throw error || errorFav;
       }
+    } else {
+      let favorites = JSON.parse(localStorage.getItem("favorites"));
+      for (const faveItem of favorites) {
+        if (faveItem === game._id) {
+          setFavoriteGame(true);
+        }
+      }
+      // setFavoriteGame(favorites.find(game._id));
     }
-  });
+  }, [dispatchAction, error, errorFav, favoriteGame, game._id, navigate]);
   return (
     <>
       {!isLoading && !isLoadingFav ? (
@@ -146,17 +160,7 @@ function GameItemPage() {
             <p
               style={{ textDecoration: "none", color: "#ffe283", margin: "0" }}
             >
-              Price:{" "}
-              <p
-                style={{
-                  display: "inline-block",
-                  textDecoration: "underline",
-                  margin: "0",
-                  color: "#ff7474",
-                }}
-              >
-                {"$" + game.price}
-              </p>
+              {`price: ${game.price}`}
             </p>
             <div className="game-item__page_actions-container">
               <button

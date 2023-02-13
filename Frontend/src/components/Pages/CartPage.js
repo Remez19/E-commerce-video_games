@@ -1,17 +1,22 @@
 import "./CartPage.css";
-import { useSelector } from "react-redux";
-
 import CartItem from "../Cart/CartItem";
 import useHttp from "../../hooks/use-http";
-import { useEffect } from "react";
 import Loading from "../UI/UI_Utill/Loading";
+import { uiSliceActions } from "../../Store/ui";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 function CartPage() {
   const { cart, userEmail } = useSelector((state) => state.ui.loggedInUser);
+  const dispatchAction = useDispatch();
 
   const onOrderFinishHandler = (resData) => {
     if (resData.url) {
       window.location.href = resData.url;
+    } else if (resData.userCart) {
+      localStorage.setItem("cart", JSON.stringify(resData.userCart));
+      dispatchAction(uiSliceActions.updateUserCart(resData.userCart));
     }
   };
   const { error, isLoading, sendRequest } = useHttp(
@@ -21,8 +26,11 @@ function CartPage() {
     onOrderFinishHandler
   );
 
+  const onClickClearCartHandler = () => {
+    sendRequest(undefined, "http://localhost:8080/cart/clearCart");
+  };
   const onClickOrderButtonHandler = () => {
-    sendRequest({ url: "http://localhost:8080/order/payOrder" });
+    sendRequest(undefined, "http://localhost:8080/order/payOrder");
   };
   useEffect(() => {
     if (error) {
@@ -37,9 +45,11 @@ function CartPage() {
         <main className="cart-page__main-container">
           <h2>Your Cart</h2>
           {cart.items.length > 0 && (
-            <h3>{`Total Price: $${cart.totalPrice}`}</h3>
+            <h3>{`Total Price: $${Number(cart.totalPrice).toFixed(2)}`}</h3>
           )}
-          {/* <button>Clear Cart</button> */}
+          {cart.items.length > 0 && (
+            <button onClick={onClickClearCartHandler}>Clear Cart</button>
+          )}
           {cart.items.length > 0 ? (
             cart.items.map((cartItem) => (
               <CartItem cartItem={cartItem} key={cartItem._id.toString()} />

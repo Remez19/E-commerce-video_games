@@ -105,7 +105,9 @@ function OrderItem({ orderData }) {
           >
             Total
           </p>
-          <p style={{ color: " #dfdfdf" }}>{`$${orderData.totalPrice}`}</p>
+          <p style={{ color: " #dfdfdf" }}>{`$${Number(
+            orderData.totalPrice
+          ).toFixed(2)}`}</p>
         </div>
       </div>
       <div>
