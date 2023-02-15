@@ -6,6 +6,7 @@ import { uiSliceActions } from "../../../Store/ui";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
+import Card from "../UI_Utill/Card";
 import "./User-Login.css";
 
 /**
@@ -58,78 +59,83 @@ function UserLogin() {
     }
   }, [requestError]);
   return (
-    <form
-      onSubmit={handleSubmit(onSubmitHandler)}
-      className="user-login__container"
-    >
-      {!isLoading ? (
-        <Fragment>
-          <div className="user-login__header-img"></div>
-          <div className="user-login__data">
-            {requestError && (
-              <div className="user-login__error-message">
-                {requestError.message}
+    <Fragment>
+      {!isLoading && (
+        <Card>
+          <form
+            onSubmit={handleSubmit(onSubmitHandler)}
+            className="user-login__container"
+          >
+            <div className="user-login__header-img"></div>
+            <div className="user-login__data">
+              {requestError && (
+                <div className="user-login__error-message">
+                  {requestError.message}
+                </div>
+              )}
+              <div className="input-label__box">
+                <label htmlFor="email" className={emailLabel}>
+                  Email
+                </label>
+                <input
+                  onFocus={() => {
+                    if (!getValues("email")) setEmailLabel("moveUp");
+                  }}
+                  type={"email"}
+                  {...register("email", {
+                    required: true,
+                    onBlur: () => {
+                      if (!getValues("email")) setEmailLabel("moveDown");
+                    },
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "invalid email address.",
+                    },
+                  })}
+                ></input>
               </div>
-            )}
-            <div className="input-label__box">
-              <label htmlFor="email" className={emailLabel}>
-                Email
-              </label>
-              <input
-                onFocus={() => {
-                  if (!getValues("email")) setEmailLabel("moveUp");
-                }}
-                type={"email"}
-                {...register("email", {
-                  required: true,
-                  onBlur: () => {
-                    if (!getValues("email")) setEmailLabel("moveDown");
-                  },
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "invalid email address.",
-                  },
-                })}
-              ></input>
+              <div className="input-label__box">
+                <label htmlFor="password" className={passwordLabel}>
+                  Password
+                </label>
+                <input
+                  onFocus={() => {
+                    if (!getValues("password")) setPasswordLabel("moveUp");
+                  }}
+                  type={"password"}
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                    onBlur: () => {
+                      if (!getValues("password")) setPasswordLabel("moveDown");
+                    },
+                  })}
+                ></input>
+              </div>
             </div>
-            <div className="input-label__box">
-              <label htmlFor="password" className={passwordLabel}>
-                Password
-              </label>
-              <input
-                onFocus={() => {
-                  if (!getValues("password")) setPasswordLabel("moveUp");
-                }}
-                type={"password"}
-                {...register("password", {
-                  required: true,
-                  minLength: 6,
-                  onBlur: () => {
-                    if (!getValues("password")) setPasswordLabel("moveDown");
-                  },
-                })}
-              ></input>
+            <input
+              type="submit"
+              disabled={!(isValid && isDirty)}
+              value="Login"
+            />
+            <div className="user-login__link-text">
+              Don't have an acoount yet?{" "}
+              <NavLink to="/signup" className="user-login__link" end>
+                Click Here
+              </NavLink>
             </div>
-          </div>
-          <input type="submit" disabled={!(isValid && isDirty)} value="Login" />
-          <div className="user-login__link-text">
-            Don't have an acoount yet?{" "}
-            <NavLink to="/signup" className="user-login__link" end>
-              Click Here
-            </NavLink>
-          </div>
-          <div className="user-login__link-text">
-            Forgot your password?{" "}
-            <NavLink to="/new-password" className="user-login__link" end>
-              Click Here
-            </NavLink>
-          </div>
-        </Fragment>
-      ) : (
-        <Loading width={"100%"} height={"100%"} />
+            <div className="user-login__link-text">
+              Forgot your password?{" "}
+              <NavLink to="/new-password" className="user-login__link" end>
+                Click Here
+              </NavLink>
+            </div>
+          </form>
+        </Card>
       )}
-    </form>
+      {isLoading && <Loading width={"100%"} height={"100%"} />}
+    </Fragment>
   );
 }
 

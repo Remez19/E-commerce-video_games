@@ -3,9 +3,23 @@ import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 
+import sgMail from "@sendgrid/mail";
+
 const SALT_VALUE = 12;
 
 const secret = process.env.JWT_SECRET;
+
+sgMail.setApiKey(process.env.SendGrid_API_KEY);
+// sgMail.setApiKey(process.env.SendGrid_API_KEY);
+
+// Hellper function to send emails
+const sendEmail = async (msg) => {
+  try {
+    await sgMail.send(msg);
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const postLogin = async (req, res, next) => {
   const errors = validationResult(req);
@@ -81,6 +95,15 @@ export const postSignup = async (req, res, next) => {
         password: hashedPassword,
       });
       const result = await user.save();
+      sendEmail({
+        to: user.email,
+        from: process.env.SendGrid_From_Email,
+        subject: "Reset Your Password",
+        dynamic_template_data: {
+          userName: user.name,
+        },
+        template_id: "d-8be3ada7bec84169aa98224f1bf2f134",
+      });
       res
         .status(201)
         .json({ message: "User created successfully.", userId: result._id });
@@ -97,18 +120,72 @@ export const postSignup = async (req, res, next) => {
   }
 };
 
-export const resetPassword = (req, res, next) => {
+export const requestResetPassword = async (req, res, next) => {
   const errors = validationResult(req);
   try {
     if (!errors.isEmpty()) {
-      const error = new Error("Invalid Input");
+      const error = new Error("Something went worng");
       error.statusCode = 422;
       error.data = errors.array();
       throw error;
     }
     const { email } = req.body;
-    // send code to user email address for later check
+    const user = await userModel.findOne({ email: email });
+    const resetPasswordToken = jwt.sign(
+      { email: email, id: user._id },
+      secret,
+      {
+        expiresIn: "15m",
+      }
+    );
+    const linkToReset = `http://localhost:3000/new-password/${user._id}/${resetPasswordToken}`;
+    sendEmail({
+      to: user.email,
+      from: process.env.SendGrid_From_Email,
+      subject: "Reset Your Password",
+      dynamic_template_data: {
+        userName: user.name,
+        resetLink: linkToReset,
+      },
+      template_id: "d-bde4e28455844c429d768163f6f69263",
+    });
     res.status(200).json({ message: "send you a email to reset " });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  const errors = validationResult(req);
+  try {
+    if (!errors.isEmpty()) {
+      const error = new Error("Something went worng");
+      error.statusCode = 500;
+      error.data = errors.array();
+      throw error;
+    }
+    const { userId, token, newPassword } = req.body;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      throw new Error("Cannot Find User!");
+    }
+    console.log(user);
+    let decodedToken = jwt.verify(token, secret);
+    if (!decodedToken) {
+      // if it wasnt able to verify
+      const error = new Error("Something went worng");
+      error.statusCode = 500;
+      throw error;
+    }
+    const newHashedPassword = await bcrypt.hash(newPassword, SALT_VALUE);
+    user.password = newHashedPassword;
+    await user.save();
+    res.status(201).json({
+      message: "password change",
+    });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;

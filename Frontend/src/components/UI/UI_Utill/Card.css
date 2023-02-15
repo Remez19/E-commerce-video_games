@@ -1,0 +1,12 @@
+.card {
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(32, 32, 32);
+  align-self: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: rgba(173, 173, 173, 0.25) 0px 50px 100px -20px,
+    rgba(239, 239, 239, 0.25) 0px -2px 6px 0px inset;
+  border: 3px solid rgba(255, 240, 185, 0.564);
+  border-radius: 5px;
+}

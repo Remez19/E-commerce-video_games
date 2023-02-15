@@ -27,9 +27,13 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
         });
         if (!response.ok) {
           // Getting the message from the server
-          let message = (await response.json()).message;
+          let resData = await response.json();
           // eslint-disable-next-line no-throw-literal
-          throw { message, status: response.status };
+          throw {
+            message: resData.message,
+            status: response.status,
+            data: resData.data,
+          };
         }
         let resData;
         if (

@@ -1,6 +1,6 @@
 import UserNewPassword from "../UI/USER_UI/User-NewPassword";
-function NewPasswordPage() {
+function RequestResetPasswordPage() {
   return <UserNewPassword />;
 }
 
-export default NewPasswordPage;
+export default RequestResetPasswordPage;

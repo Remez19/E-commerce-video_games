@@ -29,12 +29,15 @@ const UserProfile = () => {
             }`}
           >
             <div className={`dropdown-menu__user-profile`}>
-              <h4>{loggedInUser.userName}</h4>
+              <h4 style={{ marginTop: "0" }}>{loggedInUser.userName}</h4>
               <ul className="dropdown-menu__user-profile__list">
                 <li>
-                  <button className="dropdown-menu__user-profile__list-item">
+                  <NavLink
+                    to="/user-profile"
+                    className="dropdown-menu__user-profile__list-item"
+                  >
                     View Profile
-                  </button>
+                  </NavLink>
                 </li>
                 <hr />
                 <li>

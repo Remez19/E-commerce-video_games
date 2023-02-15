@@ -5,12 +5,14 @@ import RootLayout from "./components/Pages/RootLayout";
 import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
-import NewPasswordPage from "./components/Pages/NewPasswordPage";
+import RequestResetPasswordPage from "./components/Pages/RequestResetPasswordPage";
+import ResetPasswordPage from "./components/Pages/ResetPasswordPage";
 import ErrorPage from "./components/Pages/ErrorPage";
 import CartPage from "./components/Pages/CartPage";
 import OrdersPage from "./components/Pages/OrdersPage";
 import GameItemPage from "./components/Pages/GameItemPage";
 import CheckoutSuccessPage from "./components/Pages/CheckoutSuccessPage";
+import UserProfilePage from "./components/Pages/UserProfilePage";
 
 import React from "react";
 import { Provider } from "react-redux";
@@ -29,8 +31,13 @@ const router = createBrowserRouter([
         element: <UserLoginPage />,
       },
       { path: "/signup", element: <UserSignupPage /> },
-      { path: "/new-password", element: <NewPasswordPage /> },
+      { path: "/new-password", element: <RequestResetPasswordPage /> },
+      {
+        path: "/new-password/:userId/:token",
+        element: <ResetPasswordPage />,
+      },
       { path: "/shop", element: <CartPage /> },
+      { path: "/user-profile", element: <UserProfilePage /> },
       {
         path: "/orders",
         element: <OrdersPage />,

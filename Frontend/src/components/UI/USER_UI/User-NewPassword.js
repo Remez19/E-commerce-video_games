@@ -1,13 +1,15 @@
 import { useForm } from "react-hook-form";
-import { Fragment, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Fragment, useState } from "react";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 import "./User-NewPassword.css";
+import Card from "../UI_Utill/Card";
 
-// nedd to send mail with code and verify it.
+// Need styling
+
 function UserNewPassword() {
+  const [emailSent, setEmailSent] = useState(false);
   const {
     register,
     handleSubmit,
@@ -15,7 +17,9 @@ function UserNewPassword() {
     formState: { isDirty, isValid },
   } = useForm();
   const [emailLabel, setEmailLabel] = useState("");
-  const onChangePasswordFinish = () => {};
+  const onChangePasswordFinish = () => {
+    setEmailSent(true);
+  };
   const {
     error: requestError,
     sendRequest: changePassword,
@@ -27,52 +31,62 @@ function UserNewPassword() {
   const onSubmitHandler = (data) => {
     changePassword({ email: data.email });
   };
-
-  useEffect(() => {
-    if (requestError) {
-      throw requestError;
-    }
-  }, [requestError]);
-
   return (
     <Fragment>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <form
-          onSubmit={handleSubmit(onSubmitHandler)}
-          className="new-password__container"
-        >
-          <div>Enter your email</div>
-          <div className="input-label__box">
-            <label htmlFor="email" className={emailLabel}>
-              Email
-            </label>
-            <input
-              onFocus={() => {
-                if (!getValues("email")) setEmailLabel("moveUp");
-              }}
-              type={"email"}
-              {...register("email", {
-                required: true,
-                onBlur: () => {
-                  if (!getValues("email")) setEmailLabel("moveDown");
-                },
-                pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: "invalid email address.",
-                },
-              })}
-            ></input>
-          </div>
-          <input
-            type="submit"
-            disabled={!(isValid && isDirty)}
-            value="Reset Password"
-          />
-        </form>
+      {!isLoading && (
+        <Card>
+          <Fragment>
+            {!emailSent && (
+              <form
+                onSubmit={handleSubmit(onSubmitHandler)}
+                className="new-password__container"
+              >
+                <div style={{ marginTop: "2rem", textDecoration: "underline" }}>
+                  Enter your email
+                </div>
+                {requestError && (
+                  <div style={{ color: "#ff7474" }}>
+                    {requestError.data[0].msg}
+                  </div>
+                )}
+                <div className="input-label__box">
+                  <label htmlFor="email" className={emailLabel}>
+                    Email
+                  </label>
+                  <input
+                    onFocus={() => {
+                      if (!getValues("email")) setEmailLabel("moveUp");
+                    }}
+                    type={"email"}
+                    {...register("email", {
+                      required: true,
+                      onBlur: () => {
+                        if (!getValues("email")) setEmailLabel("moveDown");
+                      },
+                      pattern: {
+                        value:
+                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: "invalid email address.",
+                      },
+                    })}
+                  ></input>
+                </div>
+                <input
+                  type="submit"
+                  disabled={!(isValid && isDirty)}
+                  value="Reset Password"
+                />
+              </form>
+            )}
+            {emailSent && (
+              <div style={{ color: "#ff7474", textAlign: "center" }}>
+                An email has been sent to your email account. Follow the steps
+              </div>
+            )}
+          </Fragment>
+        </Card>
       )}
+      {isLoading && <Loading width={"100%"} height={"100%"} />}
     </Fragment>
   );
 }

@@ -51,7 +51,7 @@
   text-decoration: underline;
   position: absolute;
   width: 10rem;
-  left: calc(100% - 14.5rem);
+  left: calc(100% - 13.5rem);
   top: 3.7rem;
   z-index: 1050;
   background-color: rgb(58, 58, 58);
@@ -77,11 +77,13 @@
 }
 
 .dropdown-menu__user-profile__list-item {
+  text-decoration: none;
   cursor: pointer;
   background-color: transparent;
   border: none;
-  text-decoration: none;
   color: #ff7474;
+  font-size: 0.9rem;
+  display: inline-block;
 }
 
 .dropdown-menu__user-profile__list-item:hover {
