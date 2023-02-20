@@ -7,7 +7,6 @@ import Loading from "../UI/UI_Utill/Loading";
 function OrdersPage() {
   const loaderData = useLoaderData();
   const { userOrders } = loaderData;
-
   return (
     <main className="orders-page__conainer">
       {!loaderData ? (

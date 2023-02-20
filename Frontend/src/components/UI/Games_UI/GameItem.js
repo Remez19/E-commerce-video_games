@@ -6,7 +6,7 @@ import { uiSliceActions } from "../../../Store/ui";
 import "./GameItem.css";
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
-// import Rate from "../UI_Utill/Rate";
+import Rate from "../UI_Utill/Rate";
 
 const GameItem = ({ gameData, onGameItemClick, myRef, gameId, rate }) => {
   const [favoriteGame, setFavoriteGame] = useState(false);
@@ -122,16 +122,9 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId, rate }) => {
             className="game_item_container__image"
             style={{ backgroundImage: `url(${gameData.imageUrl})` }}
           ></div>
-          {/* <div style={{ display: "flex", gap: "0.3rem" }}>
-            {[...Array(5).keys()].map((val) => {
-              return (
-                <>
-                  <Rate color={"white"} size={"10px"} key={val + 1} />
-                  <Rate color={"#FFD700"} size={"5x"} key={val} />
-                </>
-              );
-            })}
-          </div> */}
+
+          <Rate rating={gameData.rating.averageRating} gameId={gameId} />
+
           <div className="game_item_container__platforms">
             Platforms
             <ul className="game_item_container__platforms_list">

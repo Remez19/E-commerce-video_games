@@ -21,6 +21,26 @@ const gameSchema = new Schema({
       required: true,
     },
   ],
+  rating: {
+    usersRate: {
+      type: Object,
+      required: true,
+    },
+    totalRating: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+    averageRating: {
+      type: Number,
+      default: 1,
+      required: true,
+    },
+  },
+  youtubeUrl: {
+    type: String,
+    required: true,
+  },
 });
 
 export const gameModel = mongoose.model("Game", gameSchema);

@@ -55,7 +55,7 @@ function CartItem({ cartItem }) {
       throw error;
     }
   }, [error]);
-
+  console.log(cartItem);
   return (
     <>
       {isLoading ? (

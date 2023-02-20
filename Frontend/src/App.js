@@ -17,7 +17,11 @@ import UserProfilePage from "./components/Pages/UserProfilePage";
 import React from "react";
 import { Provider } from "react-redux";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -43,7 +47,7 @@ const router = createBrowserRouter([
         element: <OrdersPage />,
         loader: async () => {
           try {
-            const jsonData = await fetch(
+            const response = await fetch(
               "http://localhost:8080/order/getUserOrders",
               {
                 method: "POST",
@@ -56,8 +60,15 @@ const router = createBrowserRouter([
                 }),
               }
             );
-            const resData = await jsonData.json();
-            return resData;
+            if (response.ok) {
+              const resData = await response.json();
+              return resData;
+            }
+            if (response.status === 401) {
+              // window.location("/login");
+              localStorage.clear();
+              window.location.href = "/login";
+            }
           } catch (err) {
             throw err;
           }

@@ -56,7 +56,7 @@ export const postLogin = async (req, res, next) => {
       },
       secret,
       // Will make sure that the token will be expired in 1 hour
-      { expiresIn: "1h" }
+      { expiresIn: "3h" }
     );
     res.status(200).json({
       token: token,

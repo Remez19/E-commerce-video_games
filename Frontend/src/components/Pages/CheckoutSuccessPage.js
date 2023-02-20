@@ -15,7 +15,7 @@ function CheckoutSuccessPage() {
   /**
    * Need to clear cart after order success.
    * Show the user the order and add + download link for the order invoice.
-   *
+   * Need to send email with the order data.
    *
    *  */
   return (

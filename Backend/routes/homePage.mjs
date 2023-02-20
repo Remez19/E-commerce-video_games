@@ -7,6 +7,7 @@ import {
   addItemToCart,
   addItemToFavorites,
   removeItemFromFavorites,
+  rateGame,
 } from "../controllers/homePage.mjs";
 
 const homePageRouter = express.Router();
@@ -26,5 +27,7 @@ homePageRouter.post(
   isAuth,
   removeItemFromFavorites
 );
+
+homePageRouter.post("/rateGame", isAuth, rateGame);
 
 export default homePageRouter;

@@ -230,3 +230,36 @@ export const removeItemFromFavorites = async (req, res, next) => {
     next(err);
   }
 };
+
+export const rateGame = async (req, res, next) => {
+  try {
+    const { gameId, userEmail, rateVal } = req.body;
+    const user = await userModel.findOne({ email: userEmail });
+    if (!user) {
+      throw new Error("Something Went Wrong!");
+    }
+    const game = await gameModel.findById(gameId);
+    let oldRate = 0;
+    if (game.rating.usersRate[user._id.toString()] !== undefined) {
+      // User already rate this game
+      oldRate = game.rating.usersRate[user._id.toString()];
+    }
+    game.rating.usersRate[user._id.toString()] = rateVal;
+
+    game.rating.totalRating += rateVal - oldRate;
+    game.rating.averageRating = Math.round(
+      game.rating.totalRating / Object.keys(game.rating.usersRate).length
+    );
+    game.rating = {
+      ...game.rating,
+    };
+    await game.save();
+    res.status(201).json({ newRating: game.rating.averageRating });
+  } catch (err) {
+    if (!err.statusCode) {
+      // Server error
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
