@@ -9,9 +9,13 @@
 .game_poster__items {
   height: 100%;
   width: 100%;
+}
+
+.game_poster_item--title {
+  font-family: "Varela Round", sans-serif;
   color: #ffe283;
   text-align: center;
-  font-family: "Varela Round", sans-serif;
+  margin: 0;
 }
 
 .game_poster__item {
@@ -25,7 +29,7 @@
 
 .out {
   animation: slideOut 1.5s ease-out forwards;
-  animation-delay: 1000ms;
+  animation-delay: 1500ms;
 }
 .in {
   animation: slideIn 1.5s ease-out forwards;
@@ -55,7 +59,7 @@
 
 .fadeOut {
   animation: fadeOutAnim 1.5s ease-out forwards;
-  animation-delay: 1000ms;
+  animation-delay: 1500ms;
 }
 .fadeIn {
   animation: fadeInAnim 1.5s ease-out forwards;

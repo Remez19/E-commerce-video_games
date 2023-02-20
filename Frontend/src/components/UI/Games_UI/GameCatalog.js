@@ -5,8 +5,9 @@ import { useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const GameCatalog = ({ GameList, handleScroll, isLoading }) => {
-  const gamesList = GameList;
+const GameCatalog = ({ handleScroll, isLoading }) => {
+  const gamesList = useSelector((state) => state.games.games);
+  // const gamesList = GameList;
   const navigate = useNavigate();
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   let favorites = loggedInUser ? loggedInUser.favorites : undefined;

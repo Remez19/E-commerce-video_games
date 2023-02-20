@@ -9,6 +9,7 @@
   font-style: italic;
   align-items: center;
   justify-content: baseline;
+  margin-bottom: 5rem;
 }
 
 .game-item__page-data-container {
@@ -79,4 +80,7 @@
 }
 
 @media (min-width: 40rem) {
+  .game-item__page-container-video {
+    height: 40%;
+  }
 }

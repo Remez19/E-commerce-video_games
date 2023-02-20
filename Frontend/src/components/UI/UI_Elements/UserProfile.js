@@ -22,7 +22,7 @@ const UserProfile = () => {
     <>
       {loggedInUser ? (
         <div className="user_profile_btn" onClick={onUserNameClickHandler}>
-          {loggedInUser.userName}
+          <p className="user_profile_btn--name">{loggedInUser.userName}</p>
           <div
             className={`dropdown-menu__user-profile__backdrop ${
               active && "dropdown-menu__user-profile__backdrop-active"
@@ -53,7 +53,7 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <NavLink to="/login" className={`user_profile_btn`} end>
+        <NavLink to="/login" className={`user_profile_btn-login`} end>
           login
         </NavLink>
       )}

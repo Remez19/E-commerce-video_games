@@ -6,9 +6,15 @@
   height: 3rem;
   align-items: center;
   justify-content: center;
-  background-color: rgb(157, 157, 157);
-  border: 2px solid #ffe283;
+  background-color: rgb(105, 105, 105);
+  border: 2px solid #7e7e7ead;
   border-radius: 5px;
   padding: 0.2rem;
-  color: #5f5e5e;
+  color: #8d8d8d;
+}
+
+@media (min-width: 40rem) {
+  .rate-container {
+    width: 30%;
+  }
 }

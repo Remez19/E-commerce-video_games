@@ -8,7 +8,7 @@ import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 import Rate from "../UI_Utill/Rate";
 
-const GameItem = ({ gameData, onGameItemClick, myRef, gameId, rate }) => {
+const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
   const [favoriteGame, setFavoriteGame] = useState(false);
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const dispatchAction = useDispatch();

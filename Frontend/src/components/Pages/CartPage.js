@@ -48,7 +48,10 @@ function CartPage() {
             <h3>{`Total Price: $${Number(cart.totalPrice).toFixed(2)}`}</h3>
           )}
           {cart.items.length > 0 && (
-            <button onClick={onClickClearCartHandler}>Clear Cart</button>
+            <div style={{ display: "flex", gap: "1rem" }}>
+              <button onClick={onClickOrderButtonHandler}>Order Now!</button>
+              <button onClick={onClickClearCartHandler}>Clear Cart</button>
+            </div>
           )}
           {cart.items.length > 0 ? (
             cart.items.map((cartItem) => (
@@ -56,9 +59,6 @@ function CartPage() {
             ))
           ) : (
             <h3>Cart is Empty</h3>
-          )}
-          {cart.items.length > 0 && (
-            <button onClick={onClickOrderButtonHandler}>Order Now!</button>
           )}
         </main>
       )}

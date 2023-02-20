@@ -1,13 +1,18 @@
+import { NavLink } from "react-router-dom";
+
 import "./Footer.css";
+
 const Footer = () => {
   return (
     <footer className="footer">
       <ul>
         <li>
-          <a>Contact</a>
+          <NavLink to={"/contact"} className="footer-link">
+            Contact
+          </NavLink>
         </li>
         <li>
-          <a>See</a>
+          <NavLink className="footer-link">See</NavLink>
         </li>
       </ul>
     </footer>

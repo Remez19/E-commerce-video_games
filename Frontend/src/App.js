@@ -1,6 +1,8 @@
 import store from "./Store/store";
 
 // Pages imports
+// Can use a diffrent method to import pages e.g use import only
+// if the page is needed to load.
 import RootLayout from "./components/Pages/RootLayout";
 import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
@@ -13,15 +15,11 @@ import OrdersPage from "./components/Pages/OrdersPage";
 import GameItemPage from "./components/Pages/GameItemPage";
 import CheckoutSuccessPage from "./components/Pages/CheckoutSuccessPage";
 import UserProfilePage from "./components/Pages/UserProfilePage";
+import ContactPage from "./components/Pages/ContactPage";
 
-import React from "react";
 import { Provider } from "react-redux";
 
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -102,17 +100,18 @@ const router = createBrowserRouter([
           }
         },
       },
+      { path: "/contact", element: <ContactPage /> },
     ],
   },
 ]);
 
 function App() {
   return (
-    <React.Fragment>
+    <>
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>
-    </React.Fragment>
+    </>
   );
 }
 

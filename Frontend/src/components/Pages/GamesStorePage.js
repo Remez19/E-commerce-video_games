@@ -6,7 +6,7 @@ import Filter from "../UI/UI_Elements/Filter";
 import SearchBar from "../UI/UI_Elements/SearchBar";
 
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import React from "react";
 
 import { gamesSliceActions } from "../../Store/games";
@@ -103,15 +103,11 @@ const GamesStore = () => {
       };
     });
   }, []);
-
-  const gamesList = useSelector((state) => state.games.games);
-
-  const gamesSlidesList = useSelector((state) => state.games.slideShowGames);
   return (
     <main className="main_data_container">
       {!isLoading ? (
         <React.Fragment>
-          <GamePosterSlider Slides={gamesSlidesList} />
+          <GamePosterSlider />
           <div className="filter_searchBar_container">
             <div className="filter_searchBar_container__data">
               <Filter
@@ -122,7 +118,6 @@ const GamesStore = () => {
             </div>
           </div>
           <GameCatalog
-            GameList={gamesList}
             handleScroll={scrollEventHandler}
             isLoading={isLoading}
           />

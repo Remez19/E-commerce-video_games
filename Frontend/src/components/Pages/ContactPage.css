@@ -1,0 +1,25 @@
+.contact-page__container {
+  animation: slideInPage 0.5s ease-in forwards;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contact-page--image {
+  margin-top: 2rem;
+  background-image: url("../../images/UI_Images/My_Image.jpg");
+  background-size: contain;
+  width: 10rem;
+  height: 10rem;
+  border: 2px solid #ff7474;
+  border-radius: 50%;
+}
+
+@keyframes slideInPage {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}

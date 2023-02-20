@@ -83,9 +83,9 @@ function Rate({ rating, gameId }) {
                 }}
                 onClick={onClickRateHandler}
                 style={{ cursor: "pointer" }}
-                color={starsColorsBool[val] === 1 ? "#FFD700" : "#4f4f4f"}
+                color={starsColorsBool[val] === 1 ? "#FFD700" : "#8d8d8d"}
                 size={"2.5rem"}
-                stroke={"#5f5e5e"}
+                stroke={"#434343"}
                 strokeWidth={"3rem"}
                 key={val}
                 id={val}

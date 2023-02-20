@@ -1,20 +1,30 @@
 .user_profile_btn {
-  background-color: transparent;
+  display: flex;
+  justify-content: center;
   background-image: url("../../../images/UI_Images/user_profile_logo.png");
   background-size: 2rem;
-  display: block;
-  background-repeat: no-repeat;
-  border: none;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
-  text-decoration: none;
   font-size: 0.7rem;
-  text-align: center;
+}
+.user_profile_btn-login {
+  display: flex;
+  justify-content: center;
+  background-image: url("../../../images/UI_Images/user_profile_logo.png");
+  background-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 0.7rem;
+  padding-top: 2rem;
   color: #ff7474;
-  padding-top: 1.8rem;
-  background-position: center;
-  padding-left: 0;
+  text-decoration: none;
+}
+.user_profile_btn--name {
+  text-decoration: none;
+  color: #ff7474;
+  margin-top: 1.9rem;
 }
 
 .user_profile_btn:hover {
@@ -47,33 +57,35 @@
 }
 
 .dropdown-menu__user-profile {
+  text-align: center;
   color: #ff7474;
-  text-decoration: underline;
   position: absolute;
   width: 10rem;
   left: calc(100% - 13.5rem);
   top: 3.7rem;
   z-index: 1050;
-  background-color: rgb(58, 58, 58);
+  background-color: rgb(59, 59, 59);
+  border: 2px solid #ff747477;
   padding: 0.75rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 2px 5px 0px rgba(255, 226, 131, 0.9);
-  /* box-shadow: 0 2px 5px 0 rgba(255, 116, 116, 0.9); */
+  border-radius: 5px;
+}
+
+.dropdown-menu__user-profile > h4 {
+  text-decoration: underline;
 }
 
 .dropdown-menu__user-profile__list {
-  align-items: center;
   padding: 0;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 0.5rem;
   list-style: none;
 }
 
 .dropdown-menu__user-profile__list > hr {
-  width: 80%;
-  margin: 0;
-  border-color: #ff747496;
+  width: 90%;
+  border-color: #87878796;
 }
 
 .dropdown-menu__user-profile__list-item {
@@ -82,7 +94,7 @@
   background-color: transparent;
   border: none;
   color: #ff7474;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   display: inline-block;
 }
 

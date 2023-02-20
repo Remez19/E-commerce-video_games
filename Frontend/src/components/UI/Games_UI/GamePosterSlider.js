@@ -1,8 +1,9 @@
 import "./GamePoster.css";
 
 import { useState } from "react";
-const GamePosterSlider = ({ Slides }) => {
-  const gamesSlides = Slides;
+import { useSelector } from "react-redux";
+const GamePosterSlider = () => {
+  const gamesSlides = useSelector((state) => state.games.slideShowGames);
   const [gamesSlidesState, setGamesSlidesState] = useState({
     animation: "in",
     index: 0,
@@ -27,12 +28,14 @@ const GamePosterSlider = ({ Slides }) => {
   };
   return (
     <section className="main_data_container__game_posters">
-      <div
-        className={`game_poster__items ${
-          gamesSlidesState.animation === "in" ? "fadeIn" : "fadeOut"
-        }`}
-      >
-        {gamesSlides[gamesSlidesState.index].title}
+      <div className="game_poster__items">
+        <p
+          className={`game_poster_item--title ${
+            gamesSlidesState.animation === "in" ? "fadeIn" : "fadeOut"
+          }`}
+        >
+          {gamesSlides[gamesSlidesState.index].title}
+        </p>
         <div
           onAnimationEnd={onAnimationEndHandler}
           onClick={onGamePosterClickHandler}

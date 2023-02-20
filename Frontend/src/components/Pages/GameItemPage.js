@@ -7,6 +7,7 @@ import "./GameItemPage.css";
 import { uiSliceActions } from "../../Store/ui";
 import useHttp from "../../hooks/use-http";
 import Loading from "../UI/UI_Utill/Loading";
+import Rate from "../UI/UI_Utill/Rate";
 
 function GameItemPage() {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
@@ -121,6 +122,7 @@ function GameItemPage() {
               allowFullScreen
               title="Embedded youtube"
             />
+            <Rate rating={game.rating.averageRating} gameId={game._id}></Rate>
             <div
               className="game_item_container__platforms"
               style={{ color: "#ffe283", margin: "0" }}
