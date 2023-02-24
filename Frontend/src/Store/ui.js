@@ -25,7 +25,7 @@ const initState = {
         favorites: favorites ? favorites : [],
       }
     : undefined,
-  isLoading: false,
+  admin: localStorage.getItem("admin"),
 };
 
 const uiSlice = createSlice({

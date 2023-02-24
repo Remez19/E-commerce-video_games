@@ -6,8 +6,7 @@ import Filter from "../UI/UI_Elements/Filter";
 import SearchBar from "../UI/UI_Elements/SearchBar";
 
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { gamesSliceActions } from "../../Store/games";
 
@@ -18,7 +17,6 @@ import useHttp from "../../hooks/use-http";
 
 const GamesStore = () => {
   // List of games to present.
-
   const [reqConfig, setReqConfig] = useState({
     operationType: "initGames",
     url: "http://localhost:8080/",
@@ -30,7 +28,7 @@ const GamesStore = () => {
   const dispatchAction = useDispatch();
 
   const [operationType] = useState({
-    initGames: (resData) => {
+    initGames: async (resData) => {
       dispatchAction(gamesSliceActions.initGames(resData));
     },
     updateGamesList: (resData) => {
@@ -47,8 +45,6 @@ const GamesStore = () => {
     hasMore: hasMoreGames,
     isLoading,
   } = useHttp(reqConfig, operationType, true);
-
-  // app state loading
 
   const scrollEventHandler = useCallback(
     (scrollPosition) => {
@@ -103,11 +99,14 @@ const GamesStore = () => {
       };
     });
   }, []);
+
+  const gamesList = useSelector((state) => state.games.games);
+  const gamesSlides = useSelector((state) => state.games.slideShowGames);
   return (
     <main className="main_data_container">
       {!isLoading ? (
-        <React.Fragment>
-          <GamePosterSlider />
+        <>
+          <GamePosterSlider gamesSlides={gamesSlides} />
           <div className="filter_searchBar_container">
             <div className="filter_searchBar_container__data">
               <Filter
@@ -118,10 +117,11 @@ const GamesStore = () => {
             </div>
           </div>
           <GameCatalog
+            GameList={gamesList}
             handleScroll={scrollEventHandler}
             isLoading={isLoading}
           />
-        </React.Fragment>
+        </>
       ) : (
         <Loading width={"100vw"} height={"100vh"} />
       )}

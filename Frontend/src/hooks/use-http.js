@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const useHttp = (reqConfig, transformerObject, loadConfig) => {
+const useHttp = (reqConfig, transformerObject, loadConfig, blob = false) => {
   // const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(loadConfig || false);
@@ -36,20 +36,11 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
           };
         }
         let resData;
-        if (
-          reqConfig.url === "http://localhost:8080/order/createOrderInvoice"
-        ) {
+        if (blob) {
           resData = await response.blob();
         } else {
           resData = await response.json();
         }
-        // call back to use the data we fetched
-        function delay(milliseconds) {
-          return new Promise((resolve) => {
-            setTimeout(resolve, milliseconds);
-          });
-        }
-        await delay(1500);
         setHasMore(resData.hasMore);
         if (reqConfig.operationType) {
           transformerObject[reqConfig.operationType](resData);
@@ -68,6 +59,7 @@ const useHttp = (reqConfig, transformerObject, loadConfig) => {
       reqConfig.headers,
       reqConfig.body,
       reqConfig.operationType,
+      blob,
       transformerObject,
     ]
   );

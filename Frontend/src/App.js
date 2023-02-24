@@ -1,10 +1,13 @@
 import store from "./Store/store";
+import React from "react";
 
 // Pages imports
 // Can use a diffrent method to import pages e.g use import only
 // if the page is needed to load.
+
+// Need to use React.lazy() to load components
 import RootLayout from "./components/Pages/RootLayout";
-import GamesStorePage from "./components/Pages/GamesStorePage";
+// import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
 import RequestResetPasswordPage from "./components/Pages/RequestResetPasswordPage";
@@ -21,13 +24,25 @@ import { Provider } from "react-redux";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+// Add Lazy loading for other pages as well
+const GamesStorePage = React.lazy(() =>
+  import("./components/Pages/GamesStorePage")
+);
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <GamesStorePage /> },
+      {
+        path: "/",
+        element: (
+          <React.Suspense>
+            <GamesStorePage />
+          </React.Suspense>
+        ),
+      },
       {
         path: "/login",
         element: <UserLoginPage />,

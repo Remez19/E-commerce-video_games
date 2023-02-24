@@ -13,6 +13,7 @@
   height: 10rem;
   border: 2px solid #ff7474;
   border-radius: 50%;
+  color: #ff8d8d;
 }
 
 @keyframes slideInPage {

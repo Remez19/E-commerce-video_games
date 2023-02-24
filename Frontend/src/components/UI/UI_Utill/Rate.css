@@ -2,19 +2,18 @@
   margin-top: 0.5rem;
   display: flex;
   gap: 0.8rem;
-  width: 50%;
-  height: 3rem;
+  width: 40%;
   align-items: center;
   justify-content: center;
   background-color: rgb(105, 105, 105);
   border: 2px solid #7e7e7ead;
   border-radius: 5px;
   padding: 0.2rem;
-  color: #8d8d8d;
 }
 
 @media (min-width: 40rem) {
   .rate-container {
-    width: 30%;
+    width: 50%;
+    min-height: 2rem;
   }
 }

@@ -1,3 +1,5 @@
+import { FaFileInvoice } from "react-icons/fa";
+
 import "./OrderItem.css";
 
 function OrderItem({ orderData }) {
@@ -114,9 +116,14 @@ function OrderItem({ orderData }) {
         <p style={{ color: "#b1b1b1" }}>{`Date: ${new Date(
           orderData.created_at
         ).toLocaleDateString("en-us")}`}</p>
-        <button title="Download Invoice" onClick={onInvoiceClickHandler}>
+        <FaFileInvoice
+          title="Download Invoice"
+          onClick={onInvoiceClickHandler}
+          className="order-item__invoice-icon"
+        />
+        {/* <button title="Download Invoice" onClick={onInvoiceClickHandler}>
           Invoice
-        </button>
+        </button> */}
       </div>
     </div>
   );

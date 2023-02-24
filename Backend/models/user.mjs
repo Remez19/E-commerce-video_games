@@ -41,6 +41,11 @@ const userShema = new Schema({
       ref: "Game",
     },
   ],
+  admin: {
+    type: Schema.Types.Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 export const userModel = mongoose.model("User", userShema);

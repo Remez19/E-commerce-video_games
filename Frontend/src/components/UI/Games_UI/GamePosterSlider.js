@@ -1,51 +1,53 @@
-import "./GamePoster.css";
-
 import { useState } from "react";
-import { useSelector } from "react-redux";
-const GamePosterSlider = () => {
-  const gamesSlides = useSelector((state) => state.games.slideShowGames);
+import React from "react";
+
+import "./GamePoster.css";
+import ImageSlide from "./imageSilde";
+
+const GamePosterSlider = ({ gamesSlides }) => {
   const [gamesSlidesState, setGamesSlidesState] = useState({
-    animation: "in",
+    animationImage: "in",
+    animationTitle: "fadeIn",
     index: 0,
   });
 
-  const onGamePosterClickHandler = () => {
-    console.log(gamesSlides[gamesSlidesState.index].title);
-  };
+  // const onGamePosterClickHandler = () => {
+  //   console.log(gamesSlides[gamesSlidesState.index].title);
+  // };
   const onAnimationEndHandler = () => {
+    // console.log("End");
+    // console.log(gamesSlidesState);
     setGamesSlidesState((prevState) => {
-      if (prevState.animation === "in") {
+      if (prevState.animationImage === "in") {
         return {
-          animation: "out",
+          animationImage: "out",
+          animationTitle: "fadeOut",
           index: prevState.index,
         };
       }
       return {
-        animation: "in",
+        animationImage: "in",
+        animationTitle: "fadeIn",
         index: (prevState.index + 1) % gamesSlides.length,
       };
     });
   };
+
   return (
     <section className="main_data_container__game_posters">
       <div className="game_poster__items">
         <p
-          className={`game_poster_item--title ${
-            gamesSlidesState.animation === "in" ? "fadeIn" : "fadeOut"
-          }`}
+          onAnimationEndCapture={onAnimationEndHandler}
+          className={`game_poster_item--title ${gamesSlidesState.animationTitle}`}
         >
           {gamesSlides[gamesSlidesState.index].title}
         </p>
-        <div
-          onAnimationEnd={onAnimationEndHandler}
-          onClick={onGamePosterClickHandler}
-          className={`game_poster__item ${gamesSlidesState.animation}`}
-          style={{
-            backgroundImage: `url(${
-              gamesSlides[gamesSlidesState.index].imageUrl
-            })`,
-          }}
-        ></div>
+        <React.Suspense>
+          <ImageSlide
+            imageUrl={gamesSlides[gamesSlidesState.index].imageUrl}
+            animation={gamesSlidesState.animationImage}
+          />
+        </React.Suspense>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FaCartPlus, FaRegHeart, FaHeart } from "react-icons/fa";
 
 import { uiSliceActions } from "../../../Store/ui";
 import "./GameItem.css";
@@ -38,7 +39,6 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
       }
     }
     setFavoriteGame(exist);
-
     localStorage.setItem("favorites", JSON.stringify(favorites));
     dispatchAction(uiSliceActions.updateUserFavorites(favorites));
   };
@@ -157,19 +157,28 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
             ref={myRef}
             id={myRef && "last"}
           >
-            <button
-              style={{
-                backgroundImage: favoriteGame
-                  ? `url(${require("../../../images/UI_Images/favorite.png")})`
-                  : `url(${require("../../../images/UI_Images/add_to_favorite.png")})`,
-              }}
-              className="game_item__to-favorite"
-              title="Add To Favorite"
-              onClick={onAddToFavoritesHandler}
-            />
-            <button
+            {favoriteGame ? (
+              <FaHeart
+                title="Remove From Favorite"
+                onClick={onAddToFavoritesHandler}
+                size={"2rem"}
+                color={"#ff7474"}
+                className="game_item__to-favorite"
+              />
+            ) : (
+              <FaRegHeart
+                title="Add To Favorite"
+                size={"2rem"}
+                color={"#ff7474"}
+                className="game_item__to-favorite"
+                onClick={onAddToFavoritesHandler}
+              />
+            )}
+            <FaCartPlus
               title="Add To Cart"
               className="game_item__to-cart"
+              size={"2rem"}
+              color={"#ffe283"}
               onClick={onAddToCartHandler}
             />
           </div>

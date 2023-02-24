@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaCartPlus, FaRegHeart, FaHeart } from "react-icons/fa";
 
 import "./GameItemPage.css";
 import { uiSliceActions } from "../../Store/ui";
@@ -165,22 +166,30 @@ function GameItemPage() {
               {`price: ${game.price}`}
             </p>
             <div className="game-item__page_actions-container">
-              <button
+              {favoriteGame ? (
+                <FaHeart
+                  title="Remove From Favorite"
+                  onClick={onAddToFavoritesHandler}
+                  size={"2rem"}
+                  color={"#ff7474"}
+                  className="game_item__to-favorite"
+                />
+              ) : (
+                <FaRegHeart
+                  title="Add To Favorite"
+                  size={"2rem"}
+                  color={"#ff7474"}
+                  className="game_item__to-favorite"
+                  onClick={onAddToFavoritesHandler}
+                />
+              )}
+              <FaCartPlus
+                title="Add To Cart"
+                className="game_item__to-cart"
+                size={"2rem"}
+                color={"#ffe283"}
                 onClick={onAddToCartHandler}
-                title="Add to cart"
-                style={{
-                  backgroundImage: `url(${require("../../images/UI_Images/add_to_cart.png")})`,
-                }}
-              ></button>
-              <button
-                onClick={onAddToFavoritesHandler}
-                title="Add to favorite"
-                style={{
-                  backgroundImage: favoriteGame
-                    ? `url(${require("../../images/UI_Images/favorite.png")})`
-                    : `url(${require("../../images/UI_Images/add_to_favorite.png")})`,
-                }}
-              ></button>
+              />
             </div>
           </div>
         </main>
@@ -192,3 +201,29 @@ function GameItemPage() {
 }
 
 export default GameItemPage;
+/**
+ *  {favoriteGame ? (
+              <FaHeart
+                title="Remove From Favorite"
+                onClick={onAddToFavoritesHandler}
+                size={"2rem"}
+                color={"#ff7474"}
+                className="game_item__to-favorite"
+              />
+            ) : (
+              <FaRegHeart
+                title="Add To Favorite"
+                size={"2rem"}
+                color={"#ff7474"}
+                className="game_item__to-favorite"
+                onClick={onAddToFavoritesHandler}
+              />
+            )}
+            <FaCartPlus
+              title="Add To Cart"
+              className="game_item__to-cart"
+              size={"2rem"}
+              color={"#ffe283"}
+              onClick={onAddToCartHandler}
+            />
+ */

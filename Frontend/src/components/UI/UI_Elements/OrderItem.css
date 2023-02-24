@@ -3,8 +3,8 @@
   width: 90%;
   height: fit-content;
   background-color: #5151518a;
-  border: 1px solid #515151f1;
-  border-radius: 5%;
+  border: 2px solid #515151f1;
+  border-radius: 5px;
   flex-direction: column;
 }
 .order-item__data-container {
@@ -63,16 +63,14 @@
   font-weight: bold;
   display: inline-block;
 }
-.order-item__container > div > button {
-  background-color: transparent;
-  border: none;
-  border-radius: 5%;
-  font-weight: bold;
+
+.order-item__invoice-icon {
+  width: 2rem;
+  height: 2rem;
 }
 
-.order-item__container > div > button:hover {
+.order-item__invoice-icon:hover {
   /* text-decoration: underline; */
-  font-weight: bolder;
   color: #e9e9e9;
   cursor: pointer;
 }

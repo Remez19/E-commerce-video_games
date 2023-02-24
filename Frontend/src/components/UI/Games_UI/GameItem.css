@@ -69,20 +69,12 @@
   height: 2rem;
 }
 
-.game_item__to-cart {
-  background-image: url("../../../images/UI_Images/add_to_cart.png");
-}
 .game_item__to-cart:hover {
-  background-image: url("../../../images/UI_Images/add_to_cart_hover.png");
   cursor: pointer;
   border-bottom: 1px solid #ffe283;
 }
-.game_item__to-favorite {
-  background-image: url("../../../images/UI_Images/add_to_favorite.png");
-}
 
 .game_item__to-favorite:hover {
-  background-image: url("../../../images/UI_Images/add_to_favorite_hover.png");
   cursor: pointer;
   border-bottom: 1px solid #ff7474;
 }

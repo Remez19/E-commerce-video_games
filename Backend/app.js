@@ -5,6 +5,7 @@ import mongoose, { Mongoose } from "mongoose";
 import { config } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
 // My imports
 import { errorMiddleware } from "./middleware/error.mjs";
@@ -27,11 +28,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-// app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
-// app.use(bodyParser.json()); // application/json
 app.use((req, res, next) => {
   if (req.originalUrl === "/order/webhook") {
-    console.log("Stripe parse");
     next();
   } else {
     bodyParser.json()(req, res, next);
@@ -40,6 +38,7 @@ app.use((req, res, next) => {
 
 // Serving images statically
 app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/contact", express.static(path.join(__dirname, "myCV/CV.pdf")));
 
 // Setting up headers to allows access and setting up headers.
 app.use((req, res, next) => {
@@ -60,6 +59,11 @@ app.use("/cart", cartPageRouter);
 
 app.use("/order", orderRouter);
 
+app.post("/contact", (req, res, next) => {
+  res.setHeader("Response-Type", "application/pdf");
+  res.status(200).sendFile(path.join(__dirname, "myCV/CV.pdf"));
+});
+
 // Error middleware to catch any errors in requests
 app.use(errorMiddleware);
 
@@ -70,6 +74,7 @@ mongoose
       if (!err) {
         console.log("Connected to DB.");
         console.log(`Server listening on port ${PORT}`);
+        // console.log(__dirname);
       } else {
         console.error("Something went worng!");
         console.error(err);

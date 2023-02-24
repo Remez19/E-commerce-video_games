@@ -2,6 +2,7 @@ import "./Header.css";
 
 import { useState } from "react";
 import ReactDOM from "react-dom";
+import { useSelector } from "react-redux";
 
 import Backdrop from "../UI_Utill/Backdrop";
 import HamburgerButton from "./HamburgerButton";
@@ -10,6 +11,7 @@ import UserProfile from "./UserProfile";
 import Cart from "../../Cart/Cart";
 
 const Header = () => {
+  const user = useSelector((state) => state.ui.loggedInUser);
   const [isHamburgerBtnClick, setIsHamburgerClick] = useState(false);
 
   const onHamburgerClickHandler = () => {
@@ -33,9 +35,11 @@ const Header = () => {
           <li className="main_header__item">
             <UserProfile />
           </li>
-          <li className="main_header__item">
-            <Cart />
-          </li>
+          {user && (
+            <li className="main_header__item">
+              <Cart />
+            </li>
+          )}
         </ul>
       </div>
     </header>

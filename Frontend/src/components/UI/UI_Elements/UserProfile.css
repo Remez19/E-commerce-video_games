@@ -1,30 +1,14 @@
 .user_profile_btn {
-  display: flex;
-  justify-content: center;
-  background-image: url("../../../images/UI_Images/user_profile_logo.png");
-  background-size: 2rem;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
-  font-size: 0.7rem;
-}
-.user_profile_btn-login {
-  display: flex;
-  justify-content: center;
-  background-image: url("../../../images/UI_Images/user_profile_logo.png");
-  background-size: 2rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  font-size: 0.7rem;
-  padding-top: 2rem;
+  background-color: #ff7474;
   color: #ff7474;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 0.7rem;
+  font-size: 0.7rem;
   text-decoration: none;
-}
-.user_profile_btn--name {
-  text-decoration: none;
-  color: #ff7474;
-  margin-top: 1.9rem;
 }
 
 .user_profile_btn:hover {

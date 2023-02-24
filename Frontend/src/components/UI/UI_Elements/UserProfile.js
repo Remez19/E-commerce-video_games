@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { uiSliceActions } from "../../../Store/ui";
+import { FaUserCircle } from "react-icons/fa";
 
 import "./UserProfile.css";
 
@@ -22,7 +23,13 @@ const UserProfile = () => {
     <>
       {loggedInUser ? (
         <div className="user_profile_btn" onClick={onUserNameClickHandler}>
-          <p className="user_profile_btn--name">{loggedInUser.userName}</p>
+          <FaUserCircle
+            size={"2rem"}
+            color={"black"}
+            strokeWidth={"1px"}
+            style={{ padding: "0.1rem" }}
+          ></FaUserCircle>
+          {loggedInUser.userName}
           <div
             className={`dropdown-menu__user-profile__backdrop ${
               active && "dropdown-menu__user-profile__backdrop-active"
@@ -53,7 +60,13 @@ const UserProfile = () => {
           </div>
         </div>
       ) : (
-        <NavLink to="/login" className={`user_profile_btn-login`} end>
+        <NavLink to="/login" className="user_profile_btn" end>
+          <FaUserCircle
+            size={"2rem"}
+            color={"black"}
+            strokeWidth={"1px"}
+            style={{ padding: "0.1rem" }}
+          ></FaUserCircle>
           login
         </NavLink>
       )}
