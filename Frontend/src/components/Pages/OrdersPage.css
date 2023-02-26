@@ -10,7 +10,8 @@
 }
 
 .orders-page__conainer > h2 {
-  color: #ffe283;
+  color: wheat;
+  font-family: "Varela Round", sans-serif;
   text-decoration: underline;
 }
 

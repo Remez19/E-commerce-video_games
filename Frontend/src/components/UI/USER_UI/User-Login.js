@@ -31,14 +31,17 @@ function UserLogin() {
     localStorage.setItem("token", resData.token);
     localStorage.setItem("userName", resData.userName);
     localStorage.setItem("userEmail", resData.userEmail);
+    localStorage.setItem("admin", resData.admin);
     localStorage.setItem("favorites", JSON.stringify(resData.favorites));
     localStorage.setItem("cart", JSON.stringify(resData.cart));
+
     dispatchAction(
       uiSliceActions.setLoggedInUser({
         userName: resData.userName,
         userEmail: resData.userEmail,
         cart: resData.cart,
         favorites: resData.favorites,
+        admin: resData.admin,
       })
     );
     navigate("/");

@@ -1,7 +1,14 @@
 import "./Card.css";
 
-function Card({ children }) {
-  return <div className="card">{children}</div>;
+function Card({ children, width }) {
+  return (
+    <div
+      className="card"
+      style={{ width: width ? width : "", maxWidth: "30rem" }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default Card;

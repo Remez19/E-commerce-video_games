@@ -1,24 +1,12 @@
 import store from "./Store/store";
 import React from "react";
 
-// Pages imports
-// Can use a diffrent method to import pages e.g use import only
-// if the page is needed to load.
-
 // Need to use React.lazy() to load components
 import RootLayout from "./components/Pages/RootLayout";
-// import GamesStorePage from "./components/Pages/GamesStorePage";
 import UserLoginPage from "./components/Pages/UserLoginPage";
 import UserSignupPage from "./components/Pages/UserSignupPage";
-import RequestResetPasswordPage from "./components/Pages/RequestResetPasswordPage";
-import ResetPasswordPage from "./components/Pages/ResetPasswordPage";
 import ErrorPage from "./components/Pages/ErrorPage";
-import CartPage from "./components/Pages/CartPage";
-import OrdersPage from "./components/Pages/OrdersPage";
 import GameItemPage from "./components/Pages/GameItemPage";
-import CheckoutSuccessPage from "./components/Pages/CheckoutSuccessPage";
-import UserProfilePage from "./components/Pages/UserProfilePage";
-import ContactPage from "./components/Pages/ContactPage";
 
 import { Provider } from "react-redux";
 
@@ -28,6 +16,29 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 const GamesStorePage = React.lazy(() =>
   import("./components/Pages/GamesStorePage")
 );
+const OrdersPage = React.lazy(() => import("./components/Pages/OrdersPage"));
+
+const CartPage = React.lazy(() => import("./components/Pages/CartPage"));
+
+const RequestResetPasswordPage = React.lazy(() =>
+  import("./components/Pages/RequestResetPasswordPage")
+);
+
+const ResetPasswordPage = React.lazy(() =>
+  import("./components/Pages/ResetPasswordPage")
+);
+
+const ContactPage = React.lazy(() => import("./components/Pages/ContactPage"));
+
+const UserProfilePage = React.lazy(() =>
+  import("./components/Pages/UserProfilePage")
+);
+
+const CheckoutSuccessPage = React.lazy(() =>
+  import("./components/Pages/CheckoutSuccessPage")
+);
+
+const AddItemPage = React.lazy(() => import("./components/Pages/AddItemPage"));
 
 const router = createBrowserRouter([
   {
@@ -48,16 +59,38 @@ const router = createBrowserRouter([
         element: <UserLoginPage />,
       },
       { path: "/signup", element: <UserSignupPage /> },
-      { path: "/new-password", element: <RequestResetPasswordPage /> },
+      {
+        path: "/new-password",
+        element: (
+          <React.Suspense>
+            <RequestResetPasswordPage />
+          </React.Suspense>
+        ),
+      },
       {
         path: "/new-password/:userId/:token",
-        element: <ResetPasswordPage />,
+        element: (
+          <React.Suspense>
+            <ResetPasswordPage />
+          </React.Suspense>
+        ),
       },
-      { path: "/shop", element: <CartPage /> },
+      {
+        path: "/shop",
+        element: (
+          <React.Suspense>
+            <CartPage />
+          </React.Suspense>
+        ),
+      },
       { path: "/user-profile", element: <UserProfilePage /> },
       {
         path: "/orders",
-        element: <OrdersPage />,
+        element: (
+          <React.Suspense>
+            <OrdersPage />
+          </React.Suspense>
+        ),
         loader: async () => {
           try {
             const response = await fetch(
@@ -90,7 +123,11 @@ const router = createBrowserRouter([
       { path: "/game-item", element: <GameItemPage /> },
       {
         path: "/checkout-sucess",
-        element: <CheckoutSuccessPage />,
+        element: (
+          <React.Suspense>
+            <CheckoutSuccessPage />
+          </React.Suspense>
+        ),
         loader: async () => {
           // Get Order data and create order on db
           try {
@@ -115,7 +152,22 @@ const router = createBrowserRouter([
           }
         },
       },
-      { path: "/contact", element: <ContactPage /> },
+      {
+        path: "/contact",
+        element: (
+          <React.Suspense>
+            <ContactPage />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "/admin/add-item",
+        element: (
+          <React.Suspense>
+            <AddItemPage />
+          </React.Suspense>
+        ),
+      },
     ],
   },
 ]);

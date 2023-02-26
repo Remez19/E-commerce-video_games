@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { userModel } from "../models/user.mjs";
 // const ExpiredTokenError = require("jsonwebtoken/lib/TokenExpiredError");
 
 import { config } from "dotenv";
@@ -36,5 +37,25 @@ export const isAuth = (req, res, next) => {
       error.statusCode = 500;
     }
     next(error);
+  }
+};
+
+export const isAuthAdmin = (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = userModel.findOne({ email });
+    if (!user) {
+      throw new Error("Something Went Worng");
+    }
+    if (!user.admin) {
+      // Check if the user is of type admin
+      throw new Error("Not Authorized");
+    }
+    next();
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next();
   }
 };

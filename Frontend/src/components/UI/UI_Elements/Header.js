@@ -23,6 +23,7 @@ const Header = () => {
     <header className="main_header">
       <HamburgerButton onClick={onHamburgerClickHandler} />
       {isHamburgerBtnClick &&
+        user &&
         ReactDOM.createPortal(
           <Backdrop setIsClick={setIsHamburgerClick}>
             <MobileNav></MobileNav>

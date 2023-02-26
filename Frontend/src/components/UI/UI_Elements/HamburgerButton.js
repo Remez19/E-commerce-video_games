@@ -5,7 +5,6 @@ import "./HamburgerButton.css";
 
 const HamburgerButton = (props) => {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
-
   return (
     <div className="hamburger_container">
       <button onClick={props.onClick} className="main_header__toggle_button">
@@ -37,6 +36,18 @@ const HamburgerButton = (props) => {
           }
         >
           Orders
+        </NavLink>
+      )}
+      {loggedInUser && loggedInUser.admin && (
+        <NavLink
+          to="/admin/add-item"
+          className={({ isActive }) =>
+            isActive
+              ? "hamburger_container-link-active"
+              : "hamburger_container-link"
+          }
+        >
+          Add Item
         </NavLink>
       )}
     </div>

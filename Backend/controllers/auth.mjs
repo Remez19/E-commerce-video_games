@@ -55,7 +55,7 @@ export const postLogin = async (req, res, next) => {
         userId: loadedUser._id.toString(),
       },
       secret,
-      // Will make sure that the token will be expired in 1 hour
+      // Will make sure that the token will be expired in 3 hours
       { expiresIn: "3h" }
     );
     res.status(200).json({
@@ -64,6 +64,7 @@ export const postLogin = async (req, res, next) => {
       userName: loadedUser.name,
       cart: loadedUser.cart,
       favorites: loadedUser.favorites,
+      admin: loadedUser.admin,
     });
   } catch (error) {
     if (!error.statusCode) {

@@ -13,6 +13,7 @@ import homePageRouter from "./routes/homePage.mjs";
 import authRoutes from "./routes/auth.mjs";
 import cartPageRouter from "./routes/cart.mjs";
 import orderRouter from "./routes/order.mjs";
+import adminRouter from "./routes/admin.mjs";
 
 // Read the env vars
 config();
@@ -58,6 +59,8 @@ app.use("/", authRoutes);
 app.use("/cart", cartPageRouter);
 
 app.use("/order", orderRouter);
+
+app.use("/admin", adminRouter);
 
 app.post("/contact", (req, res, next) => {
   res.setHeader("Response-Type", "application/pdf");
