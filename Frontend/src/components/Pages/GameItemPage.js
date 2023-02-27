@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus, FaRegHeart, FaHeart } from "react-icons/fa";
+import { GiPriceTag } from "react-icons/gi";
 
 import "./GameItemPage.css";
 import { uiSliceActions } from "../../Store/ui";
@@ -160,11 +161,22 @@ function GameItemPage() {
             >
               {game.description}
             </p>
-            <p
+            {/* <p
               style={{ textDecoration: "none", color: "#ffe283", margin: "0" }}
             >
-              {`price: ${game.price}`}
-            </p>
+              {`Price: $${game.price}`}
+            </p> */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                color: "#85bb65",
+              }}
+            >
+              <GiPriceTag color="#85bb65" size={"1.5rem"} />
+              {`${game.price}$`}
+            </div>
             <div className="game-item__page_actions-container">
               {favoriteGame ? (
                 <FaHeart

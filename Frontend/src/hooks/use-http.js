@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-
-const useHttp = (reqConfig, transformerObject, loadConfig, blob = false) => {
+import axois from "axios";
+const useHttp = (reqConfig, CallBack, loadConfig) => {
   // const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(loadConfig || false);
@@ -9,43 +9,30 @@ const useHttp = (reqConfig, transformerObject, loadConfig, blob = false) => {
 
   const sendRequest = useCallback(
     async (data, url) => {
+      const urlReq = reqConfig.url || url;
+      const body = data || reqConfig.body;
+      const headers = reqConfig.headers;
       setIsLoading(true);
       setError(null);
       let response;
       try {
-        response = await fetch(url ? url : reqConfig.url, {
-          method: reqConfig.method ? reqConfig.method : "POST",
-          headers: reqConfig.headers
-            ? reqConfig.headers
-            : {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-          body: reqConfig.body
-            ? JSON.stringify(reqConfig.body)
-            : JSON.stringify(data),
+        response = await axois.post(urlReq, body, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            ...headers,
+          },
         });
-        if (!response.ok) {
-          // Getting the message from the server
-          let resData = await response.json();
-          // eslint-disable-next-line no-throw-literal
-          throw {
-            message: resData.message,
-            status: response.status,
-            data: resData.data,
-          };
-        }
-        let resData;
-        if (blob) {
-          resData = await response.blob();
-        } else {
-          resData = await response.json();
+        let resData = response.data;
+        if (response.status > 400) {
+          throw new Error(resData.message);
         }
         setHasMore(resData.hasMore);
+        // Can be done diffrent ?
         if (reqConfig.operationType) {
-          transformerObject[reqConfig.operationType](resData);
+          CallBack[reqConfig.operationType](resData);
         } else {
-          transformerObject(resData);
+          CallBack(resData);
         }
       } catch (err) {
         setError(err);
@@ -54,13 +41,11 @@ const useHttp = (reqConfig, transformerObject, loadConfig, blob = false) => {
       }
     },
     [
-      reqConfig.url,
-      reqConfig.method,
-      reqConfig.headers,
+      CallBack,
       reqConfig.body,
+      reqConfig.headers,
       reqConfig.operationType,
-      blob,
-      transformerObject,
+      reqConfig.url,
     ]
   );
   return {
@@ -72,11 +57,3 @@ const useHttp = (reqConfig, transformerObject, loadConfig, blob = false) => {
 };
 
 export default useHttp;
-/**
- * fetch("url",
-        { 
-            method: "POST",
-            headers: { "Content-Type": "application/json",'Authorization': 'Bearer ' + window.localStorage["Access_Token"]},
-            body:data
-        }).then(response => response.blob()).then(response => ...*your code for download*... )
- */

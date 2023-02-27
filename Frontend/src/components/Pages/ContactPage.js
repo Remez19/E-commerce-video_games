@@ -31,7 +31,9 @@ function ContactPage() {
     {
       url: "http://localhost:8080/contact",
       headers: {
-        "Content-Type": "application/pdf",
+        "Content-Type": "application/json",
+        Accept: "application/pdf",
+        responseType: "arraybuffer",
       },
     },
     onFinishCVRequest,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus, FaRegHeart, FaHeart } from "react-icons/fa";
+import { GiPriceTag } from "react-icons/gi";
 
 import { uiSliceActions } from "../../../Store/ui";
 import "./GameItem.css";
@@ -151,7 +152,18 @@ const GameItem = ({ gameData, onGameItemClick, myRef, gameId }) => {
               )}
             </ul>
           </div>
-          <p className="game_item_container__price">{`Price:${gameData.price}`}</p>
+          <div
+            style={{
+              marginBottom: "1rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              color: "#85bb65",
+            }}
+          >
+            <GiPriceTag color="#85bb65" size={"1.5rem"} />
+            {`${gameData.price}$`}
+          </div>
           <div
             className="game_item_container__actions"
             ref={myRef}

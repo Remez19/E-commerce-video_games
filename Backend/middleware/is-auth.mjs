@@ -40,10 +40,10 @@ export const isAuth = (req, res, next) => {
   }
 };
 
-export const isAuthAdmin = (req, res, next) => {
+export const isAuthAdmin = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = userModel.findOne({ email });
+    const user = await userModel.findOne({ email: email });
     if (!user) {
       throw new Error("Something Went Worng");
     }
@@ -56,6 +56,6 @@ export const isAuthAdmin = (req, res, next) => {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    next();
+    next(err);
   }
 };

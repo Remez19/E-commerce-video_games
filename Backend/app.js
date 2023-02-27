@@ -1,11 +1,10 @@
 // Core modules imports
 import express from "express";
 import bodyParser from "body-parser";
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 import { config } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import fs from "fs";
 
 // My imports
 import { errorMiddleware } from "./middleware/error.mjs";
@@ -40,6 +39,7 @@ app.use((req, res, next) => {
 // Serving images statically
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/contact", express.static(path.join(__dirname, "myCV/CV.pdf")));
+app.use(express.urlencoded({ extended: true }));
 
 // Setting up headers to allows access and setting up headers.
 app.use((req, res, next) => {

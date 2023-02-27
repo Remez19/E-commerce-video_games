@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiSliceActions } from "../../Store/ui";
+import { GiPriceTag } from "react-icons/gi";
 
 import "./CartItem.css";
 import useHttp from "../../hooks/use-http";
@@ -70,7 +71,18 @@ function CartItem({ cartItem }) {
           </div>
           <div className="cart-item__info-continer">
             <p className="cart-item__title">{productData.title}</p>
-            <p className="cart-item__price">{`Price: $${productData.price}`}</p>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                color: "#85bb65",
+                fontSize: "0.8rem",
+              }}
+            >
+              <GiPriceTag color="#85bb65" size={"1rem"} />
+              {`${productData.price}$`}
+            </div>
             <div className="cart-item__platforms-container">
               Platforms:
               <ul className="cart-item__platforms-list">
