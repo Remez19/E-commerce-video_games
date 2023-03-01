@@ -34,12 +34,15 @@ adminRouter.post(
   isAuth,
   isAuthAdmin,
   [
-    body("name").isAlpha().isLength({ min: 1 }),
+    body("name").isLength({ min: 1 }),
     body("price")
       .isNumeric()
       .custom((value) => value > 0),
-    body("description").isAlphanumeric().isLength({ min: 10 }),
-    body("platforms").custom((value) => value.length > 0),
+    body("description").isLength({ min: 10 }),
+    body("platforms").custom((value) => {
+      let asArr = value.split(",");
+      return asArr.length > 0;
+    }),
   ],
   addItem
 );

@@ -1,9 +1,11 @@
 import { useCallback, useState } from "react";
 import axois from "axios";
+
 const useHttp = (reqConfig, CallBack, loadConfig) => {
   // const dispatchAction = useDispatch();
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(loadConfig || false);
+  const [progress, setProgress] = useState();
 
   const [error, setError] = useState(null);
 
@@ -12,15 +14,21 @@ const useHttp = (reqConfig, CallBack, loadConfig) => {
       const urlReq = reqConfig.url || url;
       const body = data || reqConfig.body;
       const headers = reqConfig.headers;
+      const responseType = reqConfig.responseType;
       setIsLoading(true);
       setError(null);
+      setProgress(0);
       let response;
       try {
         response = await axois.post(urlReq, body, {
+          responseType: responseType,
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.getItem("token"),
             ...headers,
+          },
+          onUploadProgress: (p) => {
+            setProgress((p.loaded / p.total) * 100);
           },
         });
         let resData = response.data;
@@ -45,6 +53,7 @@ const useHttp = (reqConfig, CallBack, loadConfig) => {
       reqConfig.body,
       reqConfig.headers,
       reqConfig.operationType,
+      reqConfig.responseType,
       reqConfig.url,
     ]
   );
@@ -53,6 +62,7 @@ const useHttp = (reqConfig, CallBack, loadConfig) => {
     sendRequest,
     isLoading,
     hasMore,
+    progress,
   };
 };
 

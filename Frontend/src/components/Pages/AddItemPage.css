@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 45rem;
   animation: slideInPage 0.5s ease-in forwards;
 }
 
@@ -10,4 +9,16 @@
   color: wheat;
   font-family: "Varela Round", sans-serif;
   text-decoration: underline;
+  margin-bottom: 1rem;
+}
+.add-item-page__data {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 60rem) {
+  .add-item-page__data {
+    flex-direction: row;
+    gap: 1rem;
+  }
 }

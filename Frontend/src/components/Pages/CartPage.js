@@ -6,6 +6,7 @@ import { uiSliceActions } from "../../Store/ui";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import Button from "react-bootstrap/Button";
 
 function CartPage() {
   const { cart, userEmail } = useSelector((state) => state.ui.loggedInUser);
@@ -49,8 +50,18 @@ function CartPage() {
           )}
           {cart.items.length > 0 && (
             <div style={{ display: "flex", gap: "1rem" }}>
-              <button onClick={onClickOrderButtonHandler}>Order Now!</button>
-              <button onClick={onClickClearCartHandler}>Clear Cart</button>
+              <Button
+                variant="outline-primary"
+                onClick={onClickOrderButtonHandler}
+              >
+                Order Now!
+              </Button>
+              <Button
+                variant="outline-danger"
+                onClick={onClickClearCartHandler}
+              >
+                Clear Cart
+              </Button>
             </div>
           )}
           {cart.items.length > 0 ? (

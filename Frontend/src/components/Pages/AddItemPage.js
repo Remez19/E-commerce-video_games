@@ -1,22 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import "./AddItemPage.css";
 import Card from "../UI/UI_Utill/Card";
 import useHttp from "../../hooks/use-http";
-import Loading from "../UI/UI_Utill/Loading";
-import GameItem from "../UI/Games_UI/GameItem";
+import UploadLoading from "../UI/UI_Utill/UploadLoading";
+import GameItemEditView from "../UI/UI_Elements/GameItemEditView";
 import AddItemForm from "../UI/UI_Elements/AddItemForm";
 
 function AddItemPage() {
-  // const [isGameCreated, setIsGameCreated] = useState(false);
+  const [newGame, setNewGame] = useState();
+  const [isAdding, setIsAdding] = useState(false);
+  const [gameData, setGameData] = useState({
+    title: "No-Name",
+    platforms: [],
+    price: 0,
+    backgroundImage: `url(${require("../../images/UI_Images/noImage.png")})`,
+  });
+  const onChangeGameView = (gameData) => {
+    setGameData((prevState) => {
+      return { ...prevState, ...gameData };
+    });
+  };
 
-  const onItemAdded = () => {
-    // Handle game creation
-    // present a feed back - game created
+  const onItemAdded = (resData) => {
+    setGameData({
+      title: "No-Name",
+      platforms: [],
+      price: 0,
+      backgroundImage: `url(${require("../../images/UI_Images/noImage.png")})`,
+    });
+    setNewGame(resData.newGame);
   };
   const {
+    progress,
     error,
-    isLoading,
     sendRequest: addItem,
   } = useHttp(
     {
@@ -33,16 +50,30 @@ function AddItemPage() {
     }
   }, [error]);
   return (
-    <main className="add-item-page__container">
-      <h2>Add New Game To Store</h2>
-      {/* {isGameCreated && <p color="white">Game Created</p>} */}
-      {isLoading && <Loading width={"100%"} height={"100%"} />}
-      {!isLoading && (
-        <Card width={"60%"}>
-          <GameItem gameData={""}></GameItem>
-          <AddItemForm addItem={addItem} />
-        </Card>
+    <main
+      className="add-item-page__container"
+      style={{ minHeight: isAdding ? "100%" : "80rem" }}
+    >
+      {!isAdding && <h2>Add New Game To Store</h2>}
+      {isAdding && (
+        <UploadLoading
+          progress={progress}
+          setIsAdding={setIsAdding}
+          newGame={newGame}
+        />
       )}
+      <div className="add-item-page__data">
+        {!isAdding && (
+          <Card>
+            <AddItemForm
+              addItem={addItem}
+              setIsAdding={setIsAdding}
+              onCahngeInput={onChangeGameView}
+            />
+          </Card>
+        )}
+        {!isAdding && <GameItemEditView gameData={gameData}></GameItemEditView>}
+      </div>
     </main>
   );
 }

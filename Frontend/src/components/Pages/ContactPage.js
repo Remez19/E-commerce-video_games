@@ -33,8 +33,8 @@ function ContactPage() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/pdf",
-        responseType: "arraybuffer",
       },
+      responseType: "arraybuffer",
     },
     onFinishCVRequest,
     false,

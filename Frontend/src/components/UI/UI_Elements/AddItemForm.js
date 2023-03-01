@@ -8,7 +8,7 @@ import { GrPersonalComputer } from "react-icons/gr";
 
 import "./AddItemForm.css";
 
-function AddItemForm({ addItem }) {
+function AddItemForm({ addItem, onCahngeInput, setIsAdding }) {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const [nameLabel, setNameLable] = useState();
   const [priceLabel, setPriceLabel] = useState();
@@ -19,6 +19,7 @@ function AddItemForm({ addItem }) {
   );
   const animatedComponents = makeAnimated();
   const imageRef = useRef();
+
   const options = [
     { value: "PS", label: <FaPlaystation name="PS" /> },
     { value: "XBOX", label: <FaXbox name="XBOX" /> },
@@ -62,11 +63,10 @@ function AddItemForm({ addItem }) {
         shouldDirty: true,
       });
       setUploadMessage(file.name);
+      onCahngeInput({
+        backgroundImage: `url(${URL.createObjectURL(file)})`,
+      });
     }
-  };
-
-  const onUploadProgress = (e) => {
-    console.log(e);
   };
 
   const onSubmitHandler = (data) => {
@@ -81,8 +81,10 @@ function AddItemForm({ addItem }) {
     addItemForm.append("image", image);
     addItemForm.append("platforms", platforms);
     addItemForm.append("youtubeUrl", youtube);
+    setIsAdding(true);
     addItem(addItemForm);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)} className="add-item__form">
       <div className="add-item-message">New Game</div>
@@ -99,6 +101,10 @@ function AddItemForm({ addItem }) {
             minLength: 1,
             onBlur: () => {
               if (!getValues("name")) setNameLable("moveDown");
+            },
+            onChange: () => {
+              let change = getValues("name");
+              onCahngeInput({ title: change });
             },
           })}
         ></input>
@@ -117,6 +123,10 @@ function AddItemForm({ addItem }) {
             required: true,
             onBlur: () => {
               if (!getValues("price")) setPriceLabel("moveDown");
+            },
+            onChange: () => {
+              let change = getValues("price");
+              onCahngeInput({ price: change });
             },
           })}
         ></input>
@@ -178,9 +188,13 @@ function AddItemForm({ addItem }) {
           type="file"
           hidden
           accept=".jpeg, .png, .jpg"
-          onProgressCapture={onUploadProgress}
           onChange={(e) => {
             setUploadMessage(e.currentTarget.files[0].name);
+            onCahngeInput({
+              backgroundImage: `url(${URL.createObjectURL(
+                e.currentTarget.files[0]
+              )})`,
+            });
             onChange(e);
           }}
           {...fields}
@@ -206,6 +220,12 @@ function AddItemForm({ addItem }) {
               <Select
                 {...register("platforms", {
                   required: true,
+                  onChange: (e) => {
+                    // console.log();
+                    onCahngeInput({
+                      platforms: e.target.value.map((item) => item.value),
+                    });
+                  },
                 })}
                 components={animatedComponents}
                 options={options}

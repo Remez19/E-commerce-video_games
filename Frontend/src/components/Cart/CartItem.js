@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { uiSliceActions } from "../../Store/ui";
 import { GiPriceTag } from "react-icons/gi";
+import Button from "react-bootstrap/Button";
 
 import "./CartItem.css";
 import useHttp from "../../hooks/use-http";
@@ -111,11 +112,30 @@ function CartItem({ cartItem }) {
             </div>
             <div className="cart-item__quantity">
               {`Quantity: ${cartItem.quantity}`}
-              <button onClick={onClickChangeQuantityHandler}>-</button>
+              <Button
+                onClick={onClickChangeQuantityHandler}
+                size="sm"
+                variant="success"
+              >
+                -
+              </Button>
               {cartItem.quantity}
-              <button onClick={onClickChangeQuantityHandler}>+</button>
+              <Button
+                onClick={onClickChangeQuantityHandler}
+                size="sm"
+                variant="danger"
+              >
+                +
+              </Button>
             </div>
-            <button onClick={onClickRemoveItemHandler}>Remove</button>
+            <Button
+              style={{ width: "5rem" }}
+              size="sm"
+              variant="outline-danger"
+              onClick={onClickRemoveItemHandler}
+            >
+              Remove
+            </Button>
           </div>
         </div>
       )}

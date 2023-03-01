@@ -1,4 +1,4 @@
-import { FaUser, FaEdit } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 import "./UserProfilePage.css";

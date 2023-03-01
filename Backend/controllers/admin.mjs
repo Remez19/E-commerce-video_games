@@ -12,11 +12,12 @@ export const addItem = async (req, res, next) => {
     }
     const { name: title, price, description, platforms, youtubeUrl } = req.body;
     let file = req.file;
+    let asArr = platforms.split(",");
     const newGame = new gameModel({
       description: description,
       title: title,
       price: price,
-      platforms: platforms,
+      platforms: asArr,
       rating: {
         usersRate: {},
         totalRating: 0,
@@ -26,7 +27,10 @@ export const addItem = async (req, res, next) => {
       youtubeUrl: youtubeUrl,
     });
     await newGame.save();
-    res.status(201).json({ message: "new game uploaded" });
+    res.status(201).json({
+      message: "new game uploaded",
+      newGame: newGame,
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.message = "Something went worng with upload";

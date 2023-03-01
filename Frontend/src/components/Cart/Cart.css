@@ -24,6 +24,7 @@
 }
 
 .cart-items__counter {
+  display: flex;
   position: relative;
   background-color: #ff7474;
   background-position: center;
@@ -31,7 +32,8 @@
   height: 1.2rem;
   border-radius: 50%;
   color: #ffe283;
-  text-align: center;
+  justify-content: center;
+  align-items: center;
   margin-left: 1rem;
   margin-top: -0.2rem;
   border: 2px solid black;
