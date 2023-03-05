@@ -7,9 +7,21 @@ A online store where pepole can signup and purchase video games.
 ## Tech/Framework
 
 - #### React
-  - Used **Redux**,**axios** and, **Bootstrap**.
+  - ##### Used:
+    - **_Redux_** - For manging application wide state management.
+    - **_axios_** - For sending http requests to the backend api and handling the responses.
+    - **Bootstrap** - For UI.
 - #### Nodejs/Express
-  -Used **multer**, **bcryptjs**, **mongoose**, **jsonwebtoken**, **stripe**, **sendgrid** and, **express-validator**.
+  - ##### Used:
+    - **_multer_** - For handling user uploads.
+    - **_bcryptjs_** - For hashing and user passwords.
+    - **_mongoose_** - For database communication (set and get data).
+    - **_jsonwebtoken_** - For creating secure user toekns and authenticate them.
+    - **_stripe_** - For secure payment sessions.
+    - **_sendgrid_** - For user notifications.
+    - **_express-validator_** - For validating requests data.
 - #### Docker
+  - For for faster deployment.
 - #### CSS
+  -
 - #### MongoDb
