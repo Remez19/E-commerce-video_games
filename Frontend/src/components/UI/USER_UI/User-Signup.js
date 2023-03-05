@@ -2,6 +2,7 @@ import { useState, Fragment, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Button from "react-bootstrap/Button";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -138,12 +139,16 @@ function UserSignup() {
                   })}
                 ></input>
               </div>
+              <Button
+                type="submit"
+                size="sm"
+                variant="outline-danger"
+                disabled={!(isValid && isDirty)}
+                className="buttonSumbit"
+              >
+                Reset Password
+              </Button>
             </div>
-            <input
-              type="submit"
-              disabled={!(isValid && isDirty)}
-              value="Signup"
-            />
             <div className="user-login__link-text">
               Have an acoount Already?{" "}
               <NavLink to="/login" className="user-login__link" end>

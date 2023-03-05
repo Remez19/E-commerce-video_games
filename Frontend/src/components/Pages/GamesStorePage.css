@@ -18,10 +18,14 @@
 .filter_searchBar_container__data {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
-  margin-right: 1rem;
+  /* margin-right: 1rem;
+   */
+  margin: 0;
+  padding: 0;
   grid-column: column-1-start / span column-1-end;
 }
 

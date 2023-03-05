@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { Fragment, useState } from "react";
+import Button from "react-bootstrap/Button";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -71,11 +72,15 @@ function UserNewPassword() {
                     })}
                   ></input>
                 </div>
-                <input
+                <Button
                   type="submit"
+                  size="sm"
+                  variant="outline-danger"
                   disabled={!(isValid && isDirty)}
-                  value="Reset Password"
-                />
+                  className="buttonSumbit"
+                >
+                  Reset Password
+                </Button>
               </form>
             )}
             {emailSent && (

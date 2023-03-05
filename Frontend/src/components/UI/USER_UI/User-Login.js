@@ -3,6 +3,8 @@ import { useNavigate, NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { uiSliceActions } from "../../../Store/ui";
+import { MdVisibilityOff, MdVisibility } from "react-icons/md";
+import Button from "react-bootstrap/Button";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
@@ -11,7 +13,7 @@ import "./User-Login.css";
 
 /**
  * Missing input validation - messaging
- * Missing fordet password opetion.
+ *
  *
  */
 
@@ -24,6 +26,7 @@ function UserLogin() {
   } = useForm();
   const [emailLabel, setEmailLabel] = useState("");
   const [passwordLabel, setPasswordLabel] = useState("");
+  const [passwordIcon, setPasswordIcon] = useState(false);
   const navigate = useNavigate();
   const dispatchAction = useDispatch();
 
@@ -61,6 +64,37 @@ function UserLogin() {
       throw requestError;
     }
   }, [requestError]);
+  const passwordIconElement = passwordIcon ? (
+    <MdVisibility
+      color="#ffe283"
+      onClick={() => {
+        setPasswordIcon((prevState) => {
+          return !prevState;
+        });
+      }}
+      size={"1.2rem"}
+      style={{
+        position: "absolute",
+        marginLeft: "11.7rem",
+        marginTop: "0.6rem",
+      }}
+    />
+  ) : (
+    <MdVisibilityOff
+      color="#ff7474"
+      onClick={() => {
+        setPasswordIcon((prevState) => {
+          return !prevState;
+        });
+      }}
+      size={"1.2rem"}
+      style={{
+        position: "absolute",
+        marginLeft: "11.7rem",
+        marginTop: "0.6rem",
+      }}
+    />
+  );
   return (
     <Fragment>
       {!isLoading && (
@@ -106,7 +140,7 @@ function UserLogin() {
                   onFocus={() => {
                     if (!getValues("password")) setPasswordLabel("moveUp");
                   }}
-                  type={"password"}
+                  type={passwordIcon ? "text" : "password"}
                   {...register("password", {
                     required: true,
                     minLength: 6,
@@ -115,13 +149,23 @@ function UserLogin() {
                     },
                   })}
                 ></input>
+                {passwordIconElement}
               </div>
+              <Button
+                type="submit"
+                size="sm"
+                variant="outline-danger"
+                disabled={!(isValid && isDirty)}
+                className="buttonSumbit"
+              >
+                Reset Password
+              </Button>
             </div>
-            <input
+            {/* <input
               type="submit"
               disabled={!(isValid && isDirty)}
               value="Login"
-            />
+            /> */}
             <div className="user-login__link-text">
               Don't have an acoount yet?{" "}
               <NavLink to="/signup" className="user-login__link" end>

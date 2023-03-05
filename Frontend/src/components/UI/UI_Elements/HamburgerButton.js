@@ -50,6 +50,18 @@ const HamburgerButton = (props) => {
           Add Item
         </NavLink>
       )}
+      {loggedInUser && loggedInUser.admin && (
+        <NavLink
+          to="/admin/edit-items"
+          className={({ isActive }) =>
+            isActive
+              ? "hamburger_container-link-active"
+              : "hamburger_container-link"
+          }
+        >
+          Edit Items
+        </NavLink>
+      )}
     </div>
   );
 };

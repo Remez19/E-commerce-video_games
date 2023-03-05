@@ -1,13 +1,12 @@
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import "./GamesStorePage.css";
 import GamePosterSlider from "../UI/Games_UI/GamePosterSlider";
 import GameCatalog from "../UI/Games_UI/GameCatalog";
 import Loading from "../UI/UI_Utill/Loading";
 import Filter from "../UI/UI_Elements/Filter";
 import SearchBar from "../UI/UI_Elements/SearchBar";
-
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
 import { gamesSliceActions } from "../../Store/games";
 
 import useHttp from "../../hooks/use-http";
@@ -22,8 +21,6 @@ const GamesStore = () => {
     url: "http://localhost:8080/",
     body: { pageNumber: 1, query: "", filter: "" },
   });
-
-  const [filterValue, setFilterValue] = useState();
 
   const dispatchAction = useDispatch();
 
@@ -75,7 +72,6 @@ const GamesStore = () => {
 
   const fillterUsedHandler = (filterData) => {
     dispatchAction(gamesSliceActions.clearGamesList());
-    setFilterValue(filterData);
     setReqConfig((prevState) => {
       return {
         ...prevState,
@@ -107,14 +103,10 @@ const GamesStore = () => {
       {!isLoading ? (
         <>
           <GamePosterSlider gamesSlides={gamesSlides} />
-          <div className="filter_searchBar_container">
-            <div className="filter_searchBar_container__data">
-              <Filter
-                filterUsed={fillterUsedHandler}
-                filterPicked={filterValue}
-              />
-              <SearchBar setUserSearch={onSearchHandler} />
-            </div>
+
+          <div className="filter_searchBar_container__data">
+            <Filter filterUsed={fillterUsedHandler} />
+            <SearchBar setUserSearch={onSearchHandler} />
           </div>
           <GameCatalog
             GameList={gamesList}
