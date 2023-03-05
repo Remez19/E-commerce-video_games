@@ -4,6 +4,13 @@ A online store where pepole can signup and purchase video games.
 
 ## Installation
 
+1. Clone or Downolad the repository (to where you would like).
+2. Create a > `.env` file
+
+```
+
+```
+
 ## Tech/Framework
 
 - #### React
@@ -23,5 +30,6 @@ A online store where pepole can signup and purchase video games.
 - #### Docker
   - For for faster deployment.
 - #### CSS
-  -
+  - For styling.
 - #### MongoDb
+  - For Storing Data.
