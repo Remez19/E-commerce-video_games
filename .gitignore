@@ -1,5 +1,6 @@
 node_modules
 .env
-images
+/Backend/images
+
 package-lock.json
 .DB_Store

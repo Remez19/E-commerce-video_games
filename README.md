@@ -52,3 +52,7 @@ A online store where pepole can signup and purchase video games.
 Set user as a "admin" type by inserting `true` manually in mongodb user document `admin` field.
 
 ## Images
+
+![Login page image](/assets/images/login_page.png)
+![Home page image](/assets/images/home_page.png)
+![Cart page image](/assets/images/Cart_page.png)
