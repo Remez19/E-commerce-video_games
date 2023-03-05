@@ -29,20 +29,16 @@ function UserProfilePage() {
       </p>
       <div className="user-profile-page--data-container">
         <div className="user-profile-page--data-field">
-          <label
-            style={{ color: "#ffe283", borderBottom: "2px solid #ffe283" }}
-          >
+          <p style={{ color: "#ffe283", textDecoration: "underline" }}>
             User Name:
-          </label>
-          <lable style={{ color: "#ff7474" }}>{loggedInUser.userName}</lable>
+          </p>
+          <p style={{ color: "#ff7474" }}>{loggedInUser.userName}</p>
         </div>
         <div className="user-profile-page--data-field">
-          <label
-            style={{ color: "#ffe283", borderBottom: "2px solid #ffe283" }}
-          >
+          <p style={{ color: "#ffe283", textDecoration: "underline" }}>
             Email:
-          </label>
-          <lable style={{ color: "#ff7474" }}>{loggedInUser.userEmail}</lable>
+          </p>
+          <p style={{ color: "#ff7474" }}>{loggedInUser.userEmail}</p>
         </div>
       </div>
     </main>
