@@ -5,7 +5,7 @@ A online store where pepole can signup and purchase video games.
 ## Installation
 
 1. Clone or Downolad the repository (to where you would like).
-2. Create a > `.env` file
+2. Create a `.env` file in the "/Backend" and the "/Frontend" folders.
 
 ```
 
