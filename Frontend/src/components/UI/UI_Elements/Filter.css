@@ -15,7 +15,7 @@
   cursor: pointer;
 }
 
-.dropdown-menu {
+/* .dropdown-menu {
   color: #ff7474;
   text-decoration: underline;
   position: absolute;
@@ -26,7 +26,7 @@
   padding: 0.75rem;
   border-radius: 0.25rem;
   box-shadow: 0 2px 5px 0px rgba(255, 226, 131, 0.9);
-  /* box-shadow: 0 2px 5px 0 rgba(255, 116, 116, 0.9); */
+  /* box-shadow: 0 2px 5px 0 rgba(255, 116, 116, 0.9); 
   opacity: 0;
   pointer-events: none;
   transform: translateY(-10px);
@@ -64,7 +64,7 @@
   text-decoration: underline;
   cursor: pointer;
   color: rgb(255, 116, 116);
-}
+} */
 
 @media (min-width: 40rem) {
   .filter-container {

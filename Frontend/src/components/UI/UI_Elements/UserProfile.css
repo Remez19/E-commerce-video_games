@@ -11,7 +11,7 @@
   text-decoration: none;
 }
 
-.user_profile_btn:hover {
+/* .user_profile_btn:hover {
   border-radius: 50%;
   background-color: #ffe283;
   color: #ffe283;
@@ -85,4 +85,8 @@
 .dropdown-menu__user-profile__list-item:hover {
   color: #ffe283;
   text-decoration: underline;
+} */
+
+.dropdown-toggle::after {
+  display: none;
 }
