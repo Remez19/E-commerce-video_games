@@ -28,7 +28,7 @@ A online store where pepole can signup and purchase video games.
 
 - #### React
   - ##### Used:
-    - **_Redux_** - For manging application wide state management.
+    - **_Redux_** - For application wide state management.
     - **_axios_** - For sending http requests to the backend api and handling the responses.
     - **Bootstrap** - For UI.
 - #### Nodejs/Express
