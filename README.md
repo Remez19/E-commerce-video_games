@@ -13,13 +13,13 @@ A online store where pepole can signup and purchase video games.
     - **Bootstrap** - For UI.
 - #### Nodejs/Express
   - ##### Used:
-    -- **_multer_** - For handling user uploads.
-    -- **_bcryptjs_** - For hashing and user passwords.
+    - **_multer_** - For handling user uploads.
+    - **_bcryptjs_** - For hashing and user passwords.
     - **_mongoose_** - For database communication (set and get data).
     - **_jsonwebtoken_** - For creating secure user toekns and authenticate them.
-    - **_stripe_** - For secure payment sessions.
-    - **_sendgrid_** - For user notifications.
-    - **_express-validator_** - For validating requests data.
+    * **_stripe_** - For secure payment sessions.
+    * **_sendgrid_** - For user notifications.
+    * **_express-validator_** - For validating requests data.
 - #### Docker
   - For for faster deployment.
 - #### CSS
