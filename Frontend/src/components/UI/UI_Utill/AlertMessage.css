@@ -1,26 +1,21 @@
-.alert-container {
-  position: absolute;
-  width: 100%;
-  height: max-content;
-  padding: 0;
-  /* left: 50%; */
-  animation: moveDown 0.4s ease-out forwards;
-}
-
-@keyframes moveDown {
+@keyframes moveDownAlert {
   from {
     transform: translateY(-100%);
+    opacity: 0;
   }
   to {
-    transform: translateY(0%);
+    transform: translateY(-30%);
+    opacity: 1;
   }
 }
 
-@keyframes moveUp {
+@keyframes moveUpAlert {
   from {
     transform: translateY(0%);
+    opacity: 1;
   }
   to {
-    transform: translateY(-120%);
+    transform: translateY(-200%);
+    opacity: 0;
   }
 }

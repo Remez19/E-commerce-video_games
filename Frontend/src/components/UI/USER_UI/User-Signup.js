@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 
+import AlertMessage from "../UI_Utill/AlertMessage";
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 import Card from "../UI_Utill/Card";
@@ -40,12 +41,24 @@ function UserSignup() {
     });
   };
   useEffect(() => {
-    if (requestError && requestError.status !== 409) {
+    if (
+      requestError &&
+      requestError.response.status !== 401 &&
+      requestError.response.status !== 422
+    ) {
       throw requestError;
     }
   }, [requestError]);
+  console.log(requestError);
   return (
     <Card>
+      {requestError && (
+        <AlertMessage
+          heading={requestError.response.data.messageClient}
+          varient="danger"
+          message={requestError.response.data.dataMessage}
+        />
+      )}
       <form
         onSubmit={handleSubmit(onSubmitHandler)}
         className="user-login__container"
@@ -54,11 +67,6 @@ function UserSignup() {
           <Fragment>
             <div className="user-signup__header-img"></div>
             <div className="user-login__data">
-              {requestError && (
-                <div className="user-login__error-message">
-                  {requestError.message}
-                </div>
-              )}
               <div className="input-label__box">
                 <label htmlFor="userName" className={userNameLabel}>
                   User Name
@@ -146,7 +154,7 @@ function UserSignup() {
                 disabled={!(isValid && isDirty)}
                 className="buttonSumbit"
               >
-                Reset Password
+                Signup
               </Button>
             </div>
             <div className="user-login__link-text">

@@ -56,7 +56,11 @@ function UserLogin() {
   };
   useEffect(() => {
     // console.log(requestError);
-    if (requestError && requestError.response.status !== 401) {
+    if (
+      requestError &&
+      requestError.response.status !== 401 &&
+      requestError.response.status !== 422
+    ) {
       throw requestError;
     }
   }, [requestError]);
@@ -91,21 +95,17 @@ function UserLogin() {
       }}
     />
   );
-  console.log(requestError);
   return (
     <Fragment>
-      {requestError && (
-        <AlertMessage
-          heading={requestError.response.data.messageClient}
-          varient="danger"
-          // message={}
-        />
-        // <div className="user-login__error-message">
-        //   {requestError.response.data.messageClient}
-        // </div>
-      )}
       {!isLoading && (
         <Card>
+          {requestError && (
+            <AlertMessage
+              heading={requestError.response.data.messageClient}
+              varient="danger"
+              message={requestError.response.data.dataMessage}
+            />
+          )}
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
             className="user-login__container"
