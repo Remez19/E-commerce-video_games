@@ -6,6 +6,7 @@ export const addItem = async (req, res, next) => {
   try {
     if (!errors.isEmpty()) {
       const error = new Error("Invalid Input");
+      error.messageClient = "Invalid Input";
       error.statusCode = 422;
       error.data = errors.array();
       throw error;
@@ -33,7 +34,7 @@ export const addItem = async (req, res, next) => {
     });
   } catch (err) {
     if (!err.statusCode) {
-      err.message = "Something went worng with upload";
+      err.messageClient = "Something went worng with upload";
       err.statusCode = 500;
     }
     next(err);

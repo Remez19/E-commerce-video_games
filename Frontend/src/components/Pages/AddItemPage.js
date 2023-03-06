@@ -72,6 +72,7 @@ function AddItemPage() {
             />
           </Card>
         )}
+        <div className="break"></div>
         {!isAdding && <GameItemEditView gameData={gameData}></GameItemEditView>}
       </div>
     </main>

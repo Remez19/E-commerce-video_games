@@ -1,11 +1,11 @@
 import "./SearchBar.css";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const SearchBar = ({ setUserSearch }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
-  const [serachBarInput, setSearchBarInput] = useState("");
-
+  const searchBarRef = useRef();
+  // let inputValue;
   const cssClasses = [
     "search_bar__input",
     !isSearchActive ? "not_active_search" : "",
@@ -18,22 +18,19 @@ const SearchBar = ({ setUserSearch }) => {
   };
   const onUserKeyDownHandler = (event) => {
     const userKey = event.key;
-    if (userKey !== "Enter") {
-      setSearchBarInput((prevState) => {
-        return event.target.value;
-      });
-    } else {
-      setUserSearch(serachBarInput);
+    if (userKey === "Enter") {
+      setUserSearch(event.target.value);
     }
   };
 
   const onSearchBtnClickHandler = () => {
-    setUserSearch(serachBarInput);
+    setUserSearch(searchBarRef.current.value);
   };
 
   return (
     <div className="search_bar__container">
       <input
+        ref={searchBarRef}
         type="text"
         className={cssClasses.join(" ")}
         placeholder="Search for Games"
@@ -44,6 +41,7 @@ const SearchBar = ({ setUserSearch }) => {
       <button
         className="serach_bar__search_btn"
         onClick={onSearchBtnClickHandler}
+        style={{ outline: isSearchActive ? "2px solid #ff7474" : "" }}
       >
         Search
       </button>

@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import { userModel } from "../models/user.mjs";
-// const ExpiredTokenError = require("jsonwebtoken/lib/TokenExpiredError");
 
 import { config } from "dotenv";
 
@@ -20,7 +19,7 @@ export const isAuth = (req, res, next) => {
     let decodedToken = jwt.verify(token, secret);
     if (!decodedToken) {
       // if it wasnt able to verify
-      const error = new Error("Not authenticated.");
+      const error = new Error("Token Expired.");
       error.statusCode = 401;
       throw error;
     }
@@ -35,6 +34,7 @@ export const isAuth = (req, res, next) => {
     }
     if (!error.statusCode) {
       error.statusCode = 500;
+      error.messageClient = "Something Went Wrong";
     }
     next(error);
   }
@@ -45,15 +45,20 @@ export const isAuthAdmin = async (req, res, next) => {
     const { email } = req.body;
     const user = await userModel.findOne({ email: email });
     if (!user) {
-      throw new Error("Something Went Worng");
+      const error = new Error("User Not Found.");
+      error.statusCode = 401;
+      throw error;
     }
     if (!user.admin) {
       // Check if the user is of type admin
-      throw new Error("Not Authorized");
+      const error = new Error("You are not allowed.");
+      error.statusCode = 403;
+      throw error;
     }
     next();
-  } catch (err) {
-    if (!err.statusCode) {
+  } catch (error) {
+    if (!error.statusCode) {
+      err.messageClient = "Something Went Wrong";
       err.statusCode = 500;
     }
     next(err);

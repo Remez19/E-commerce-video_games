@@ -7,15 +7,10 @@ import { MdVisibilityOff, MdVisibility } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 
 import useHttp from "../../../hooks/use-http";
+import AlertMessage from "../UI_Utill/AlertMessage";
 import Loading from "../UI_Utill/Loading";
 import Card from "../UI_Utill/Card";
 import "./User-Login.css";
-
-/**
- * Missing input validation - messaging
- *
- *
- */
 
 function UserLogin() {
   const {
@@ -60,7 +55,8 @@ function UserLogin() {
     login({ email: data.email, password: data.password });
   };
   useEffect(() => {
-    if (requestError && requestError.status !== 401) {
+    // console.log(requestError);
+    if (requestError && requestError.response.status !== 401) {
       throw requestError;
     }
   }, [requestError]);
@@ -95,8 +91,19 @@ function UserLogin() {
       }}
     />
   );
+  console.log(requestError);
   return (
     <Fragment>
+      {requestError && (
+        <AlertMessage
+          heading={requestError.response.data.messageClient}
+          varient="danger"
+          // message={}
+        />
+        // <div className="user-login__error-message">
+        //   {requestError.response.data.messageClient}
+        // </div>
+      )}
       {!isLoading && (
         <Card>
           <form
@@ -105,11 +112,6 @@ function UserLogin() {
           >
             <div className="user-login__header-img"></div>
             <div className="user-login__data">
-              {requestError && (
-                <div className="user-login__error-message">
-                  {requestError.message}
-                </div>
-              )}
               <div className="input-label__box">
                 <label htmlFor="email" className={emailLabel}>
                   Email
@@ -158,14 +160,9 @@ function UserLogin() {
                 disabled={!(isValid && isDirty)}
                 className="buttonSumbit"
               >
-                Reset Password
+                Login
               </Button>
             </div>
-            {/* <input
-              type="submit"
-              disabled={!(isValid && isDirty)}
-              value="Login"
-            /> */}
             <div className="user-login__link-text">
               Don't have an acoount yet?{" "}
               <NavLink to="/signup" className="user-login__link" end>

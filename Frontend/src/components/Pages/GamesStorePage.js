@@ -21,6 +21,7 @@ const GamesStore = () => {
     url: "http://localhost:8080/",
     body: { pageNumber: 1, query: "", filter: "" },
   });
+  const [searchBarInput, setSearchBarInput] = useState();
 
   const dispatchAction = useDispatch();
 
@@ -82,6 +83,7 @@ const GamesStore = () => {
     });
   };
   const onSearchHandler = useCallback((keyWords) => {
+    setSearchBarInput(keyWords);
     setReqConfig((prevState) => {
       return {
         ...prevState,
@@ -106,7 +108,10 @@ const GamesStore = () => {
 
           <div className="filter_searchBar_container__data">
             <Filter filterUsed={fillterUsedHandler} />
-            <SearchBar setUserSearch={onSearchHandler} />
+            <SearchBar
+              searchBarInput={searchBarInput}
+              setUserSearch={onSearchHandler}
+            />
           </div>
           <GameCatalog
             GameList={gamesList}

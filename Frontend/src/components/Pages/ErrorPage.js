@@ -1,4 +1,5 @@
-import { useRouteError, isRouteErrorResponse } from "react-router-dom";
+import { useRouteError } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../UI/UI_Elements/Header";
 import Footer from "../UI/UI_Elements/Footer";
@@ -6,23 +7,29 @@ import { Fragment } from "react";
 
 function ErrorPage() {
   const error = useRouteError();
+  const navigate = useNavigate();
   let title = "An Error Accourd!";
-  let message = error.message || "Something went wrong.";
-  let status = error.status;
-
-  console.log(error);
-  // if () {
-  //   message = error.data.message;
-  //   console.log(message);
+  let message = error.response.data.message || "Something went wrong.";
+  let status = error.response.status;
+  // if (isRouteErrorResponse(error)) {
   // }
-  if (isRouteErrorResponse(error)) {
-  }
-  if (error.status === 500) {
+
+  //
+  if (status === 500) {
     message = error.message;
   }
-  if (error.status === 400) {
+
+  if (status === 400) {
     title = "Not Found!";
     message = "Could not find rescource or page.";
+  }
+  // User not authenticated in some way.
+  if (status === 401) {
+    navigate("/login");
+  }
+  // User not allowed to preforme action
+  if (status === 403) {
+    navigate("/");
   }
 
   return (

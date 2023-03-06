@@ -17,6 +17,7 @@ const sendEmail = async (msg) => {
   try {
     await sgMail.send(msg);
   } catch (error) {
+    error.statusCode = 500;
     throw error;
   }
 };
@@ -26,6 +27,7 @@ export const postLogin = async (req, res, next) => {
   try {
     if (!errors.isEmpty()) {
       const error = new Error("Invalid Input");
+      error.messageClient = "Invalid Input.";
       error.statusCode = 422;
       error.data = errors.array();
       throw error;
@@ -38,6 +40,7 @@ export const postLogin = async (req, res, next) => {
     if (!user) {
       // User not found
       const error = new Error("User with this email not exist.");
+      error.messageClient = "User with this email not exist.";
       error.statusCode = 401;
       throw error;
     }
@@ -45,6 +48,7 @@ export const postLogin = async (req, res, next) => {
     const isEqual = await bcrypt.compare(password, user.password);
     if (isEqual === false) {
       const error = new Error("Worng password.");
+      error.messageClient = "Worng email or password.";
       error.statusCode = 401;
       throw error;
     }
@@ -79,6 +83,7 @@ export const postSignup = async (req, res, next) => {
   try {
     if (!errors.isEmpty()) {
       const error = new Error("Invalid Input");
+      error.messageClient = "Invalid Input.";
       error.statusCode = 422;
       error.data = errors.array();
       throw error;
@@ -125,7 +130,7 @@ export const requestResetPassword = async (req, res, next) => {
   const errors = validationResult(req);
   try {
     if (!errors.isEmpty()) {
-      const error = new Error("Something went worng");
+      const error = new Error("Invalid Input");
       error.statusCode = 422;
       error.data = errors.array();
       throw error;
@@ -150,7 +155,7 @@ export const requestResetPassword = async (req, res, next) => {
       },
       template_id: "d-bde4e28455844c429d768163f6f69263",
     });
-    res.status(200).json({ message: "send you a email to reset " });
+    res.status(200).json({ message: "send you a email to reset" });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
@@ -163,8 +168,8 @@ export const resetPassword = async (req, res, next) => {
   const errors = validationResult(req);
   try {
     if (!errors.isEmpty()) {
-      const error = new Error("Something went worng");
-      error.statusCode = 500;
+      const error = new Error("Invalid Input. Please check what you enter.");
+      error.statusCode = 422;
       error.data = errors.array();
       throw error;
     }

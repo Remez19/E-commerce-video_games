@@ -1,0 +1,26 @@
+.alert-container {
+  position: absolute;
+  width: 100%;
+  height: max-content;
+  padding: 0;
+  /* left: 50%; */
+  animation: moveDown 0.4s ease-out forwards;
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(-120%);
+  }
+}

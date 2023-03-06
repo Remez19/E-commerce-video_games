@@ -19,7 +19,7 @@ A online store where pepole can signup and purchase video games.
       10. **SendGrid_API_KEY** - Your Send grid API key.
       11. **SendGrid_From_Email** - Email address you want to send email from.
    2. In the `/Frontend` folder add the following key-value pairs:
-      - **Backend** - The address of the api you want to comunnicate to.
+      - **Backend** - The address of the api you want to comunnicate with.
 3. open new terminal at the `/Backend` folder and run `npm install` (wait for the download to complete).
 4. open new terminal at the `/Frontend` folder and run `npm install` (wait for the download to complete).
 5. run `npm start` in the two terminals you opend.

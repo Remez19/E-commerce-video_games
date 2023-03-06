@@ -31,8 +31,8 @@
 .user-login__data {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
   align-items: center;
+  gap: 2rem;
 }
 .user-login__error-message {
   color: #ff7474;
@@ -68,6 +68,33 @@
 .user-login__data input:focus {
   outline: none;
   border: 1px solid #ffe283;
+}
+
+.buttonSumbit {
+  color: #ff7474;
+  background-color: transparent;
+  width: 8rem;
+  height: 2rem;
+  border-radius: 5px;
+  border: 1px solid #ff7474;
+  font-size: 0.8rem;
+  /* padding: 0.1rem; */
+}
+.buttonSumbit:disabled,
+.buttonSumbit:disabled:hover {
+  color: #ff747464;
+  border-color: #ff747464;
+  cursor: auto;
+  border-radius: 5px;
+}
+.buttonSumbit:hover,
+.buttonSumbit:active {
+  background-color: transparent;
+  border-radius: 10px;
+  border: 1px solid #ffe283;
+  color: #ffe283;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .user-login__link-text {

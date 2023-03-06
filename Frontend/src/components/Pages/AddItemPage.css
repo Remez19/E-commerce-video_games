@@ -14,11 +14,20 @@
 .add-item-page__data {
   display: flex;
   flex-direction: column-reverse;
+  width: 100%;
+  align-items: center;
 }
 
 @media (min-width: 60rem) {
   .add-item-page__data {
     flex-direction: row;
     gap: 1rem;
+  }
+  .break {
+    height: 80%;
+    margin-top: 5rem;
+    background-color: #ffe283;
+    width: 0.5rem;
+    border-radius: 10px;
   }
 }
