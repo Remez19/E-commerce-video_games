@@ -83,7 +83,7 @@ function GameItemPage() {
   // If user is authenticated
   useEffect(() => {
     if (error) {
-      if (error.status === 401) {
+      if (error.response && error.response.status === 401) {
         localStorage.clear();
         dispatchAction(uiSliceActions.setLoggedInUser(undefined));
         navigate("/login");
@@ -101,9 +101,11 @@ function GameItemPage() {
       }
     } else {
       let favorites = JSON.parse(localStorage.getItem("favorites"));
-      for (const faveItem of favorites) {
-        if (faveItem === game._id) {
-          setFavoriteGame(true);
+      if (favorites) {
+        for (const faveItem of favorites) {
+          if (faveItem === game._id) {
+            setFavoriteGame(true);
+          }
         }
       }
       // setFavoriteGame(favorites.find(game._id));
@@ -213,29 +215,3 @@ function GameItemPage() {
 }
 
 export default GameItemPage;
-/**
- *  {favoriteGame ? (
-              <FaHeart
-                title="Remove From Favorite"
-                onClick={onAddToFavoritesHandler}
-                size={"2rem"}
-                color={"#ff7474"}
-                className="game_item__to-favorite"
-              />
-            ) : (
-              <FaRegHeart
-                title="Add To Favorite"
-                size={"2rem"}
-                color={"#ff7474"}
-                className="game_item__to-favorite"
-                onClick={onAddToFavoritesHandler}
-              />
-            )}
-            <FaCartPlus
-              title="Add To Cart"
-              className="game_item__to-cart"
-              size={"2rem"}
-              color={"#ffe283"}
-              onClick={onAddToCartHandler}
-            />
- */

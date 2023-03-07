@@ -46,7 +46,7 @@ function Rate({ rating, gameId }) {
   };
   useEffect(() => {
     if (error) {
-      if (error.statusCode === 401) {
+      if (error.response && error.response.status === 401) {
         navigate("/login");
       } else {
         throw error;

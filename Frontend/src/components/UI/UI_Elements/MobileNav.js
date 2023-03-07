@@ -7,19 +7,28 @@ const MobileNav = ({ anim }) => {
   return (
     <nav className="mobile_nav">
       <ul className="mobile_nav__items">
-        <li className="mobile_nav__item">
-          <NavLink to="/orders" className="mobile_nav__item-link">
-            Orders
-          </NavLink>
-        </li>
-        {loggedInUser.admin && (
+        {!loggedInUser && (
+          <li className="mobile_nav__item">
+            <NavLink to="/orders" className="mobile_nav__item-link">
+              Login
+            </NavLink>
+          </li>
+        )}
+        {loggedInUser && (
+          <li className="mobile_nav__item">
+            <NavLink to="/orders" className="mobile_nav__item-link">
+              Orders
+            </NavLink>
+          </li>
+        )}
+        {loggedInUser && loggedInUser.admin && (
           <li className="mobile_nav__item">
             <NavLink to="/admin/add-item" className="mobile_nav__item-link">
               Add Item
             </NavLink>
           </li>
         )}
-        {loggedInUser.admin && (
+        {loggedInUser && loggedInUser.admin && (
           <li className="mobile_nav__item">
             <NavLink to="/admin/edit-items" className="mobile_nav__item-link">
               Edit Item

@@ -38,6 +38,7 @@ const UserProfile = () => {
               onToggle={() => {
                 console.log("ffdf");
               }}
+              className="active"
               style={{
                 backgroundColor: "#ff7474",
                 borderColor: "#ff7474",

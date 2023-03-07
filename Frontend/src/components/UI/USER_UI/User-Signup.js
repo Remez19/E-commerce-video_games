@@ -23,7 +23,7 @@ function UserSignup() {
   const [rePasswordLabel, setRePasswordLabel] = useState("");
   const navigate = useNavigate();
 
-  const onLoginFinishHandler = (resData) => {
+  const onFinishSignupHandler = (resData) => {
     navigate("/login");
   };
 
@@ -31,7 +31,7 @@ function UserSignup() {
     error: requestError,
     sendRequest: signup,
     isLoading,
-  } = useHttp({ url: "http://localhost:8080/signup" }, onLoginFinishHandler);
+  } = useHttp({ url: "http://localhost:8080/signup" }, onFinishSignupHandler);
 
   const onSubmitHandler = (data) => {
     signup({
@@ -49,7 +49,6 @@ function UserSignup() {
       throw requestError;
     }
   }, [requestError]);
-  console.log(requestError);
   return (
     <Card>
       {requestError && (

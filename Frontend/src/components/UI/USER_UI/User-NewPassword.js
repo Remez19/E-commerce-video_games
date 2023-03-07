@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 
 import useHttp from "../../../hooks/use-http";
 import Loading from "../UI_Utill/Loading";
 import "./User-NewPassword.css";
 import Card from "../UI_Utill/Card";
+import AlertMessage from "../UI_Utill/AlertMessage";
 
 // Need styling
 
@@ -32,10 +33,26 @@ function UserNewPassword() {
   const onSubmitHandler = (data) => {
     changePassword({ email: data.email });
   };
+  useEffect(() => {
+    if (
+      requestError &&
+      requestError.response.status !== 401 &&
+      requestError.response.status !== 422
+    ) {
+      throw requestError;
+    }
+  }, [requestError]);
   return (
     <Fragment>
       {!isLoading && (
         <Card>
+          {requestError && (
+            <AlertMessage
+              heading={requestError.response.data.messageClient}
+              varient="danger"
+              message={requestError.response.data.dataMessage}
+            />
+          )}
           <Fragment>
             {!emailSent && (
               <form
@@ -45,11 +62,6 @@ function UserNewPassword() {
                 <div style={{ marginTop: "2rem", textDecoration: "underline" }}>
                   Enter your email
                 </div>
-                {requestError && (
-                  <div style={{ color: "#ff7474" }}>
-                    {requestError.data[0].msg}
-                  </div>
-                )}
                 <div className="input-label__box">
                   <label htmlFor="email" className={emailLabel}>
                     Email

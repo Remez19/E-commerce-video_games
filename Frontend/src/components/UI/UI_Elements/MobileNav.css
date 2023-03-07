@@ -40,6 +40,12 @@
   font-weight: bold;
   text-decoration: none;
 }
+.mobile_nav__item-link:hover {
+  color: #ffe283;
+}
+.mobile_nav__item:hover {
+  border-bottom: 2px solid #ff7474;
+}
 
 @media (min-width: 40rem) {
   .mobile_nav {

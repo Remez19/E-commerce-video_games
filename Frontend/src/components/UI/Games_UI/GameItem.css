@@ -26,7 +26,8 @@
 }
 
 .game_item_container__platforms {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
+
   text-decoration: underline;
   display: flex;
   flex-direction: column;
@@ -35,6 +36,7 @@
 }
 
 .game_item_container__platforms_list {
+  margin-top: 1rem;
   display: flex;
   gap: 1rem;
   list-style: none;

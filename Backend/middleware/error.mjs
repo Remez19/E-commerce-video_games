@@ -7,9 +7,11 @@ export const errorMiddleware = (error, req, res, next) => {
     error.messageClient || error.message || "Something Went Worng.";
   let dataMessage = "";
   const data = error.data;
-  // getting all the errors
-  for (const value of data) {
-    dataMessage += value.msg + "/n";
+  if (data) {
+    // getting all the errors
+    for (const value of data) {
+      dataMessage += value.msg + "/n";
+    }
   }
   res.status(status).json({ messageClient, dataMessage });
 };

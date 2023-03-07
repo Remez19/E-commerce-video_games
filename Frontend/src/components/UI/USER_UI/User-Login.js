@@ -55,7 +55,6 @@ function UserLogin() {
     login({ email: data.email, password: data.password });
   };
   useEffect(() => {
-    // console.log(requestError);
     if (
       requestError &&
       requestError.response.status !== 401 &&
@@ -65,35 +64,43 @@ function UserLogin() {
     }
   }, [requestError]);
   const passwordIconElement = passwordIcon ? (
-    <MdVisibility
-      color="#ffe283"
-      onClick={() => {
-        setPasswordIcon((prevState) => {
-          return !prevState;
-        });
-      }}
-      size={"1.2rem"}
+    <i
       style={{
         position: "absolute",
-        marginLeft: "11.7rem",
-        marginTop: "0.6rem",
+        marginLeft: "12rem",
+        marginTop: "0.4rem",
       }}
-    />
+    >
+      <MdVisibility
+        color="#ffe283"
+        onClick={() => {
+          setPasswordIcon((prevState) => {
+            return !prevState;
+          });
+        }}
+        size={"1.2rem"}
+        style={{ cursor: "pointer" }}
+      />
+    </i>
   ) : (
-    <MdVisibilityOff
-      color="#ff7474"
-      onClick={() => {
-        setPasswordIcon((prevState) => {
-          return !prevState;
-        });
-      }}
-      size={"1.2rem"}
+    <i
       style={{
         position: "absolute",
-        marginLeft: "11.7rem",
-        marginTop: "0.6rem",
+        marginLeft: "12rem",
+        marginTop: "0.4rem",
       }}
-    />
+    >
+      <MdVisibilityOff
+        color="#ff7474"
+        onClick={() => {
+          setPasswordIcon((prevState) => {
+            return !prevState;
+          });
+        }}
+        size={"1.2rem"}
+        style={{ cursor: "pointer" }}
+      />
+    </i>
   );
   return (
     <Fragment>
@@ -138,6 +145,7 @@ function UserLogin() {
                 <label htmlFor="password" className={passwordLabel}>
                   Password
                 </label>
+
                 <input
                   onFocus={() => {
                     if (!getValues("password")) setPasswordLabel("moveUp");

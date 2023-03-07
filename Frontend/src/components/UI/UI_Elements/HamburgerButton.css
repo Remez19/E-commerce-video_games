@@ -70,6 +70,10 @@
   font-weight: bold;
   width: max-content;
 }
+.hamburger_container-main-link:hover,
+.hamburger_container-main-link-active:hover {
+  color: #ffe283;
+}
 .hamburger_container-main-link-active {
   color: #ffe283;
   text-decoration: underline;
@@ -86,6 +90,11 @@
 .hamburger_container-link,
 .hamburger_container-link-active {
   display: none;
+}
+
+.hamburger_container-link:hover,
+.hamburger_container-link-active:hover {
+  color: #ffe283;
 }
 
 .hamburger_container > p:hover {
