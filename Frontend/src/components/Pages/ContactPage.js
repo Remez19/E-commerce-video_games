@@ -29,7 +29,7 @@ function ContactPage() {
 
   const { sendRequest: Download } = useHttp(
     {
-      url: "http://localhost:8080/contact",
+      url: `${process.env.REACT_APP_Backend}/contact`,
       headers: {
         "Content-Type": "application/json",
         Accept: "application/pdf",

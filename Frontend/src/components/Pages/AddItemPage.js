@@ -37,7 +37,7 @@ function AddItemPage() {
     sendRequest: addItem,
   } = useHttp(
     {
-      url: "http://localhost:8080/admin/add-item/",
+      url: `${process.env.REACT_APP_Backend}/admin/add-item/`,
       headers: { "Content-Type": "multipart/form-data" },
     },
     onItemAdded,

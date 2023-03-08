@@ -31,7 +31,10 @@ function UserSignup() {
     error: requestError,
     sendRequest: signup,
     isLoading,
-  } = useHttp({ url: "http://localhost:8080/signup" }, onFinishSignupHandler);
+  } = useHttp(
+    { url: `${process.env.REACT_APP_Backend}/signup` },
+    onFinishSignupHandler
+  );
 
   const onSubmitHandler = (data) => {
     signup({

@@ -29,7 +29,7 @@ function Rate({ rating, gameId }) {
     sendRequest: rateGame,
   } = useHttp(
     {
-      url: "http://localhost:8080/rateGame",
+      url: `${process.env.REACT_APP_Backend}/rateGame`,
     },
     onRateFinish
   );

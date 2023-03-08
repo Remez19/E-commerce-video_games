@@ -16,7 +16,7 @@ function GameItemPage() {
   const navigate = useNavigate();
   const dispatchAction = useDispatch();
   const [reqConfigCart] = useState({
-    url: "http://localhost:8080/addToCart",
+    url: `${process.env.REACT_APP_Backend}/addToCart`,
   });
 
   const [reqConfigFav] = useState({});
@@ -64,12 +64,12 @@ function GameItemPage() {
     } else if (favoriteGame) {
       favItem(
         { userEmail: loggedInUser.userEmail, itemId: game._id },
-        "http://localhost:8080/removeItemFromFavorites"
+        `${process.env.REACT_APP_Backend}/removeItemFromFavorites`
       );
     } else {
       favItem(
         { userEmail: loggedInUser.userEmail, itemId: game._id },
-        "http://localhost:8080/addToFavorites"
+        `${process.env.REACT_APP_Backend}/addToFavorites`
       );
     }
   };

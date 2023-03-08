@@ -18,7 +18,7 @@ const GamesStore = () => {
   // List of games to present.
   const [reqConfig, setReqConfig] = useState({
     operationType: "initGames",
-    url: "http://localhost:8080/",
+    url: `${process.env.REACT_APP_Backend}/`,
     body: { pageNumber: 1, query: "", filter: "" },
   });
   const [searchBarInput, setSearchBarInput] = useState();
@@ -76,7 +76,7 @@ const GamesStore = () => {
     setReqConfig((prevState) => {
       return {
         ...prevState,
-        url: "http://localhost:8080/filter",
+        url: `${process.env.REACT_APP_Backend}/filter`,
         body: { pageNumber: 1, filter: filterData },
         operationType: "updateGamesList",
       };
@@ -87,7 +87,7 @@ const GamesStore = () => {
     setReqConfig((prevState) => {
       return {
         ...prevState,
-        url: "http://localhost:8080/search",
+        url: `${process.env.REACT_APP_Backend}/search`,
         body: {
           pageNumber: 1,
           filter: prevState.body.filter,

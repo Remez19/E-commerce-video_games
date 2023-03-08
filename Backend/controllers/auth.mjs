@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 
 import sgMail from "@sendgrid/mail";
 
-const SALT_VALUE = 12;
+const SALT_VALUE = process.env.SALT_VALUE || 12;
 
-const secret = process.env.JWT_SECRET;
+const secret = process.env.JWT_SECRET || "something secret";
 
 sgMail.setApiKey(process.env.SendGrid_API_KEY);
 // sgMail.setApiKey(process.env.SendGrid_API_KEY);

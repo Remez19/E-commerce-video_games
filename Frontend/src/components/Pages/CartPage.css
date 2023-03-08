@@ -1,6 +1,5 @@
 .cart-page__main-container {
   animation: slideInPage 0.5s ease-in forwards;
-  background-color: black;
   display: flex;
   flex-direction: column;
   text-align: center;

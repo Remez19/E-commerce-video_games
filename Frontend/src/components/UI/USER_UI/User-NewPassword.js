@@ -27,7 +27,7 @@ function UserNewPassword() {
     sendRequest: changePassword,
     isLoading,
   } = useHttp(
-    { url: "http://localhost:8080/new-password" },
+    { url: `${process.env.REACT_APP_Backend}/new-password` },
     onChangePasswordFinish
   );
   const onSubmitHandler = (data) => {
