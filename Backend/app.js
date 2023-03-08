@@ -18,7 +18,7 @@ import adminRouter from "./routes/admin.mjs";
 config();
 
 // Setting up the port we want to use
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT_BACKEND || 8080;
 
 // Mongodb connection string
 const MONGODB_URI = process.env.MONGODB_CONNSTRING;

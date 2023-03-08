@@ -72,6 +72,7 @@ function AddItemForm({ addItem, onCahngeInput, setIsAdding }) {
   const onSubmitHandler = (data) => {
     let platforms = data.platforms.map((item) => item.value);
     const { name, price, description, youtube } = data;
+    const youtubeUrl = youtube.split("v=")[1];
     const image = data.image[0];
     const addItemForm = new FormData();
     addItemForm.append("email", loggedInUser.userEmail);
@@ -80,7 +81,7 @@ function AddItemForm({ addItem, onCahngeInput, setIsAdding }) {
     addItemForm.append("description", description);
     addItemForm.append("image", image);
     addItemForm.append("platforms", platforms);
-    addItemForm.append("youtubeUrl", youtube);
+    addItemForm.append("youtubeUrl", youtubeUrl);
     setIsAdding(true);
     addItem(addItemForm);
   };
