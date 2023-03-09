@@ -1,5 +1,6 @@
 import store from "./Store/store";
 import React from "react";
+// import { dotenv } from "dotenv";
 
 // Need to use React.lazy() to load components
 import RootLayout from "./components/Pages/RootLayout";
@@ -11,7 +12,6 @@ import GameItemPage from "./components/Pages/GameItemPage";
 import { Provider } from "react-redux";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 // Add Lazy loading for other pages as well
 const GamesStorePage = React.lazy(() =>
   import("./components/Pages/GamesStorePage")
@@ -39,6 +39,8 @@ const CheckoutSuccessPage = React.lazy(() =>
 );
 
 const AddItemPage = React.lazy(() => import("./components/Pages/AddItemPage"));
+
+// dotenv.config();
 
 const router = createBrowserRouter([
   {
@@ -94,7 +96,7 @@ const router = createBrowserRouter([
         loader: async () => {
           try {
             const response = await fetch(
-              "http://localhost:8080/order/getUserOrders",
+              `${process.env.REACT_APP_Backend}/order/getUserOrders`,
               {
                 method: "POST",
                 headers: {
@@ -132,7 +134,7 @@ const router = createBrowserRouter([
           // Get Order data and create order on db
           try {
             const jsonData = await fetch(
-              "http://localhost:8080/order/getOrder",
+              `${process.env.REACT_APP_Backend}/order/getOrder`,
 
               {
                 method: "POST",

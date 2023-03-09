@@ -26,7 +26,7 @@ function CartItem({ cartItem }) {
   );
 
   const onClickRemoveItemHandler = () => {
-    const url = "http://localhost:8080/cart/removeFromCart";
+    const url = `${process.env.REACT_APP_Backend}/cart/removeFromCart`;
     sendRequest(
       {
         itemId: productData._id,
@@ -39,7 +39,7 @@ function CartItem({ cartItem }) {
 
   const onClickChangeQuantityHandler = (e) => {
     // e.target.innerText
-    const url = "http://localhost:8080/cart/changeCartItemQuantity";
+    const url = `${process.env.REACT_APP_Backend}/cart/changeCartItemQuantity`;
     sendRequest(
       {
         itemId: productData._id,

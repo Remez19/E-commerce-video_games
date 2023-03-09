@@ -1,6 +1,7 @@
 // import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 // import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
@@ -12,12 +13,42 @@ import "./UserProfile.css";
 const UserProfile = () => {
   const loggedInUser = useSelector((state) => state.ui.loggedInUser);
   const dispatchAction = useDispatch();
+  const dropDownRef = useRef();
   const navigate = useNavigate();
   const onLogoutClickHandler = () => {
     localStorage.clear();
     dispatchAction(uiSliceActions.setLoggedInUser(undefined));
     navigate("/login");
   };
+  // const dropDown = (
+  //   <Dropdown.Toggle
+  //     ref={dropDownRef}
+  //     as={Button}
+  //     id="dropdown-basic"
+  //     size="sm"
+  //     className="active"
+  //     style={{
+  //       backgroundColor: "#ff7474",
+  //       borderColor: "#ff7474",
+  //       display: "flex",
+  //       flexDirection: "column",
+  //       borderRadius: "50%",
+  //       height: "2rem",
+  //       width: "2rem",
+  //       alignItems: "center",
+  //       justifyContent: "center",
+  //       padding: 0,
+  //       textAlign: "start",
+  //     }}
+  //   >
+  //     <FaUserCircle
+  //       size={"2rem"}
+  //       color={"black"}
+  //       strokeWidth={"1px"}
+  //     ></FaUserCircle>
+  //   </Dropdown.Toggle>
+  // );
+  // console.log(dropDownRef);
   return (
     <>
       {loggedInUser ? (
@@ -32,12 +63,10 @@ const UserProfile = () => {
             }}
           >
             <Dropdown.Toggle
+              ref={dropDownRef}
               as={Button}
               id="dropdown-basic"
               size="sm"
-              onToggle={() => {
-                console.log("ffdf");
-              }}
               className="active"
               style={{
                 backgroundColor: "#ff7474",
@@ -59,6 +88,7 @@ const UserProfile = () => {
                 strokeWidth={"1px"}
               ></FaUserCircle>
             </Dropdown.Toggle>
+            {/* {dropDown} */}
             <Dropdown.Menu variant="dark">
               <Dropdown.ItemText
                 style={{ textAlign: "center", color: "#ff7474" }}
@@ -79,7 +109,14 @@ const UserProfile = () => {
                 Logout
               </Dropdown.Item>
             </Dropdown.Menu>
-            <p style={{ margin: 0 }}>{loggedInUser.userName}</p>
+            <p
+              onClick={() => {
+                dropDownRef.current.click();
+              }}
+              tyle={{ margin: 0 }}
+            >
+              {loggedInUser.userName}
+            </p>
           </Dropdown>
         </div>
       ) : (

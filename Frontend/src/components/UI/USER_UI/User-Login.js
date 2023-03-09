@@ -49,7 +49,10 @@ function UserLogin() {
     error: requestError,
     sendRequest: login,
     isLoading,
-  } = useHttp({ url: "http://localhost:8080/login" }, onLoginFinishHandler);
+  } = useHttp(
+    { url: `${process.env.REACT_APP_Backend}/login` },
+    onLoginFinishHandler
+  );
 
   const onSubmitHandler = (data) => {
     login({ email: data.email, password: data.password });

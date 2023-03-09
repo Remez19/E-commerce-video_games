@@ -26,7 +26,7 @@ function ResetPasswordPage() {
     sendRequest: resetPassword,
     isLoading,
   } = useHttp(
-    { url: "http://localhost:8080/reset-password" },
+    { url: `${process.env.REACT_APP_Backend}/reset-password` },
     onFinishResetPasswordHandler
   );
 

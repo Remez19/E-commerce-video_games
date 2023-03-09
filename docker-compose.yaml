@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  BE-video-games:
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    image: "server-video-games"
+    volumes:
+      - images:/serverApp/images/Games_Images
+    container_name: BE
+    env_file:
+      - ./env/.env
+    # environment:
+    #   - name=value
+  FE-video-games:
+    ports:
+      - "3000:3000"
+    image: "client-video-games"
+    container_name: FE
+    expose:
+      - 3000
+    env_file:
+      - ./env/.env
+volumes:
+  images:

@@ -28,14 +28,13 @@ const MobileNav = ({ anim }) => {
             </NavLink>
           </li>
         )}
-        {loggedInUser && loggedInUser.admin && (
+        {/* {loggedInUser && loggedInUser.admin && (
           <li className="mobile_nav__item">
             <NavLink to="/admin/edit-items" className="mobile_nav__item-link">
               Edit Item
             </NavLink>
           </li>
-        )}
-        s
+        )} */}
       </ul>
     </nav>
   );

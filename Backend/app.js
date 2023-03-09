@@ -18,10 +18,10 @@ import adminRouter from "./routes/admin.mjs";
 config();
 
 // Setting up the port we want to use
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT_BACKEND || 8080;
 
 // Mongodb connection string
-const MONGODB_URI = `mongodb+srv://${process.env.MongodbUser}:${process.env.MongodbPassword}@${process.env.MongodbDataBaseName}.7vjdhyd.mongodb.net/${process.env.MongodbCollectionName}?retryWrites=true&w=majority`;
+const MONGODB_URI = process.env.MONGODB_CONNSTRING;
 
 // Using es6 modules we construct the absolute path to a folder using:
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Setting up headers to allows access and setting up headers.
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
@@ -80,6 +80,7 @@ mongoose
       if (!err) {
         console.log("Connected to DB.");
         console.log(`Server listening on port ${PORT}`);
+        // console.log(MONGODB_URI);
         // console.log(__dirname);
       } else {
         console.error("Something went worng!");

@@ -2,7 +2,6 @@
   height: 100%;
   animation: slideInPage 0.5s ease-in forwards;
   color: #ff7474;
-  background-color: black;
   display: flex;
   flex-direction: column;
   font-family: "Varela Round", sans-serif;
@@ -21,6 +20,9 @@
   height: 100%;
 }
 .game-item__page-container-video {
+  border: 2px solid #6e6e6e;
+
+  border-radius: 5px;
   background-size: contain;
   background-position: center;
   width: 80%;

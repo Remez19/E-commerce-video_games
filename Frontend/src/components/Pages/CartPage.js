@@ -28,10 +28,10 @@ function CartPage() {
   );
 
   const onClickClearCartHandler = () => {
-    sendRequest(undefined, "http://localhost:8080/cart/clearCart");
+    sendRequest(undefined, `${process.env.REACT_APP_Backend}/cart/clearCart`);
   };
   const onClickOrderButtonHandler = () => {
-    sendRequest(undefined, "http://localhost:8080/order/payOrder");
+    sendRequest(undefined, `${process.env.REACT_APP_Backend}/order/payOrder`);
   };
   useEffect(() => {
     if (error) {
