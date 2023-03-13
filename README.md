@@ -1,7 +1,7 @@
 # **E-Commerce-video-games.**
 
 A online store where pepole can signup and purchase video games.
-Rate video games and favorite any game you want.
+Rate video games and, favorite games.
 
 ## Installation
 
