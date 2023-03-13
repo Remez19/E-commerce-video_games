@@ -11,9 +11,6 @@ const Footer = () => {
             Contact
           </NavLink>
         </li>
-        <li>
-          <NavLink className="footer-link">See</NavLink>
-        </li>
       </ul>
     </footer>
   );

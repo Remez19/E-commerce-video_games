@@ -59,7 +59,8 @@ Rate video games and, favorite games.
 
 ## How to Use?
 
-Create an account. Login with the user you created an play around.
+Create an account. Login with the user you created and play around.
+You can see my see my CV by clicking - **"conatct"**.
 
 ## Images
 
