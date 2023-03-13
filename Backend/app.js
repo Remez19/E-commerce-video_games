@@ -80,8 +80,6 @@ mongoose
       if (!err) {
         console.log("Connected to DB.");
         console.log(`Server listening on port ${PORT}`);
-        // console.log(MONGODB_URI);
-        // console.log(__dirname);
       } else {
         console.error("Something went worng!");
         console.error(err);

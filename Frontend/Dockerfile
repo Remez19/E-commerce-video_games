@@ -1,4 +1,4 @@
-FROM node:16.15.0
+FROM node:alpine
 
 WORKDIR /clientApp
 
@@ -10,5 +10,5 @@ COPY . /clientApp/
 
 EXPOSE 3000
 
-# CMD ["npm", "start"]
-CMD [ "npx", "serve", "build" ]
+CMD ["npm", "start"]
+

@@ -117,7 +117,6 @@ export const stripeWebHook = async (req, res, next) => {
       const user = await userModel
         .findById(metadata.userId)
         .populate("cart.items.productData");
-      console.log(user);
       const newOrder = new orderModel({
         user: user._id,
         items: [...user.cart.items],
