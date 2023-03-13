@@ -1,28 +1,38 @@
 # **E-Commerce-video-games.**
 
 A online store where pepole can signup and purchase video games.
+Rate video games and favorite any game you want.
 
 ## Installation
 
+### Using NPM Install.
+
 1. Clone or Downolad the repository (to where you would like).
-2. Create a `.env` file in the `/Backend` and the `/Frontend` folders.
+2. Create a `.env` file in the `/Backend` and `/Frontend` folders.
    1. In the `/Backend` folder add the following key-value pairs:
-      1. **PORT** - The port number on which you want the server to listen for incoming requests.
+      1. **PORT_BACKEND** - The port number on which you want the server to listen for incoming requests.
       2. **SALT_VALUE** - For Hashing iterations (bcryptjs).
-      3. **MongodbUser** - A mongoDB user account name.
-      4. **MongodbPassword** - Your mongoDB account password.
-      5. **MongodbDataBaseName** - Your mongoDB database name.
-      6. **MongodbCollectionName** - Your mongoDB database collection name.
-      7. **JWT_SECRET** - String (private key stripe) - can be what ever works for you.
-      8. **Stripe_Key** - Your Stripe account private key.
-      9. **Stripe_EndPoint_Secret** - End point secret for stripe web hooks (for checkout). see - [Stripe Web Hooks](https://stripe.com/docs/webhooks)
-      10. **SendGrid_API_KEY** - Your Send grid API key.
-      11. **SendGrid_From_Email** - Email address you want to send email from.
+      3. **MONGODB_CONNSTRING** - Mongodb connection string see - [Connection String URI Format](https://www.mongodb.com/docs/manual/reference/connection-string/)
+      4. **JWT_SECRET** - String - can be what ever works for you see - [JSON Web Tokens](https://jwt.io/introduction).
+      5. **Stripe_Key** - Your Stripe account private key see - [API keys](https://stripe.com/docs/keys). (This is needed for orders).
+      6. **Stripe_EndPoint_Secret** - End point secret for stripe web hooks (for checkout). see - [Get started with the Stripe CLI](https://stripe.com/docs/stripe-cli) and [Stripe Web Hooks](https://stripe.com/docs/webhooks)
+      7. **SendGrid_API_KEY** - Your Send grid API see - [SendGrid Documentation](https://docs.sendgrid.com/).
+      8. **SendGrid_From_Email** - Email address you want to send email from.
+      9. **CLIENT_URL** - The address of the client side you want to send data to.
    2. In the `/Frontend` folder add the following key-value pairs:
-      - **Backend** - The address of the api you want to comunnicate with.
+      1. **REACT_APP_Backend** - The address of the api (Backend) you want to comunnicate with.
+      2. **REACT_APP_Stripe_Key** - Your Stripe account public key see - [API keys](https://stripe.com/docs/keys).
 3. open new terminal at the `/Backend` folder and run `npm install` (wait for the download to complete).
 4. open new terminal at the `/Frontend` folder and run `npm install` (wait for the download to complete).
 5. run `npm start` in the two terminals you opend.
+
+### Using Docker.
+
+1. Clone or Downolad the repository (to where you would like).
+2. Create a `.env` file in the `/env` folder and add the following key value pairs as metioned above.
+3. Navigate to `/Frontend` and open new teminal. Run `docker build -t client-video-games .`.
+4. Navigate to `/Backend` and open new teminal. Run `docker build -t server-video-games . `.
+5. open new terimal and run `docker-compose up`.
 
 ## Tech/Framework
 
@@ -49,7 +59,7 @@ A online store where pepole can signup and purchase video games.
 
 ## How to Use?
 
-Set user as a "admin" type by inserting `true` manually in mongodb user document `admin` field.
+Create an account. Login with the user you created an play around.
 
 ## Images
 
